@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>pwnhub无用的电脑_丧心病狂_writeup | giglf的盐缸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="比赛地址是 pwnhub.cn 也可以下载我上传的writeup来看 弱渣用的解法超奇怪233333333 然而居然还被选上了官方推荐 接下来看看正文吧  得到pwnhub.jar包，先跑起看看 java -jar pwnhub.jar">
+<meta name="keywords" content="逆向,java,pwnhub">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pwnhub无用的电脑_丧心病狂_writeup">
+<meta property="og:url" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/index.html">
+<meta property="og:site_name" content="giglf的盐缸">
+<meta property="og:description" content="比赛地址是 pwnhub.cn 也可以下载我上传的writeup来看 弱渣用的解法超奇怪233333333 然而居然还被选上了官方推荐 接下来看看正文吧  得到pwnhub.jar包，先跑起看看 java -jar pwnhub.jar">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/1_zpsoqcgrhb4.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/2_zpsuj7qfqed.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/3_zps5y4x3irm.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/4_zpsxigy8ngg.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/5_zpsx0ahwwsx.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/6_zpsmh1ezgq6.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/7_zpskalmrgjm.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/8_zpslvqunj48.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/9_zpslsnlymka.jpg">
+<meta property="og:updated_time" content="2017-11-22T11:50:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="pwnhub无用的电脑_丧心病狂_writeup">
+<meta name="twitter:description" content="比赛地址是 pwnhub.cn 也可以下载我上传的writeup来看 弱渣用的解法超奇怪233333333 然而居然还被选上了官方推荐 接下来看看正文吧  得到pwnhub.jar包，先跑起看看 java -jar pwnhub.jar">
+<meta name="twitter:image" content="http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/1_zpsoqcgrhb4.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="giglf的盐缸" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">giglf</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">让咸鱼更咸</p>
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives">文章</a></li>
+                        
+                            <li><a href="/tags">标签</a></li>
+                        
+                            <li><a href="/about">about</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Android/" style="font-size: 16.67px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so加载/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/全国大学生信息安全竞赛初赛/" style="font-size: 13.33px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/内核编译/" style="font-size: 10px;">内核编译</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/签名认证/" style="font-size: 13.33px;">签名认证</a> <a href="/tags/编码/" style="font-size: 10px;">编码</a> <a href="/tags/逆向/" style="font-size: 20px;">逆向</a> <a href="/tags/随便写写啦/" style="font-size: 20px;">随便写写啦</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/luuman/hexo-theme-spfk">spfk主题</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">我都不知道我是谁了，大概只是一条只想吃吃喝喝的咸鱼吧</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">giglf</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">giglf</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">让咸鱼更咸</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives">文章</a></li>
+                
+                    <li><a href="/tags">标签</a></li>
+                
+                    <li><a href="/about">about</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-pwnhub无用的电脑-丧心病狂-writeup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/" class="article-date">
+      <time datetime="2017-02-20T11:44:17.000Z" itemprop="datePublished">2017-02-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      pwnhub无用的电脑_丧心病狂_writeup
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/WriteUp/">WriteUp</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwnhub/">pwnhub</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/逆向/">逆向</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>比赛地址是 pwnhub.cn</p>
+<p>也可以下载我上传的writeup来看</p>
+<p>弱渣用的解法超奇怪233333333</p>
+<p>然而居然还被选上了官方推荐</p>
+<p>接下来看看正文吧</p>
+<hr>
+<p>得到pwnhub.jar包，先跑起看看</p>
+<p><code>java -jar pwnhub.jar</code></p>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/1_zpsoqcgrhb4.jpg" alt="1"></p>
+<a id="more"></a>
+<p>jar包好说，拖进jd-gui看看</p>
+<p>结果出来一堆疑似MD5处理的类名，除了最后五个小写的类能正常反编译外，其余1500+个都不能正常打开</p>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/2_zpsuj7qfqed.jpg" alt="2"></p>
+<p>反编译看出，先验证code，code的长度为4，接着就是验证code的类</p>
+<p>对应<code>a4a89174426b40307102e165374ab8ab.class</code>这个类，里面的验证代码略复杂</p>
+<p>因为code只有4位，copy一下代码暴力跑下就出来了</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> pwnhub.ConvertClass;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">char</span>[] word = <span class="string">"abcdefghijklmnopqrstuvwxyz0123456789"</span>.toCharArray();</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">char</span> a : word)&#123;</span><br><span class="line">			<span class="keyword">for</span>(<span class="keyword">char</span> b : word)&#123;</span><br><span class="line">				<span class="keyword">for</span>(<span class="keyword">char</span> c : word)&#123;</span><br><span class="line">					<span class="keyword">for</span>(<span class="keyword">char</span> d : word)&#123;</span><br><span class="line">						String tmp = String.valueOf(a)+String.valueOf(b)+String.valueOf(c)+String.valueOf(d);</span><br><span class="line">						<span class="keyword">if</span>(ConvertClass.b(tmp))&#123;</span><br><span class="line">							System.out.println(tmp);</span><br><span class="line">						&#125;</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//result: mdzz</span></span><br></pre></td></tr></table></figure>
+<p>跑出来code = mdzz</p>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/3_zps5y4x3irm.jpg" alt="3"></p>
+<p>接下来就是输入flag验证了</p>
+<p>跟踪到这个类中，发现通过java的反射机制加载checkFlag这个类</p>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/4_zpsxigy8ngg.jpg" alt="4"></p>
+<p>跟踪进去<code>mc</code>这个类，就能看到其中重载了<code>ClassLoader</code>中<code>findClass</code>这个函数</p>
+<p>通过MD5转换类名，找到对应类文件，并通过AES解密，秘钥写死，解密后获取对应的类</p>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/5_zpsx0ahwwsx.jpg" alt="5"></p>
+<hr>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/6_zpsmh1ezgq6.jpg" alt="6"></p>
+<p>把类copy出来，并且在最后添加一段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//output the decoded file</span></span><br><span class="line"><span class="comment">//********************************my operation**************************</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">	FileOutputStream out = <span class="keyword">new</span> FileOutputStream(name);</span><br><span class="line">	out.write(en, <span class="number">0</span>, en.length);</span><br><span class="line">	out.flush();</span><br><span class="line">	out.close();</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">	<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">	e.printStackTrace();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//********************************finish********************************</span></span><br></pre></td></tr></table></figure>
+<p>获取解密后的类</p>
+<p>获得的checkFlag类</p>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/7_zpskalmrgjm.jpg" alt="7"></p>
+<p>把b和flag的字节码传进函数中获取返回值验证</p>
+<p>前面有个<code>load.l()</code>的函数，<code>cadqa</code>也不知道是什么类</p>
+<p>但猜想可通过同样原理从一堆加密的class中把原来的类解密出来</p>
+<p>获得cadqa类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">GetClass mClass = <span class="keyword">new</span> GetClass();</span><br><span class="line">Class&lt;?&gt; clazz = mClass.findClass(<span class="string">"pwnhub.cadqa"</span>);</span><br></pre></td></tr></table></figure>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/8_zpslvqunj48.jpg" alt="8"></p>
+<p>y变换出下一个类名，同样通过反射机制获取下一个类</p>
+<p>注意到对b[2]进行了一次异或操作，并继续传进下一个函数</p>
+<p>同理copy出来获取下一个类<code>pwnhub.wmyvg</code></p>
+<p>会发现下一个类中也是差不多同样的东西</p>
+<p>一直传递进去</p>
+<p>好，所以换种思路，可以在开始重载的findClass函数中加进输出类名的信息，替换掉原jar包中的类，则可以输出逐步加载的类名</p>
+<p>这里注意之前提到过的<code>load.l()</code>函数，通过findClass找到该类发现方法中把所有的类都加载了一遍</p>
+<p>所以还需要做出一点修改</p>
+<p><img src="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/9_zpslsnlymka.jpg" alt="9"></p>
+<p><strong>思路是：</strong> 修改checkFlag类，注释掉<code>load.l()</code>语句，注意到传进的<code>int[] b</code>在每次迭代的类中都对其中一位进行异或，每个中间的类只对该数组进行了修改，别的都无关，我们直接在最后输出最终的b数组的值，不必关注当中的过程。</p>
+<p>修改checkFlag</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> pwnhub;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.BufferedReader;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStreamReader;</span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">checkFlag</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">check</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">// load.l();</span></span><br><span class="line">		BufferedReader strin = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(System.in));</span><br><span class="line">		System.out.println(<span class="string">"ok, now give me flag"</span>);</span><br><span class="line">		System.out.print(<span class="string">"flag:"</span>);</span><br><span class="line">		String flag = strin.readLine();</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span>[] b = &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span> &#125;;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">byte</span>[] result = cadqa.i(flag.getBytes(), b);</span><br><span class="line">			</span><br><span class="line">		System.out.print(<span class="string">"Array b: "</span>);</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i : b)&#123;</span><br><span class="line">			System.out.print(i + <span class="string">", "</span>);</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">byte</span>[] tFlag = &#123; <span class="number">16</span>, <span class="number">37</span>, -<span class="number">54</span>, -<span class="number">1</span>, -<span class="number">36</span>, -<span class="number">34</span>, -<span class="number">83</span>, -<span class="number">64</span>, <span class="number">39</span>, -<span class="number">112</span>, <span class="number">5</span>, -<span class="number">85</span>, <span class="number">61</span>, <span class="number">108</span>, -<span class="number">4</span>, <span class="number">13</span>, <span class="number">85</span>, -<span class="number">22</span>, -<span class="number">116</span>, -<span class="number">77</span>, <span class="number">31</span>, <span class="number">21</span>, -<span class="number">64</span>, <span class="number">13</span>, -<span class="number">86</span>, -<span class="number">48</span>, -<span class="number">86</span>, -<span class="number">115</span>, -<span class="number">28</span>, -<span class="number">82</span>, <span class="number">48</span>, -<span class="number">15</span> &#125;;</span><br><span class="line">		<span class="keyword">if</span> (Arrays.equals(result, tFlag)) &#123;</span><br><span class="line">			System.out.println(<span class="string">"pwnhub&#123;flag:"</span> + flag + <span class="string">"&#125;"</span>);</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			System.out.println(<span class="string">"try again"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为该类是通过AES解密出来的，替换原jar包中的该类必须先把类加密</p>
+<p>对于java中AES的方法非常简单，因为秘钥已写死，只要把重写的findClass中的代码拷贝出来</p>
+<p>因为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ENCRYPT_MODE = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> DECRYPT_MODE = <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
+<p>所以在<code>cipher.init(2, skey, iv);</code>改为<code>cipher.init(1, skey, iv);</code>就加密出来了</p>
+<p>输出加密后的类就可以替换原jar包中的类了</p>
+<p>跑一下修改后的jar包</p>
+<p>得到</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line">no passcode, no game</span><br><span class="line">code:mdzz</span><br><span class="line">classname: checkFlag</span><br><span class="line">ok, now give me flag</span><br><span class="line">flag:aaaaaa</span><br><span class="line">classname: cadqa</span><br><span class="line">classname: wmyvg</span><br><span class="line">classname: fthyl</span><br><span class="line">classname: knklz</span><br><span class="line">classname: swygk</span><br><span class="line">classname: xbzvx</span><br><span class="line">classname: bstqh</span><br><span class="line">classname: lmvxj</span><br><span class="line">classname: iaclf</span><br><span class="line">classname: civgj</span><br><span class="line">classname: jzlnc</span><br><span class="line">classname: wpzay</span><br><span class="line">classname: yhusg</span><br><span class="line">classname: qrleu</span><br><span class="line">classname: ryugj</span><br><span class="line">classname: krvkv</span><br><span class="line">classname: rysks</span><br><span class="line">classname: mcnky</span><br><span class="line">classname: pqxex</span><br><span class="line">classname: hfdxm</span><br><span class="line">classname: bhlro</span><br><span class="line">classname: ghxxg</span><br><span class="line">classname: kxgjk</span><br><span class="line">classname: ugeia</span><br><span class="line">classname: gxizy</span><br><span class="line">classname: whpuy</span><br><span class="line">classname: itjyb</span><br><span class="line">classname: dypmm</span><br><span class="line">classname: vphxl</span><br><span class="line">classname: xmopd</span><br><span class="line">classname: bkarw</span><br><span class="line">classname: xwver</span><br><span class="line">classname: qujkq</span><br><span class="line">classname: jwzgx</span><br><span class="line">classname: lpodr</span><br><span class="line">classname: dfhcv</span><br><span class="line">classname: uxxlh</span><br><span class="line">classname: qkznr</span><br><span class="line">classname: jovrk</span><br><span class="line">classname: plmbn</span><br><span class="line">classname: dnmoe</span><br><span class="line">classname: lxmpw</span><br><span class="line">classname: mvhaz</span><br><span class="line">classname: ekuyu</span><br><span class="line">classname: zqggw</span><br><span class="line">classname: oxodn</span><br><span class="line">classname: tjoao</span><br><span class="line">classname: ytpej</span><br><span class="line">classname: yjubo</span><br><span class="line">classname: igjiv</span><br><span class="line">classname: aaisy</span><br><span class="line">classname: uvrut</span><br><span class="line">classname: krdya</span><br><span class="line">classname: rmrou</span><br><span class="line">classname: tknxh</span><br><span class="line">classname: gzmbz</span><br><span class="line">classname: dkqcg</span><br><span class="line">classname: zrhvo</span><br><span class="line">classname: biosp</span><br><span class="line">classname: ddbfz</span><br><span class="line">classname: tdozs</span><br><span class="line">classname: klfqs</span><br><span class="line">classname: wtwpi</span><br><span class="line">classname: icpbr</span><br><span class="line">classname: angkn</span><br><span class="line">classname: vjsqq</span><br><span class="line">classname: lazus</span><br><span class="line">classname: hjtcg</span><br><span class="line">classname: jwuvs</span><br><span class="line">classname: eximk</span><br><span class="line">classname: qotct</span><br><span class="line">classname: prlhh</span><br><span class="line">classname: ictnz</span><br><span class="line">classname: vdwrx</span><br><span class="line">classname: akkks</span><br><span class="line">classname: mtyvu</span><br><span class="line">classname: ummng</span><br><span class="line">classname: zltaa</span><br><span class="line">classname: ptqro</span><br><span class="line">classname: bdoqu</span><br><span class="line">classname: iaedu</span><br><span class="line">classname: ekjiz</span><br><span class="line">classname: wzvnt</span><br><span class="line">classname: uxxzo</span><br><span class="line">classname: oshbc</span><br><span class="line">classname: jfwqa</span><br><span class="line">classname: ubvnq</span><br><span class="line">classname: itlpk</span><br><span class="line">classname: wwigc</span><br><span class="line">classname: hnvij</span><br><span class="line">classname: ctavm</span><br><span class="line">classname: gsqdi</span><br><span class="line">classname: wqeuz</span><br><span class="line">classname: rjfog</span><br><span class="line">classname: fkviz</span><br><span class="line">classname: bjbwm</span><br><span class="line">classname: gefao</span><br><span class="line">classname: hllei</span><br><span class="line">classname: wmolw</span><br><span class="line">classname: herqz</span><br><span class="line">classname: dlfnv</span><br><span class="line">classname: frsu</span><br><span class="line">try again</span><br></pre></td></tr></table></figure>
+<p>看待迭代了这么多个类……</p>
+<p>并且跑出了最终b数组的值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> b[] = &#123;<span class="number">187632156</span>, <span class="number">874189824</span>, <span class="number">254150144</span>, <span class="number">924386310</span>, <span class="number">121057538</span>, <span class="number">840500228</span>, <span class="number">389160971</span>, <span class="number">907870729</span>, <span class="number">389426184</span>, <span class="number">973875457</span>, <span class="number">372376604</span>, <span class="number">707731490</span>, <span class="number">1043334948</span>, <span class="number">439222784</span>, <span class="number">876216579</span>, <span class="number">455999525</span>&#125;;</span><br></pre></td></tr></table></figure>
+<p>查看最后加载的两个类，类<code>dlfnv</code>是跟上面的一样的迭代类</p>
+<p>最后的<code>frsu</code>是最终的解密类</p>
+<p>同理获得解出来的类，得到一段复杂的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">byte</span>[] b(<span class="keyword">byte</span>[] flag, <span class="keyword">int</span>[] bInt) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr1 = &#123; <span class="number">943331329</span>, <span class="number">170788368</span>, <span class="number">1008414755</span>, <span class="number">187049985</span>, <span class="number">1010368540</span>, <span class="number">220604441</span>, <span class="number">940377620</span>, <span class="number">255209728</span>,</span><br><span class="line">			<span class="number">689771012</span>, <span class="number">221709344</span>, <span class="number">957157408</span>, <span class="number">892536332</span>, <span class="number">722417666</span>, <span class="number">1026621720</span>, <span class="number">655302664</span>, <span class="number">890966315</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr2 = &#123; <span class="number">1847617210</span>, <span class="number">1994607775</span>, <span class="number">1906299266</span>, <span class="number">1443467998</span>, <span class="number">1753140052</span>, <span class="number">782026644</span>, <span class="number">743697037</span>, <span class="number">1500018807</span>,</span><br><span class="line">			<span class="number">1015162722</span>, <span class="number">141403752</span>, <span class="number">1057274701</span>, <span class="number">1430471406</span>, <span class="number">921937966</span>, <span class="number">1419221067</span>, <span class="number">962664086</span>, <span class="number">2133607337</span> &#125;;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">		bInt[i] ^= constantArr2[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span>[] mergeBInt = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">32</span>];</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">		mergeBInt[i] = constantArr1[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">		mergeBInt[(i + <span class="number">16</span>)] = bInt[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">byte</span>[] flagcp = flag;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>[] constantArr3 = &#123; <span class="number">16843776</span>, <span class="number">0</span>, <span class="number">65536</span>, <span class="number">16843780</span>, <span class="number">16842756</span>, <span class="number">66564</span>, <span class="number">4</span>, <span class="number">65536</span>, <span class="number">1024</span>, <span class="number">16843776</span>, <span class="number">16843780</span>, <span class="number">1024</span>,</span><br><span class="line">			<span class="number">16778244</span>, <span class="number">16842756</span>, <span class="number">16777216</span>, <span class="number">4</span>, <span class="number">1028</span>, <span class="number">16778240</span>, <span class="number">16778240</span>, <span class="number">66560</span>, <span class="number">66560</span>, <span class="number">16842752</span>, <span class="number">16842752</span>, <span class="number">16778244</span>,</span><br><span class="line">			<span class="number">65540</span>, <span class="number">16777220</span>, <span class="number">16777220</span>, <span class="number">65540</span>, <span class="number">0</span>, <span class="number">1028</span>, <span class="number">66564</span>, <span class="number">16777216</span>, <span class="number">65536</span>, <span class="number">16843780</span>, <span class="number">4</span>, <span class="number">16842752</span>, <span class="number">16843776</span>,</span><br><span class="line">			<span class="number">16777216</span>, <span class="number">16777216</span>, <span class="number">1024</span>, <span class="number">16842756</span>, <span class="number">65536</span>, <span class="number">66560</span>, <span class="number">16777220</span>, <span class="number">1024</span>, <span class="number">4</span>, <span class="number">16778244</span>, <span class="number">66564</span>, <span class="number">16843780</span>, <span class="number">65540</span>,</span><br><span class="line">			<span class="number">16842752</span>, <span class="number">16778244</span>, <span class="number">16777220</span>, <span class="number">1028</span>, <span class="number">66564</span>, <span class="number">16843776</span>, <span class="number">1028</span>, <span class="number">16778240</span>, <span class="number">16778240</span>, <span class="number">0</span>, <span class="number">65540</span>, <span class="number">66560</span>, <span class="number">0</span>,</span><br><span class="line">			<span class="number">16842756</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr4 = &#123; -<span class="number">2146402272</span>, -<span class="number">2147450880</span>, <span class="number">32768</span>, <span class="number">1081376</span>, <span class="number">1048576</span>, <span class="number">32</span>, -<span class="number">2146435040</span>, -<span class="number">2147450848</span>, -<span class="number">2147483616</span>,</span><br><span class="line">			-<span class="number">2146402272</span>, -<span class="number">2146402304</span>, Integer.MIN_VALUE, -<span class="number">2147450880</span>, <span class="number">1048576</span>, <span class="number">32</span>, -<span class="number">2146435040</span>, <span class="number">1081344</span>, <span class="number">1048608</span>,</span><br><span class="line">			-<span class="number">2147450848</span>, <span class="number">0</span>, Integer.MIN_VALUE, <span class="number">32768</span>, <span class="number">1081376</span>, -<span class="number">2146435072</span>, <span class="number">1048608</span>, -<span class="number">2147483616</span>, <span class="number">0</span>, <span class="number">1081344</span>, <span class="number">32800</span>,</span><br><span class="line">			-<span class="number">2146402304</span>, -<span class="number">2146435072</span>, <span class="number">32800</span>, <span class="number">0</span>, <span class="number">1081376</span>, -<span class="number">2146435040</span>, <span class="number">1048576</span>, -<span class="number">2147450848</span>, -<span class="number">2146435072</span>,</span><br><span class="line">			-<span class="number">2146402304</span>, <span class="number">32768</span>, -<span class="number">2146435072</span>, -<span class="number">2147450880</span>, <span class="number">32</span>, -<span class="number">2146402272</span>, <span class="number">1081376</span>, <span class="number">32</span>, <span class="number">32768</span>, Integer.MIN_VALUE,</span><br><span class="line">			<span class="number">32800</span>, -<span class="number">2146402304</span>, <span class="number">1048576</span>, -<span class="number">2147483616</span>, <span class="number">1048608</span>, -<span class="number">2147450848</span>, -<span class="number">2147483616</span>, <span class="number">1048608</span>, <span class="number">1081344</span>, <span class="number">0</span>,</span><br><span class="line">			-<span class="number">2147450880</span>, <span class="number">32800</span>, Integer.MIN_VALUE, -<span class="number">2146435040</span>, -<span class="number">2146402272</span>, <span class="number">1081344</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr5 = &#123; <span class="number">520</span>, <span class="number">134349312</span>, <span class="number">0</span>, <span class="number">134348808</span>, <span class="number">134218240</span>, <span class="number">0</span>, <span class="number">131592</span>, <span class="number">134218240</span>, <span class="number">131080</span>, <span class="number">134217736</span>, <span class="number">134217736</span>,</span><br><span class="line">			<span class="number">131072</span>, <span class="number">134349320</span>, <span class="number">131080</span>, <span class="number">134348800</span>, <span class="number">520</span>, <span class="number">134217728</span>, <span class="number">8</span>, <span class="number">134349312</span>, <span class="number">512</span>, <span class="number">131584</span>, <span class="number">134348800</span>, <span class="number">134348808</span>,</span><br><span class="line">			<span class="number">131592</span>, <span class="number">134218248</span>, <span class="number">131584</span>, <span class="number">131072</span>, <span class="number">134218248</span>, <span class="number">8</span>, <span class="number">134349320</span>, <span class="number">512</span>, <span class="number">134217728</span>, <span class="number">134349312</span>, <span class="number">134217728</span>,</span><br><span class="line">			<span class="number">131080</span>, <span class="number">520</span>, <span class="number">131072</span>, <span class="number">134349312</span>, <span class="number">134218240</span>, <span class="number">0</span>, <span class="number">512</span>, <span class="number">131080</span>, <span class="number">134349320</span>, <span class="number">134218240</span>, <span class="number">134217736</span>, <span class="number">512</span>, <span class="number">0</span>,</span><br><span class="line">			<span class="number">134348808</span>, <span class="number">134218248</span>, <span class="number">131072</span>, <span class="number">134217728</span>, <span class="number">134349320</span>, <span class="number">8</span>, <span class="number">131592</span>, <span class="number">131584</span>, <span class="number">134217736</span>, <span class="number">134348800</span>, <span class="number">134218248</span>,</span><br><span class="line">			<span class="number">520</span>, <span class="number">134348800</span>, <span class="number">131592</span>, <span class="number">8</span>, <span class="number">134348808</span>, <span class="number">131584</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr6 = &#123; <span class="number">8396801</span>, <span class="number">8321</span>, <span class="number">8321</span>, <span class="number">128</span>, <span class="number">8396928</span>, <span class="number">8388737</span>, <span class="number">8388609</span>, <span class="number">8193</span>, <span class="number">0</span>, <span class="number">8396800</span>, <span class="number">8396800</span>, <span class="number">8396929</span>, <span class="number">129</span>, <span class="number">0</span>,</span><br><span class="line">			<span class="number">8388736</span>, <span class="number">8388609</span>, <span class="number">1</span>, <span class="number">8192</span>, <span class="number">8388608</span>, <span class="number">8396801</span>, <span class="number">128</span>, <span class="number">8388608</span>, <span class="number">8193</span>, <span class="number">8320</span>, <span class="number">8388737</span>, <span class="number">1</span>, <span class="number">8320</span>, <span class="number">8388736</span>, <span class="number">8192</span>,</span><br><span class="line">			<span class="number">8396928</span>, <span class="number">8396929</span>, <span class="number">129</span>, <span class="number">8388736</span>, <span class="number">8388609</span>, <span class="number">8396800</span>, <span class="number">8396929</span>, <span class="number">129</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">8396800</span>, <span class="number">8320</span>, <span class="number">8388736</span>, <span class="number">8388737</span>,</span><br><span class="line">			<span class="number">1</span>, <span class="number">8396801</span>, <span class="number">8321</span>, <span class="number">8321</span>, <span class="number">128</span>, <span class="number">8396929</span>, <span class="number">129</span>, <span class="number">1</span>, <span class="number">8192</span>, <span class="number">8388609</span>, <span class="number">8193</span>, <span class="number">8396928</span>, <span class="number">8388737</span>, <span class="number">8193</span>, <span class="number">8320</span>,</span><br><span class="line">			<span class="number">8388608</span>, <span class="number">8396801</span>, <span class="number">128</span>, <span class="number">8388608</span>, <span class="number">8192</span>, <span class="number">8396928</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr7 = &#123; <span class="number">256</span>, <span class="number">34078976</span>, <span class="number">34078720</span>, <span class="number">1107296512</span>, <span class="number">524288</span>, <span class="number">256</span>, <span class="number">1073741824</span>, <span class="number">34078720</span>, <span class="number">1074266368</span>, <span class="number">524288</span>,</span><br><span class="line">			<span class="number">33554688</span>, <span class="number">1074266368</span>, <span class="number">1107296512</span>, <span class="number">1107820544</span>, <span class="number">524544</span>, <span class="number">1073741824</span>, <span class="number">33554432</span>, <span class="number">1074266112</span>, <span class="number">1074266112</span>, <span class="number">0</span>,</span><br><span class="line">			<span class="number">1073742080</span>, <span class="number">1107820800</span>, <span class="number">1107820800</span>, <span class="number">33554688</span>, <span class="number">1107820544</span>, <span class="number">1073742080</span>, <span class="number">0</span>, <span class="number">1107296256</span>, <span class="number">34078976</span>, <span class="number">33554432</span>,</span><br><span class="line">			<span class="number">1107296256</span>, <span class="number">524544</span>, <span class="number">524288</span>, <span class="number">1107296512</span>, <span class="number">256</span>, <span class="number">33554432</span>, <span class="number">1073741824</span>, <span class="number">34078720</span>, <span class="number">1107296512</span>, <span class="number">1074266368</span>,</span><br><span class="line">			<span class="number">33554688</span>, <span class="number">1073741824</span>, <span class="number">1107820544</span>, <span class="number">34078976</span>, <span class="number">1074266368</span>, <span class="number">256</span>, <span class="number">33554432</span>, <span class="number">1107820544</span>, <span class="number">1107820800</span>, <span class="number">524544</span>,</span><br><span class="line">			<span class="number">1107296256</span>, <span class="number">1107820800</span>, <span class="number">34078720</span>, <span class="number">0</span>, <span class="number">1074266112</span>, <span class="number">1107296256</span>, <span class="number">524544</span>, <span class="number">33554688</span>, <span class="number">1073742080</span>, <span class="number">524288</span>, <span class="number">0</span>,</span><br><span class="line">			<span class="number">1074266112</span>, <span class="number">34078976</span>, <span class="number">1073742080</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr8 = &#123; <span class="number">536870928</span>, <span class="number">541065216</span>, <span class="number">16384</span>, <span class="number">541081616</span>, <span class="number">541065216</span>, <span class="number">16</span>, <span class="number">541081616</span>, <span class="number">4194304</span>, <span class="number">536887296</span>, <span class="number">4210704</span>,</span><br><span class="line">			<span class="number">4194304</span>, <span class="number">536870928</span>, <span class="number">4194320</span>, <span class="number">536887296</span>, <span class="number">536870912</span>, <span class="number">16400</span>, <span class="number">0</span>, <span class="number">4194320</span>, <span class="number">536887312</span>, <span class="number">16384</span>, <span class="number">4210688</span>,</span><br><span class="line">			<span class="number">536887312</span>, <span class="number">16</span>, <span class="number">541065232</span>, <span class="number">541065232</span>, <span class="number">0</span>, <span class="number">4210704</span>, <span class="number">541081600</span>, <span class="number">16400</span>, <span class="number">4210688</span>, <span class="number">541081600</span>, <span class="number">536870912</span>,</span><br><span class="line">			<span class="number">536887296</span>, <span class="number">16</span>, <span class="number">541065232</span>, <span class="number">4210688</span>, <span class="number">541081616</span>, <span class="number">4194304</span>, <span class="number">16400</span>, <span class="number">536870928</span>, <span class="number">4194304</span>, <span class="number">536887296</span>, <span class="number">536870912</span>,</span><br><span class="line">			<span class="number">16400</span>, <span class="number">536870928</span>, <span class="number">541081616</span>, <span class="number">4210688</span>, <span class="number">541065216</span>, <span class="number">4210704</span>, <span class="number">541081600</span>, <span class="number">0</span>, <span class="number">541065232</span>, <span class="number">16</span>, <span class="number">16384</span>, <span class="number">541065216</span>,</span><br><span class="line">			<span class="number">4210704</span>, <span class="number">16384</span>, <span class="number">4194320</span>, <span class="number">536887312</span>, <span class="number">0</span>, <span class="number">541081600</span>, <span class="number">536870912</span>, <span class="number">4194320</span>, <span class="number">536887312</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr9 = &#123; <span class="number">2097152</span>, <span class="number">69206018</span>, <span class="number">67110914</span>, <span class="number">0</span>, <span class="number">2048</span>, <span class="number">67110914</span>, <span class="number">2099202</span>, <span class="number">69208064</span>, <span class="number">69208066</span>, <span class="number">2097152</span>, <span class="number">0</span>,</span><br><span class="line">			<span class="number">67108866</span>, <span class="number">2</span>, <span class="number">67108864</span>, <span class="number">69206018</span>, <span class="number">2050</span>, <span class="number">67110912</span>, <span class="number">2099202</span>, <span class="number">2097154</span>, <span class="number">67110912</span>, <span class="number">67108866</span>, <span class="number">69206016</span>,</span><br><span class="line">			<span class="number">69208064</span>, <span class="number">2097154</span>, <span class="number">69206016</span>, <span class="number">2048</span>, <span class="number">2050</span>, <span class="number">69208066</span>, <span class="number">2099200</span>, <span class="number">2</span>, <span class="number">67108864</span>, <span class="number">2099200</span>, <span class="number">67108864</span>, <span class="number">2099200</span>,</span><br><span class="line">			<span class="number">2097152</span>, <span class="number">67110914</span>, <span class="number">67110914</span>, <span class="number">69206018</span>, <span class="number">69206018</span>, <span class="number">2</span>, <span class="number">2097154</span>, <span class="number">67108864</span>, <span class="number">67110912</span>, <span class="number">2097152</span>, <span class="number">69208064</span>,</span><br><span class="line">			<span class="number">2050</span>, <span class="number">2099202</span>, <span class="number">69208064</span>, <span class="number">2050</span>, <span class="number">67108866</span>, <span class="number">69208066</span>, <span class="number">69206016</span>, <span class="number">2099200</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">69208066</span>, <span class="number">0</span>, <span class="number">2099202</span>,</span><br><span class="line">			<span class="number">69206016</span>, <span class="number">2048</span>, <span class="number">67108866</span>, <span class="number">67110912</span>, <span class="number">2048</span>, <span class="number">2097154</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span>[] constantArr10 = &#123; <span class="number">268439616</span>, <span class="number">4096</span>, <span class="number">262144</span>, <span class="number">268701760</span>, <span class="number">268435456</span>, <span class="number">268439616</span>, <span class="number">64</span>, <span class="number">268435456</span>, <span class="number">262208</span>, <span class="number">268697600</span>,</span><br><span class="line">			<span class="number">268701760</span>, <span class="number">266240</span>, <span class="number">268701696</span>, <span class="number">266304</span>, <span class="number">4096</span>, <span class="number">64</span>, <span class="number">268697600</span>, <span class="number">268435520</span>, <span class="number">268439552</span>, <span class="number">4160</span>, <span class="number">266240</span>, <span class="number">262208</span>,</span><br><span class="line">			<span class="number">268697664</span>, <span class="number">268701696</span>, <span class="number">4160</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">268697664</span>, <span class="number">268435520</span>, <span class="number">268439552</span>, <span class="number">266304</span>, <span class="number">262144</span>, <span class="number">266304</span>, <span class="number">262144</span>,</span><br><span class="line">			<span class="number">268701696</span>, <span class="number">4096</span>, <span class="number">64</span>, <span class="number">268697664</span>, <span class="number">4096</span>, <span class="number">266304</span>, <span class="number">268439552</span>, <span class="number">64</span>, <span class="number">268435520</span>, <span class="number">268697600</span>, <span class="number">268697664</span>, <span class="number">268435456</span>,</span><br><span class="line">			<span class="number">262144</span>, <span class="number">268439616</span>, <span class="number">0</span>, <span class="number">268701760</span>, <span class="number">262208</span>, <span class="number">268435520</span>, <span class="number">268697600</span>, <span class="number">268439552</span>, <span class="number">268439616</span>, <span class="number">0</span>, <span class="number">268701760</span>,</span><br><span class="line">			<span class="number">266240</span>, <span class="number">266240</span>, <span class="number">4160</span>, <span class="number">4160</span>, <span class="number">262208</span>, <span class="number">268435456</span>, <span class="number">268701696</span> &#125;;</span><br><span class="line">	<span class="keyword">int</span> flagLen = flagcp.length;</span><br><span class="line">	<span class="keyword">int</span> var72 = flagLen % <span class="number">8</span>;</span><br><span class="line">	<span class="keyword">if</span> (var72 != <span class="number">0</span>) &#123;</span><br><span class="line">		System.out.println(<span class="string">"try again"</span>);</span><br><span class="line">		System.exit(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	var72 = <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">int</span>[] var21 = <span class="keyword">new</span> <span class="keyword">int</span>[var72];</span><br><span class="line">	<span class="keyword">byte</span>[] var22 = <span class="keyword">new</span> <span class="keyword">byte</span>[flagLen];</span><br><span class="line">	<span class="keyword">int</span> var23 = flagLen / <span class="number">8</span>; <span class="comment">//2</span></span><br><span class="line">	<span class="keyword">int</span> var24 = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span> (var24 &lt; var23) &#123;</span><br><span class="line">		<span class="keyword">int</span> var25 = var24 * <span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> var26 = <span class="number">0</span>;</span><br><span class="line">		<span class="comment">//二进制&#123;flag[0]flag[1]flag[2]flag[3]&#125;构成var21[0]</span></span><br><span class="line">		<span class="comment">//二进制&#123;flag[4]flag[5]flag[6]flag[7]&#125;构成var21[1]</span></span><br><span class="line">		<span class="keyword">while</span> (var26 &lt; <span class="number">2</span>) &#123;</span><br><span class="line">			var21[var26] = ((flagcp[(var25 + var26 * <span class="number">4</span>)] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">24</span></span><br><span class="line">					| (flagcp[(var25 + var26 * <span class="number">4</span> + <span class="number">1</span>)] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">16</span> | (flagcp[(var25 + var26 * <span class="number">4</span> + <span class="number">2</span>)] &amp; <span class="number">0xFF</span>) &lt;&lt; <span class="number">8</span></span><br><span class="line">					| flagcp[(var25 + var26 * <span class="number">4</span> + <span class="number">3</span>)] &amp; <span class="number">0xFF</span>);</span><br><span class="line">			var26++;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span> var31 = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">int</span> var29 = var21[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">int</span> var28 = var21[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> var27 = (var29 &gt;&gt;&gt; <span class="number">4</span> ^ var28) &amp; <span class="number">0xF0F0F0F</span>;</span><br><span class="line">		var28 ^= var27;</span><br><span class="line">		var29 ^= var27 &lt;&lt; <span class="number">4</span>;</span><br><span class="line">		var27 = (var29 &gt;&gt;&gt; <span class="number">16</span> ^ var28) &amp; <span class="number">0xFFFF</span>;</span><br><span class="line">		var28 ^= var27;</span><br><span class="line">		var29 ^= var27 &lt;&lt; <span class="number">16</span>;</span><br><span class="line">		var27 = (var28 &gt;&gt;&gt; <span class="number">2</span> ^ var29) &amp; <span class="number">0x33333333</span>;</span><br><span class="line">		var29 ^= var27;</span><br><span class="line">		var28 ^= var27 &lt;&lt; <span class="number">2</span>;</span><br><span class="line">		var27 = (var28 &gt;&gt;&gt; <span class="number">8</span> ^ var29) &amp; <span class="number">0xFF00FF</span>;</span><br><span class="line">		var29 ^= var27;</span><br><span class="line">		var28 ^= var27 &lt;&lt; <span class="number">8</span>;</span><br><span class="line">		var28 = var28 &lt;&lt; <span class="number">1</span> | var28 &gt;&gt;&gt; <span class="number">31</span> &amp; <span class="number">0x1</span>;</span><br><span class="line">		var27 = (var29 ^ var28) &amp; <span class="number">0xAAAAAAAA</span>;</span><br><span class="line">		var29 ^= var27;</span><br><span class="line">		var28 ^= var27;</span><br><span class="line">		var29 = var29 &lt;&lt; <span class="number">1</span> | var29 &gt;&gt;&gt; <span class="number">31</span> &amp; <span class="number">0x1</span>;</span><br><span class="line">		<span class="keyword">int</span> var30 = <span class="number">0</span>;</span><br><span class="line">		<span class="keyword">while</span> (var30 &lt; <span class="number">8</span>) &#123;</span><br><span class="line">			var27 = var28 &lt;&lt; <span class="number">28</span> | var28 &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">			var27 ^= mergeBInt[(var31++)];</span><br><span class="line">			var26 = constantArr9[(var27 &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr7[(var27 &gt;&gt;&gt; <span class="number">8</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr5[(var27 &gt;&gt;&gt; <span class="number">16</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr3[(var27 &gt;&gt;&gt; <span class="number">24</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var27 = var28 ^ mergeBInt[(var31++)];</span><br><span class="line">			var26 |= constantArr10[(var27 &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr8[(var27 &gt;&gt;&gt; <span class="number">8</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr6[(var27 &gt;&gt;&gt; <span class="number">16</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr4[(var27 &gt;&gt;&gt; <span class="number">24</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var29 ^= var26;</span><br><span class="line">			var27 = var29 &lt;&lt; <span class="number">28</span> | var29 &gt;&gt;&gt; <span class="number">4</span>;</span><br><span class="line">			var27 ^= mergeBInt[(var31++)];</span><br><span class="line">			var26 = constantArr9[(var27 &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr7[(var27 &gt;&gt;&gt; <span class="number">8</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr5[(var27 &gt;&gt;&gt; <span class="number">16</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr3[(var27 &gt;&gt;&gt; <span class="number">24</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var27 = var29 ^ mergeBInt[(var31++)];</span><br><span class="line">			var26 |= constantArr10[(var27 &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr8[(var27 &gt;&gt;&gt; <span class="number">8</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr6[(var27 &gt;&gt;&gt; <span class="number">16</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var26 |= constantArr4[(var27 &gt;&gt;&gt; <span class="number">24</span> &amp; <span class="number">0x3F</span>)];</span><br><span class="line">			var28 ^= var26;</span><br><span class="line">			var30++;</span><br><span class="line">		&#125;</span><br><span class="line">		var28 = var28 &lt;&lt; <span class="number">31</span> | var28 &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		var27 = (var29 ^ var28) &amp; <span class="number">0xAAAAAAAA</span>;</span><br><span class="line">		var29 ^= var27;</span><br><span class="line">		var28 ^= var27;</span><br><span class="line">		var29 = var29 &lt;&lt; <span class="number">31</span> | var29 &gt;&gt;&gt; <span class="number">1</span>;</span><br><span class="line">		var27 = (var29 &gt;&gt;&gt; <span class="number">8</span> ^ var28) &amp; <span class="number">0xFF00FF</span>;</span><br><span class="line">		var28 ^= var27;</span><br><span class="line">		var29 ^= var27 &lt;&lt; <span class="number">8</span>;</span><br><span class="line">		var27 = (var29 &gt;&gt;&gt; <span class="number">2</span> ^ var28) &amp; <span class="number">0x33333333</span>;</span><br><span class="line">		var28 ^= var27;</span><br><span class="line">		var29 ^= var27 &lt;&lt; <span class="number">2</span>;</span><br><span class="line">		var27 = (var28 &gt;&gt;&gt; <span class="number">16</span> ^ var29) &amp; <span class="number">0xFFFF</span>;</span><br><span class="line">		var29 ^= var27;</span><br><span class="line">		var28 ^= var27 &lt;&lt; <span class="number">16</span>;</span><br><span class="line">		var27 = (var28 &gt;&gt;&gt; <span class="number">4</span> ^ var29) &amp; <span class="number">0xF0F0F0F</span>;</span><br><span class="line">		var29 ^= var27;</span><br><span class="line">		var28 ^= var27 &lt;&lt; <span class="number">4</span>;</span><br><span class="line">		var21[<span class="number">0</span>] = var28;</span><br><span class="line">		var21[<span class="number">1</span>] = var29;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> var32 = var24 * <span class="number">8</span>;</span><br><span class="line">		<span class="keyword">int</span> var33 = <span class="number">0</span>;</span><br><span class="line">		<span class="comment">//var22[0]var22[1]var22[2]var22[3]由var21[0]拆解得，对应变换后的flag[0]flag[1]flag[2]flag[3]</span></span><br><span class="line">		<span class="keyword">while</span> (var33 &lt; <span class="number">2</span>) &#123;</span><br><span class="line">			var22[(var32 + var33 * <span class="number">4</span>)] = ((<span class="keyword">byte</span>) (var21[var33] &gt;&gt;&gt; <span class="number">24</span>));</span><br><span class="line">			var22[(var32 + var33 * <span class="number">4</span> + <span class="number">1</span>)] = ((<span class="keyword">byte</span>) (var21[var33] &gt;&gt;&gt; <span class="number">16</span>));</span><br><span class="line">			var22[(var32 + var33 * <span class="number">4</span> + <span class="number">2</span>)] = ((<span class="keyword">byte</span>) (var21[var33] &gt;&gt;&gt; <span class="number">8</span>));</span><br><span class="line">			var22[(var32 + var33 * <span class="number">4</span> + <span class="number">3</span>)] = ((<span class="keyword">byte</span>) var21[var33]);</span><br><span class="line">			var33++;</span><br><span class="line">		&#125;</span><br><span class="line">		var24++;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">byte</span> var66 = var22[(var22.length - <span class="number">1</span>)];</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> var22;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>自己反推太复杂了，猜测是某种加密的算法</p>
+<p>搜索关键的字符，发现这是<code>DESEngine的代码</code></p>
+<p>通过搜索得到的代码得知</p>
+<p>通过<code>generateWorkKey</code>获得秘钥，加密秘钥与解密秘钥的关系非常大</p>
+<p>秘钥为len = 32的int数组，其中</p>
+<p><code>decKey[i] = encKey[30-i], decKey[i+1] = encKey[30-i+1], i=0,2,4,6...14</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span>[] constantArr1 = &#123; <span class="number">943331329</span>, <span class="number">170788368</span>, <span class="number">1008414755</span>, <span class="number">187049985</span>, <span class="number">1010368540</span>, <span class="number">220604441</span>, <span class="number">940377620</span>, <span class="number">255209728</span>, <span class="number">689771012</span>, <span class="number">221709344</span>, <span class="number">957157408</span>, <span class="number">892536332</span>, <span class="number">722417666</span>, <span class="number">1026621720</span>, <span class="number">655302664</span>, <span class="number">890966315</span> &#125;;</span><br><span class="line">		<span class="keyword">int</span>[] constantArr2 = &#123; <span class="number">1847617210</span>, <span class="number">1994607775</span>, <span class="number">1906299266</span>, <span class="number">1443467998</span>, <span class="number">1753140052</span>, <span class="number">782026644</span>, <span class="number">743697037</span>, <span class="number">1500018807</span>, <span class="number">1015162722</span>, <span class="number">141403752</span>, <span class="number">1057274701</span>, <span class="number">1430471406</span>, <span class="number">921937966</span>, <span class="number">1419221067</span>, <span class="number">962664086</span>, <span class="number">2133607337</span> &#125;;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">			bInt[i] ^= constantArr2[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">int</span>[] mergeBInt = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">32</span>];</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">			mergeBInt[i] = constantArr1[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">			mergeBInt[(i + <span class="number">16</span>)] = bInt[i];</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//------add-------</span></span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">16</span>;i+=<span class="number">2</span>)&#123;</span><br><span class="line">			<span class="keyword">int</span> tmp = mergeBInt[<span class="number">30</span>-i];</span><br><span class="line">			mergeBInt[<span class="number">30</span>-i] = mergeBInt[i];</span><br><span class="line">			mergeBInt[i] = tmp;</span><br><span class="line">			</span><br><span class="line">			tmp = mergeBInt[<span class="number">30</span>-i+<span class="number">1</span>];</span><br><span class="line">			mergeBInt[<span class="number">30</span>-i+<span class="number">1</span>] = mergeBInt[i+<span class="number">1</span>];</span><br><span class="line">			mergeBInt[i+<span class="number">1</span>] = tmp;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//----add finish---</span></span><br></pre></td></tr></table></figure>
+<p>前面加入一段代码就能变为解密的函数</p>
+<p>这里还有点得注意的，因为在传进函数后有这么一段</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">16</span>; i++) &#123;</span><br><span class="line">	bInt[i] ^= constantArr2[i];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>所以输出的b数组是异或后的结果。</p>
+<p>解密时先异或回来再传进函数解密</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, UnsupportedEncodingException </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> b[] = &#123;<span class="number">187632156</span>, <span class="number">874189824</span>, <span class="number">254150144</span>, <span class="number">924386310</span>, <span class="number">121057538</span>, <span class="number">840500228</span>, <span class="number">389160971</span>, <span class="number">907870729</span>, <span class="number">389426184</span>, <span class="number">973875457</span>, <span class="number">372376604</span>, <span class="number">707731490</span>, <span class="number">1043334948</span>, <span class="number">439222784</span>, <span class="number">876216579</span>, <span class="number">455999525</span>&#125;;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span>[] constantArr2 = &#123; <span class="number">1847617210</span>, <span class="number">1994607775</span>, <span class="number">1906299266</span>, <span class="number">1443467998</span>, <span class="number">1753140052</span>, <span class="number">782026644</span>, <span class="number">743697037</span>, <span class="number">1500018807</span>, <span class="number">1015162722</span>, <span class="number">141403752</span>, <span class="number">1057274701</span>, <span class="number">1430471406</span>, <span class="number">921937966</span>, <span class="number">1419221067</span>, <span class="number">962664086</span>, <span class="number">2133607337</span> &#125;;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;b.length;i++)&#123;</span><br><span class="line">		b[i] ^= constantArr2[i];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	String flag = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">byte</span>[] tFlag = &#123;<span class="number">16</span>, <span class="number">37</span>, -<span class="number">54</span>, -<span class="number">1</span>, -<span class="number">36</span>, -<span class="number">34</span>, -<span class="number">83</span>, -<span class="number">64</span>, <span class="number">39</span>, -<span class="number">112</span>, <span class="number">5</span>, -<span class="number">85</span>, <span class="number">61</span>, <span class="number">108</span>, -<span class="number">4</span>, <span class="number">13</span>, <span class="number">85</span>, -<span class="number">22</span>, -<span class="number">116</span>, -<span class="number">77</span>, <span class="number">31</span>, <span class="number">21</span>, -<span class="number">64</span>, <span class="number">13</span>, -<span class="number">86</span>, -<span class="number">48</span>, -<span class="number">86</span>, -<span class="number">115</span>, -<span class="number">28</span>, -<span class="number">82</span>, <span class="number">48</span>, -<span class="number">15</span> &#125;;</span><br><span class="line">	<span class="keyword">byte</span>[] result = <span class="keyword">null</span>;</span><br><span class="line">	<span class="keyword">try</span> &#123;</span><br><span class="line">		result = frsu.decode(tFlag, b);</span><br><span class="line">	&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">		<span class="comment">// TODO Auto-generated catch block</span></span><br><span class="line">		e.printStackTrace();</span><br><span class="line">	&#125;	</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;result.length;i++)&#123;</span><br><span class="line">		System.out.print(result[i] + <span class="string">", "</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	System.out.println();</span><br><span class="line">	</span><br><span class="line">	flag = <span class="keyword">new</span> String(result);</span><br><span class="line">	System.out.println(flag);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>即可跑出<code>3c5ab398eb3bcb8e829126f5ae60442b</code></p>
+<p>并验证成功</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">no passcode, no game</span><br><span class="line">code:mdzz</span><br><span class="line">ok, now give me flag</span><br><span class="line">flag:3c5ab398eb3bcb8e829126f5ae60442b</span><br><span class="line">pwnhub&#123;flag:3c5ab398eb3bcb8e829126f5ae60442b&#125;</span><br></pre></td></tr></table></figure>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>赞助gif换电脑、吃双皮奶(逃</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 giglf 的个人博客">giglf</a></p>
+        <p><span>发布时间:</span>2017年02月20日 - 19时44分</p>
+        <p><span>最后更新:</span>2017年11月22日 - 19时50分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/" title="pwnhub无用的电脑_丧心病狂_writeup">http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.2bsitcker.cn/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/02/21/NGfish_mini-lctf_writeup/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          NGfish_mini-lctf_writeup
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/17/各种编码区别及内存映射/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">各种编码区别及内存映射</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <!-- 来必力City版安装代码 -->
+        <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTEzNi83Njg1">
+            <script type="text/javascript">
+           (function(d, s) {
+               var j, e = d.getElementsByTagName(s)[0];
+               if (typeof LivereTower === 'function') { return; }
+               j = d.createElement(s);
+               j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+               j.async = true;
+               e.parentNode.insertBefore(j, e);
+           })(document, 'script');
+            </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+        </div>
+        <!-- City版安装代码已完成 -->
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/02/21/NGfish_mini-lctf_writeup/" title="上一篇: NGfish_mini-lctf_writeup">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/02/17/各种编码区别及内存映射/" title="下一篇: 各种编码区别及内存映射">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/诈尸一下/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu克隆mac地址后连不上网/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity出题记录/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/编译小米3td内核记录/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/源码分析Android-so加载过程/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/记录一个Windows下Makefile的神坑/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-思路/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android签名原理介绍（2）-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android签名原理介绍（1）--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/各种编码区别及内存映射/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu的apache2配置PHP不能运行问题/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/数据库坑之记录/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/汇编学习-nasm使用-调试/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf神奇的压缩文件/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/滴滴-学生卡/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP破解-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/全国大学生信息安全竞赛初赛-对称密码1/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/全国大学生信息安全竞赛初赛_珍贵资料/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/两年了/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr四道Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014——最难的题目/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/一篇helloworld及些许说明/">一篇helloworld及些许说明</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 giglf
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >dalao到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 8;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-107314179-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?549394a97554b370d120d5a854f98672";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>NGfish_mini-lctf_writeup | giglf的盐缸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="WriteUp比赛完就写了= =结果我拖到现在才整理发上来mini-lctf是校内入门赛啊……真正的dalao们都出题去了，没有参加，于是给我单挑打了个第五出来然而因为没有新生在队内所以不给我奖品咯[掀桌!]好歹我还ak了re和mobile！(虽然都是入门级的)好咯，不管你，post一下题目的打包链接: https://pan.baidu.com/s/1pKXa2rp 密码: gnbq">
+<meta name="keywords" content="mini-lctf">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NGfish_mini-lctf_writeup">
+<meta property="og:url" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/index.html">
+<meta property="og:site_name" content="giglf的盐缸">
+<meta property="og:description" content="WriteUp比赛完就写了= =结果我拖到现在才整理发上来mini-lctf是校内入门赛啊……真正的dalao们都出题去了，没有参加，于是给我单挑打了个第五出来然而因为没有新生在队内所以不给我奖品咯[掀桌!]好歹我还ak了re和mobile！(虽然都是入门级的)好咯，不管你，post一下题目的打包链接: https://pan.baidu.com/s/1pKXa2rp 密码: gnbq">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsrxova7qk.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/fix_zpswpeyzcbx.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsa3cnlzby.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsoqqw4x9u.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsdabqrlyk.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/2_zpswhckumuz.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpseqny3qrf.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zps10cjd4ei.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/2_zpsqvhs25em.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zps6fvp52ls.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/2_zpsw8zjzje5.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/3_zpsfzvmyesh.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/2_zpsdvysqafc.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/3_zpsxbnt8hs5.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsotlsyy0l.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/2_zpsymyo3nut.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/3_zps9emx6l1o.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsft4yihgp.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/2_zpsw8ig4y8g.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/3_zpsnjjgio1s.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsuyqxpzmu.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/2_zpshtql795o.jpg">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/3_zpswwklg0cu.jpg">
+<meta property="og:updated_time" content="2017-11-22T11:50:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NGfish_mini-lctf_writeup">
+<meta name="twitter:description" content="WriteUp比赛完就写了= =结果我拖到现在才整理发上来mini-lctf是校内入门赛啊……真正的dalao们都出题去了，没有参加，于是给我单挑打了个第五出来然而因为没有新生在队内所以不给我奖品咯[掀桌!]好歹我还ak了re和mobile！(虽然都是入门级的)好咯，不管你，post一下题目的打包链接: https://pan.baidu.com/s/1pKXa2rp 密码: gnbq">
+<meta name="twitter:image" content="http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/1_zpsrxova7qk.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="giglf的盐缸" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">giglf</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">让咸鱼更咸</p>
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives">文章</a></li>
+                        
+                            <li><a href="/tags">标签</a></li>
+                        
+                            <li><a href="/about">about</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Android/" style="font-size: 16.67px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so加载/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/全国大学生信息安全竞赛初赛/" style="font-size: 13.33px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/内核编译/" style="font-size: 10px;">内核编译</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/签名认证/" style="font-size: 13.33px;">签名认证</a> <a href="/tags/编码/" style="font-size: 10px;">编码</a> <a href="/tags/逆向/" style="font-size: 20px;">逆向</a> <a href="/tags/随便写写啦/" style="font-size: 20px;">随便写写啦</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/luuman/hexo-theme-spfk">spfk主题</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">我都不知道我是谁了，大概只是一条只想吃吃喝喝的咸鱼吧</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">giglf</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">giglf</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">让咸鱼更咸</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives">文章</a></li>
+                
+                    <li><a href="/tags">标签</a></li>
+                
+                    <li><a href="/about">about</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-NGfish_mini-lctf_writeup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/21/NGfish_mini-lctf_writeup/" class="article-date">
+      <time datetime="2017-02-21T06:44:17.000Z" itemprop="datePublished">2017-02-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NGfish_mini-lctf_writeup
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/WriteUp/">WriteUp</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mini-lctf/">mini-lctf</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>WriteUp比赛完就写了= =结果我拖到现在才整理发上来<br>mini-lctf是校内入门赛啊……<br>真正的dalao们都出题去了，没有参加，于是给我单挑打了个第五出来<br>然而因为没有新生在队内所以不给我奖品咯[掀桌!]<br>好歹我还ak了re和mobile！(虽然都是入门级的)<br>好咯，不管你，post一下题目的打包<br>链接: <a href="https://pan.baidu.com/s/1pKXa2rp" target="_blank" rel="noopener">https://pan.baidu.com/s/1pKXa2rp</a> 密码: gnbq</p>
+<a id="more"></a>
+<h2 id="Web-50-苏打学姐撞上碳酸钠了"><a href="#Web-50-苏打学姐撞上碳酸钠了" class="headerlink" title="Web 50 (苏打学姐撞上碳酸钠了)"></a>Web 50 (苏打学姐撞上碳酸钠了)</h2><p>能看到源码为</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sha1 conllision, Can you <span class="keyword">do</span> it&lt;!-- </span><br><span class="line">$key = <span class="string">"aa3OFF9m"</span>;</span><br><span class="line">$pass = <span class="keyword">isset</span>($_GET[<span class="string">'pass'</span>]) ? $_GET[<span class="string">'pass'</span>] : <span class="string">""</span>;</span><br><span class="line"><span class="keyword">if</span> ($pass != $key &amp;&amp; sha1($pass)==sha1($key) ) &#123;</span><br><span class="line">	<span class="keyword">echo</span> $flag;</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">	<span class="keyword">echo</span> <span class="string">"sha1 conllision&lt;/br&gt;"</span>;</span><br><span class="line">&#125; --&gt;</span><br></pre></td></tr></table></figure>
+<p>获得pass，与key=”aa30FF9m”的sha1值比较</p>
+<p>第一个想到的是sha1碰撞，试了下显然没什么效果，50分不应该很难</p>
+<p>后来谷狗搜了下key的sha1值，发现了这个神奇的github</p>
+<p><a href="https://github.com/spaze/hashes" target="_blank" rel="noopener">https://github.com/spaze/hashes</a></p>
+<p>这个是php的问题了额</p>
+<p>挑了个输入，得到flag</p>
+<p><code>LCTF{conllision_is_so_difficult}</code></p>
+<p>然后web就基本都不会做了= =</p>
+<h2 id="Misc-20-回转十三位"><a href="#Misc-20-回转十三位" class="headerlink" title="Misc 20 (回转十三位)"></a>Misc 20 (回转十三位)</h2><p>后面接着4个等号，base32编码，加上回转13位，想到ROT13，得到flag</p>
+<h2 id="Misc20-Easy"><a href="#Misc20-Easy" class="headerlink" title="Misc20 (Easy)"></a>Misc20 (Easy)</h2><p>密文是<code>LbbeCaarT3r}Fer{_i</code></p>
+<p>典型栅栏密码</p>
+<h2 id="Misc60-Document"><a href="#Misc60-Document" class="headerlink" title="Misc60 (Document)"></a>Misc60 (Document)</h2><p>解压出来后用binwalk跑了下，发现了一堆隐藏的文件</p>
+<p>直接后缀名改成.zip，是个压缩包</p>
+<p>直接就在子文件夹中找到flag了</p>
+<h2 id="Misc100-Noisy"><a href="#Misc100-Noisy" class="headerlink" title="Misc100 (Noisy)"></a>Misc100 (Noisy)</h2><p>下载文件名是wav，音频文件嘛……后缀名改成.wmv，听一下是一段噪音</p>
+<p>下了个Audacity分析，瞎搞一下</p>
+<p>发现转成频谱图的时候</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpsrxova7qk.jpg" alt="捕获"></p>
+<p>噢草，厉害了！</p>
+<h2 id="Misc150-Sword-Art-Online"><a href="#Misc150-Sword-Art-Online" class="headerlink" title="Misc150 (Sword Art Online)"></a>Misc150 (Sword Art Online)</h2><p>一个txt文件，打开发现全是<code>255, 255, 255</code></p>
+<p>然后中间还夹杂着一些别的数据</p>
+<p>第一反应就是RGB数据咯，统计了下共1080*1080组数据</p>
+<p>写了个脚本复原一下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#-*-coding:utf-8-*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image, ImageDraw</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">width = <span class="number">1080</span></span><br><span class="line">height = <span class="number">1080</span></span><br><span class="line"></span><br><span class="line">image = Image.new(<span class="string">'RGB'</span>, (width, height))</span><br><span class="line"></span><br><span class="line">colorfd = open(<span class="string">'wtf.txt'</span>,<span class="string">'r'</span>)</span><br><span class="line"></span><br><span class="line">draw = ImageDraw.Draw(image)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> range(width):</span><br><span class="line">	<span class="keyword">for</span> y <span class="keyword">in</span> range(height):</span><br><span class="line">		s = colorfd.readline()</span><br><span class="line">		<span class="keyword">if</span> x%<span class="number">4</span>==<span class="number">1</span>:</span><br><span class="line">			y1 = (y+<span class="number">270</span>)%<span class="number">1080</span></span><br><span class="line">		<span class="keyword">elif</span> x%<span class="number">4</span>==<span class="number">2</span>:</span><br><span class="line">			y1 = (y+<span class="number">540</span>)%<span class="number">1080</span></span><br><span class="line">		<span class="keyword">elif</span> x%<span class="number">4</span>==<span class="number">3</span>:</span><br><span class="line">			y1 = (y+<span class="number">810</span>)%<span class="number">1080</span></span><br><span class="line">		<span class="keyword">else</span>:</span><br><span class="line">			y1 = y</span><br><span class="line">		num = s.split(<span class="string">', '</span>)</span><br><span class="line">		draw.point((x,y1), fill=(int(num[<span class="number">0</span>]), int(num[<span class="number">1</span>]), int(num[<span class="number">2</span>])))</span><br><span class="line"></span><br><span class="line">image.save(<span class="string">'fix.jpg'</span>,<span class="string">'jpeg'</span>)</span><br></pre></td></tr></table></figure>
+<p>当中一些点的排序有问题，导致图分成了四个部分= = (事实上是我错估了分辨率)</p>
+<p>随意魔改了下脚本，虽然还是有问题，但是已经勉强能看出flag了2333333</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/fix_zpswpeyzcbx.jpg" alt="fix"></p>
+<p><code>LCTF{C0ngratulation_y0u_g0t_1t}</code></p>
+<p>Misc玩完了……时间不够不想继续尝试了T_T</p>
+<h2 id="Pwn20"><a href="#Pwn20" class="headerlink" title="Pwn20"></a>Pwn20</h2><p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpsa3cnlzby.jpg" alt="捕获"></p>
+<p>这个，gdb调试能发现，写v2时直接溢出就能覆盖到v3，v3只要为非0就是true了</p>
+<p>直接输入长点瞎搞一下就出来了……</p>
+<h2 id="Pwn80"><a href="#Pwn80" class="headerlink" title="Pwn80"></a>Pwn80</h2><p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpsoqqw4x9u.jpg" alt="捕获"></p>
+<p>同样，输入能覆盖到v2、v3，0x63 0x65这些还都是正常的字符， 不需要用python构造输入</p>
+<p>gdb调试时确定下相关位置就稳了</p>
+<p>pwn基本没怎么接触过，shellcode还不会写T_T</p>
+<p>狗带吧！</p>
+<h2 id="Mobile20-Log"><a href="#Mobile20-Log" class="headerlink" title="Mobile20 (Log)"></a>Mobile20 (Log)</h2><p>题目都说着Log了……</p>
+<p>然后我直接反编译看了下代码</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpsdabqrlyk.jpg" alt="1"></p>
+<p>log的数据写到了jni里，这么正常思维就是连上真机/虚拟机调试DDMS看log出来的flag</p>
+<p>然后咸鱼如我直接ida了一下lib包……(才20分怎么可能写得很复杂嘛！)</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/2_zpswhckumuz.jpg" alt="2"></p>
+<p>然后就出来了呗</p>
+<h2 id="Mobile50-Base"><a href="#Mobile50-Base" class="headerlink" title="Mobile50 (Base)"></a>Mobile50 (Base)</h2><p>说实话这题我不知道考点在哪……代码混淆吗……</p>
+<p>毕竟也就50分</p>
+<p>就是这段代码</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpseqny3qrf.jpg" alt="1"></p>
+<p>检测是否调试器链接，然后toast输出flag</p>
+<p>懵逼了很久……后来我甚至发现了那算法就是base32阿噗</p>
+<p>流程就是把写死在程序里的key base32变换一下输出，key转换一下顺序再base32 一下输出</p>
+<p>结果就是直接装上真机，按一下按钮flag就出来了……</p>
+<h2 id="Mobile100-Smali"><a href="#Mobile100-Smali" class="headerlink" title="Mobile100 (Smali)"></a>Mobile100 (Smali)</h2><p>下载下来就是一个Smali代码</p>
+<p>而且是经过一定的处理，不能用Smali2Java之类的工具转换成java代码</p>
+<p>那么就直接阅读吧（真棒！！！刚好给我练一下阅读smali代码！）</p>
+<p>smali代码指令可以到这查询</p>
+<p><a href="http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html" target="_blank" rel="noopener">http://pallergabor.uw.hu/androidblog/dalvik_opcodes.html</a></p>
+<p>很关键的几个字符串<code>AES/ECB/PKCS5Padding</code> <code>MD5</code></p>
+<p>最终结果是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">00000080  const-string        v6, &quot;falg&quot;</span><br><span class="line">00000084  invoke-static       Log-&gt;d(String, String)I, v6, v4</span><br></pre></td></tr></table></figure>
+<p>Log输出flag（唔，为什么是falg）</p>
+<p>代码不长，大致流程就是</p>
+<p>字符串<code>this_is_your_key</code> ，传进Encrypt.handle()函数</p>
+<p>用这返回结果作为AES加密的秘钥，</p>
+<p>再用这返回结果调用AESEncrypt.Encryption()函数</p>
+<p>最后加密结果把byte转回为16进制String输出</p>
+<p>分析一下handle函数，其实就是把奇数位和偶数位的字符交换一下</p>
+<p>由此复原函数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.io.UnsupportedEncodingException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Learn</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">handle</span><span class="params">(String key)</span> <span class="keyword">throws</span> UnsupportedEncodingException</span>&#123;</span><br><span class="line">		StringBuilder stringBuilder = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;key.length();i+=<span class="number">2</span>)&#123;</span><br><span class="line">			stringBuilder.append(key.charAt(i+<span class="number">1</span>));</span><br><span class="line">			stringBuilder.append(key.charAt(i));</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> stringBuilder.toString();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		String key = <span class="string">"this_is_your_key"</span>;</span><br><span class="line">		String keyChange = handle(key);</span><br><span class="line">		System.out.println(keyChange);</span><br><span class="line">		CryptoTools cipher = <span class="keyword">new</span> CryptoTools(keyChange.getBytes());</span><br><span class="line">		<span class="keyword">byte</span>[] result = cipher.aesEncryptData(keyChange.getBytes());</span><br><span class="line">		System.out.println(CryptoTools.byte2HexString(result));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中CryptoTools是自己写好的相应的AES加密的类</p>
+<p>跑一下出结果</p>
+<p><code>184b4e1bc353510f7841bb126d94259449055ef296e3b665dac507032e4c01e1</code></p>
+<p>值得一提的是，在初始化秘钥的函数有点混淆的地方</p>
+<p>就是当传入秘钥参数为空时会把空字符串求MD5作为秘钥，这是库中的一点处理，正常是空字符串求不了的吧……</p>
+<p>刚开始还在这卡了点时间，怎么能如此的不熟练</p>
+<p>然后就是眼瞎把最后加密用的字符串或秘钥各种看错，把key换成keyChange、keyChange换成key啥的阿噗，ctf真是个考验眼睛的比赛</p>
+<p>估计是考虑到科普向，mobile的题就这三题（这才是我主场啊喂）</p>
+<p>不过，我也蜜汁ak了re红红火火恍恍惚惚</p>
+<h2 id="Re60"><a href="#Re60" class="headerlink" title="Re60"></a>Re60</h2><p>跑一下程序运行时让输入flag，正确就会输出对应的flag</p>
+<p>直接拖到ida用f5神器看一下</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zps10cjd4ei.jpg" alt="1"></p>
+<p>calLenEqual32，函数名说得挺清楚的</p>
+<p>然后进到里面也是一个很简单的判断，输入长度为32即返回5</p>
+<p>其中sub_3c4d函数就是很简单的一个strcmp函数，相等即返回5，输出flag</p>
+<p>所以关键就是在sub_3c4c函数中</p>
+<p>分析可知第一个参数是输入的字符串，第二个参数是内存中一段数据，第三个是结果</p>
+<p>进到该函数看</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/2_zpsqvhs25em.jpg" alt="2"></p>
+<p>在OD中调试能看到strupr是把字符串都转换为大写的函数</p>
+<p>iHenStrlenLow是数据字符串的长度，Gap那个很复杂，但input和bc2e（自己改的名）长度应该是相同的，所以都不用管。</p>
+<p>关键就是中间一段循环，调用的两个函数</p>
+<p>两个函数也很简单，判断输入大小跟64和9的关系，把输入的字符-55、-48或+55、+48</p>
+<p>我一开始写解密函数时还想着改写下这两个函数，仔细一看55+9=64，这两个函数时互补的</p>
+<p>在OD调试中看到硬编码的字符串，长度32，直接写。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">char</span> str[] = <span class="string">"bc2e0d7f253d7fff9f9d56053d051f0b"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">fun</span><span class="params">(<span class="keyword">char</span> in)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> in&lt;=<span class="number">64</span>? in<span class="number">-48</span> : in<span class="number">-55</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span> <span class="title">fun2</span><span class="params">(<span class="keyword">char</span> in)</span></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> in&lt;=<span class="number">9</span>? in+<span class="number">48</span> : in+<span class="number">55</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">toUpper</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">		str[i] = <span class="built_in">toupper</span>(str[i]);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//char rel[] = "17500E5A4DCC77B3475ADD736DAB2FB4";</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> result2[<span class="number">32</span>];</span><br><span class="line">	<span class="comment">//char result[32];</span></span><br><span class="line">	<span class="comment">//char input[] = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";</span></span><br><span class="line">	toUpper();</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">char</span> tmp;</span><br><span class="line">		rel[i] = fun(rel[i]);</span><br><span class="line">		tmp = rel[i] ^ fun(str[i]);</span><br><span class="line">		result2[i] = fun2(tmp);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// for(int i=0;i&lt;32;i++)&#123;</span></span><br><span class="line">	<span class="comment">// 	char tmp = fun(input[i]);</span></span><br><span class="line">	<span class="comment">// 	result[i] = tmp ^ fun(str[i]);</span></span><br><span class="line">	<span class="comment">// 	result[i] = fun2(result[i]);</span></span><br><span class="line">	<span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">32</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">cout</span>&lt;&lt;result2[i];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">cout</span>&lt;&lt;<span class="built_in">endl</span>;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//input: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span></span><br><span class="line"><span class="comment">//result:17500E5A4DCC77B3475ADD736DAB2FB4</span></span><br></pre></td></tr></table></figure>
+<p>跑出来flag是<code>AB7E032568F1084CD8C78B7650AE30BF</code></p>
+<h2 id="Re100-Easy-GUI"><a href="#Re100-Easy-GUI" class="headerlink" title="Re100 (Easy GUI)"></a>Re100 (Easy GUI)</h2><p>windows下的gui逆向，输入正确的password</p>
+<p>一般来说有两种定位的思路，一是查找相应的字符串，二是在GetDlgItem这类获取控制句柄的winapi中下断点</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zps6fvp52ls.jpg" alt="1"></p>
+<p>这里字符串一下子看不到有用的信息，于是在GetDlgItem下断点，OD跑出来</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/2_zpsw8zjzje5.jpg" alt="2"></p>
+<p>然后就可以定位到关键函数了，这里发挥自己的想象瞎搞一波</p>
+<p>可以直接到ida相关地方f5</p>
+<p>也可以直接OD动态调试看寄存器</p>
+<p>像这样，稍微阅读汇编发现password长度为13</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/3_zpsfzvmyesh.jpg" alt="3"></p>
+<p>cmp地方下个断点，反复跑13次程序，就能骗出flag了，这样解密程序都不用写233333</p>
+<p>flag: <code>w1napi_1s_old</code></p>
+<h2 id="Re150-Easy-Linux"><a href="#Re150-Easy-Linux" class="headerlink" title="Re150 (Easy Linux)"></a>Re150 (Easy Linux)</h2><p>拖到linux中跑来看看</p>
+<p>结果发现data.dat文件不一起放过去的话是跑不动的</p>
+<p>所以可以猜想一部分代码在data.dat中</p>
+<p>然后拖进ida就发现了checkpassword函数</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/2_zpsdvysqafc.jpg" alt="2"></p>
+<p>非常简单的逻辑，跳转到secret的地方，获得13位数据</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/3_zpsxbnt8hs5.jpg" alt="3"></p>
+<p>写个程序跑一下就出来了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">char</span> str[] = &#123;<span class="number">0xFF</span>,<span class="number">0xA0</span>,<span class="number">0xAF</span>,<span class="number">0xFC</span>,<span class="number">0xA1</span>,<span class="number">0xA9</span>,<span class="number">0xFE</span>,<span class="number">0x80</span>,<span class="number">0xA5</span>,<span class="number">0xA2</span>,<span class="number">0xB9</span>,<span class="number">0xB4</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">13</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%c"</span>,str[i]^<span class="number">0xcc</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//W3lc0me2Linux</span></span><br></pre></td></tr></table></figure>
+<p>flag <code>W3lc0me2Linux</code></p>
+<h2 id="Re200-壶中的大银河-Easy"><a href="#Re200-壶中的大银河-Easy" class="headerlink" title="Re200 (壶中的大银河~Easy~)"></a>Re200 (壶中的大银河~Easy~)</h2><p>然后后面这几题就真的学到很多东西了</p>
+<p>这题提示着linux signal机制</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpsotlsyy0l.jpg" alt="1"></p>
+<p>ida看到main函数很简单，主要有alarm、pause函数</p>
+<p>注意在gdb调试中，默认alarm信号是不传进程序的，会导致程序阻塞在pause的地方</p>
+<p>学习了一轮signal机制，知道了这么一回事</p>
+<p>signal函数 void (*<em>signal</em>(int signo, void (*handler)(int)))(int);</p>
+<p>在接受到signo的信号后，会跳转到第二个参数（一个函数指针）去处理</p>
+<p>这里主程序是发出了alarm的信号</p>
+<p>ida中搜了一下signal，就能发现这个函数</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/2_zpsymyo3nut.jpg" alt="2"></p>
+<p>跳转到handler里面</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/3_zps9emx6l1o.jpg" alt="3"></p>
+<p>然后查看各个地址，0x8049B40中获得奇怪的字符串一个</p>
+<p>写个程序就跑出来了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> cmp[] = <span class="string">"8BVXznh]z^VXdAfC&#125;PgE"</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">char</span> rel[<span class="number">20</span>];</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">if</span>(i &amp; <span class="number">1</span>)&#123;</span><br><span class="line">			rel[i] = cmp[i] ^ rel[<span class="number">0</span>];</span><br><span class="line"> 		&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">			rel[i] = cmp[i] ^ <span class="number">9</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">20</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%c"</span>,rel[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>flag: <code>1s_is_also_important</code></p>
+<h2 id="Re250-蓬莱的玉枝"><a href="#Re250-蓬莱的玉枝" class="headerlink" title="Re250 (蓬莱的玉枝)"></a>Re250 (蓬莱的玉枝)</h2><p>也是一个winGUI</p>
+<p>跟之前同样道理，定位到关键函数，用ida查看</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpsft4yihgp.jpg" alt="1"></p>
+<p>这个函数非常简单！而且Seed是写死的，rand()每次运行程序都一样</p>
+<p>那么思路就是获得0x0041c010的数据，写个程序跑出来</p>
+<p>嗯……然后出来一堆奇怪的东西，所以这样不对吧</p>
+<p>然后用OD调试，发现长度27，到这里会有判断……</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/2_zpsw8ig4y8g.jpg" alt="2"></p>
+<p>又是累一点下个断点一次次跑然后出结果2333333</p>
+<p>后来再想其实那个程序为什么会不对呢，有可能在某个函数对那块空间处理了一下</p>
+<p>在OD中看那块地址空间果然跟原来的不一样了</p>
+<p>后来果然找到了那个函数</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/3_zpsnjjgio1s.jpg" alt="3"></p>
+<p>咦……IsDebuggerPresent()函数</p>
+<p>如果检测到在调试模式下变换出来的字符串是错误的</p>
+<p>结果我就发现……用OD调试时IsDebuggerPresent()函数返回的是非！厉害了OD</p>
+<p>同时用ida调试了一下，出来的是非0值，检测到在调试，再修改下程序，就跑出来了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="comment">//char ch[] = &#123;0x17,0x14,0xE7,0x83,0xA4,0x63,0xAC,0x91,0xCB,0xC5,0x42,0x4A,0x8B,0x5B,0x9D,0x93,5,0x98,0x20,0xB1,0x29,0xC1,0x8C,0x53,0x92,0x8D,0x36&#125;; //source</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">char</span> ch[] = &#123;<span class="number">0x12</span>,<span class="number">0x11</span>,<span class="number">0xE2</span>,<span class="number">0x86</span>,<span class="number">0xA1</span>,<span class="number">0x66</span>,<span class="number">0xA9</span>,<span class="number">0x94</span>,<span class="number">0xCE</span>,<span class="number">0xC0</span>,<span class="number">0x47</span>,<span class="number">0x4F</span>,<span class="number">0x8E</span>,<span class="number">0x5E</span>,<span class="number">0x98</span>,<span class="number">0x96</span>,<span class="number">0x9D</span>,<span class="number">0x00</span>,<span class="number">0x25</span>,<span class="number">0xB4</span>,<span class="number">0x2C</span>,<span class="number">0xC4</span>,<span class="number">0x89</span>,<span class="number">0x56</span>,<span class="number">0x97</span>,<span class="number">0x88</span>,<span class="number">0x33</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//char ch[] = &#123;0x1E,0x1D,0xEE,0x8A,0xAD,0x6A,0xA5,0x98,0xC2,0xCC,0x4B,0x43,0x82,0x52,0x94,0x9A,0x91,0x0C,0x29,0xB8,0x20,0xC8,0x85,0x5A,0x9B,0x84,0x3F&#125;; //wrong</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	srand(<span class="number">17</span>);</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">27</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%c"</span>,(ch[i] ^ (rand() % <span class="number">0xFF</span>u)));</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//LCTF&#123;learn_more_think_more&#125;</span></span><br></pre></td></tr></table></figure>
+<p><code>LCTF{learn_more_think_more}</code></p>
+<h2 id="Re350-永遠の春夢"><a href="#Re350-永遠の春夢" class="headerlink" title="Re350 (永遠の春夢)"></a>Re350 (永遠の春夢)</h2><p>嗯……做的时候提示还没出来</p>
+<p>分析出来后成就感满满的啊噢！</p>
+<p>这个比较麻烦我就直接用ida调试了，先看主操作函数</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/1_zpsuyqxpzmu.jpg" alt="1"></p>
+<p>关键就是在sub_401621函数中了</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/2_zpshtql795o.jpg" alt="2"></p>
+<p>刚开始就懵逼的发现前面有个异或的操作，后面有个a1(a4)这特么是个啥！</p>
+<p>然后再前面传入的第一个参数一直分不清到底是数据还是程序</p>
+<p>a2的长度刚好就是a1地址中数据的长度</p>
+<p>这时看看汇编代码</p>
+<p>看到一个call eax</p>
+<p><img src="/2017/02/21/NGfish_mini-lctf_writeup/3_zpswwklg0cu.jpg" alt="3"></p>
+<p>所以那就是个函数咯</p>
+<p>那前面异或？这是就想到动态自修改了</p>
+<p>调试中看到这段汇编代码，这个就用不了f5了，直接阅读吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">.text:00401584 push    ebp</span><br><span class="line">.text:00401584 sub_401584 endp ; sp-analysis failed</span><br><span class="line">.text:00401584</span><br><span class="line">.text:00401585 mov     ebp, esp</span><br><span class="line">.text:00401587 mov     eax, [ebp+8]</span><br><span class="line">.text:0040158A mov     eax, ds:dword_40EA40[eax*4]</span><br><span class="line">.text:00401591 shl     eax, 4</span><br><span class="line">.text:00401594 movzx   edx, al</span><br><span class="line">.text:00401597 mov     eax, [ebp+8]</span><br><span class="line">.text:0040159A mov     eax, ds:dword_40EA40[eax*4]</span><br><span class="line">.text:004015A1 shr     eax, 4</span><br><span class="line">.text:004015A4 and     eax, 0Fh</span><br><span class="line">.text:004015A7 or      eax, edx</span><br><span class="line">.text:004015A9 movzx   edx, al</span><br><span class="line">.text:004015AC mov     eax, [ebp+8]</span><br><span class="line">.text:004015AF mov     ds:dword_40EA40[eax*4], edx</span><br><span class="line">.text:004015B6 mov     eax, [ebp+8]</span><br><span class="line">.text:004015B9 mov     eax, dword_40A020[eax*4]</span><br><span class="line">.text:004015C0 lea     ecx, [eax+30h]</span><br><span class="line">.text:004015C3 mov     edx, 80808081h</span><br><span class="line">.text:004015C8 mov     eax, ecx</span><br><span class="line">.text:004015CA mul     edx</span><br><span class="line">.text:004015CC mov     eax, edx</span><br><span class="line">.text:004015CE shr     eax, 7</span><br><span class="line">.text:004015D1 mov     edx, eax</span><br><span class="line">.text:004015D3 shl     edx, 8</span><br><span class="line">.text:004015D6 sub     edx, eax</span><br><span class="line">.text:004015D8 mov     eax, ecx</span><br><span class="line">.text:004015DA sub     eax, edx</span><br><span class="line">.text:004015DC mov     edx, [ebp+8]</span><br><span class="line">.text:004015DF mov     dword_40A020[edx*4], eax</span><br><span class="line">.text:004015E6 mov     eax, 0</span><br><span class="line">.text:004015EB pop     ebp</span><br><span class="line">.text:004015EC retn</span><br></pre></td></tr></table></figure>
+<p>大致就是每次取ds:dword_40EA40的值中的8位字符数据低四位与高四位交换一下</p>
+<p>再把dword_40A020中的数据进行一点处理，这里似乎是取模？</p>
+<p>然后结合外部f5出来的代码可以猜想对输入字符串都进行这个操作了</p>
+<p>然后是第二个函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">.text:004015ED push    ebp                             ; DATA XREF: sub_4014C8+8Do</span><br><span class="line">.text:004015EE mov     ebp, esp</span><br><span class="line">.text:004015F0 sub     esp, 10h</span><br><span class="line">.text:004015F3 mov     eax, [ebp+8]</span><br><span class="line">.text:004015F6 mov     eax, ds:dword_40EA40[eax*4]</span><br><span class="line">.text:004015FD mov     [ebp-4], eax</span><br><span class="line">.text:00401600 xor     dword ptr [ebp-4], 55h</span><br><span class="line">.text:00401604 mov     eax, [ebp+8]</span><br><span class="line">.text:00401607 mov     eax, dword_40A020[eax*4]</span><br><span class="line">.text:0040160E cmp     eax, [ebp-4]</span><br><span class="line">.text:00401611 jz      short loc_40161A</span><br><span class="line">.text:00401613 mov     eax, 0</span><br><span class="line">.text:00401618 jmp     short locret_40161F</span><br></pre></td></tr></table></figure>
+<p>很简单的异或一下，然后比较</p>
+<p>所以就可以写程序跑了</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">int</span> chr[] = &#123;<span class="number">0x61</span>,<span class="number">0x31</span>,<span class="number">0xdf</span>,<span class="number">1</span>,<span class="number">0xb2</span>,<span class="number">0x30</span>,<span class="number">0x51</span>,<span class="number">0x31</span>,<span class="number">0x70</span>,<span class="number">0x93</span>,<span class="number">0x32</span>,<span class="number">0x70</span>,<span class="number">0xd2</span>,<span class="number">0xa2</span>,<span class="number">0x33</span>,<span class="number">0x93</span>,<span class="number">0xe1</span>,<span class="number">0xd2</span>,<span class="number">0xe2</span>,<span class="number">0x17</span>,<span class="number">0x52</span>&#125;;</span><br><span class="line"><span class="keyword">int</span> chr2[<span class="number">21</span>];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">21</span>;i++)&#123;</span><br><span class="line">		<span class="keyword">long</span> <span class="keyword">long</span> d1 = chr[i] + <span class="number">0x30</span>;</span><br><span class="line">		<span class="keyword">long</span> <span class="keyword">long</span> e1 = d1*<span class="number">0x80808081</span>;</span><br><span class="line">		<span class="keyword">long</span> <span class="keyword">long</span> e2 = e1&gt;&gt;<span class="number">32</span>;</span><br><span class="line">		e2 = e2&gt;&gt;<span class="number">7</span>;</span><br><span class="line">		<span class="keyword">long</span> <span class="keyword">long</span> e3 = e2&lt;&lt;<span class="number">8</span>;</span><br><span class="line"></span><br><span class="line">		chr2[i] = d1-(e3-e2);</span><br><span class="line">		chr2[i] = chr2[i]^<span class="number">0x55</span>;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">int</span> tmp = chr2[i];</span><br><span class="line">		<span class="keyword">int</span> tmp2 = (tmp&lt;&lt;<span class="number">4</span>) &amp; <span class="number">0xff</span>;<span class="comment">//获取低四位</span></span><br><span class="line">		<span class="keyword">int</span> tmp3 = (tmp&gt;&gt;<span class="number">4</span>) &amp; <span class="number">0xf</span>; <span class="comment">//获取高四位</span></span><br><span class="line">		chr2[i] = tmp2^tmp3;</span><br><span class="line"></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;<span class="number">21</span>;i++)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"%c"</span>,chr2[i]);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"\n"</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>因为前面没分析出来mul 0x80808081的作用，所以就直接强行模拟了</p>
+<p>后来看这结合上下代码似乎是一个取模的操作</p>
+<p>跑出来结果</p>
+<p><code>LCTF{SMC_is_excited!}</code></p>
+<p>Excited!</p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>赞助gif换电脑、吃双皮奶(逃</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 giglf 的个人博客">giglf</a></p>
+        <p><span>发布时间:</span>2017年02月21日 - 14时44分</p>
+        <p><span>最后更新:</span>2017年11月22日 - 19时50分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/02/21/NGfish_mini-lctf_writeup/" title="NGfish_mini-lctf_writeup">http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.2bsitcker.cn/2017/02/21/NGfish_mini-lctf_writeup/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/04/07/Android签名原理介绍（1）--schemev1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Android签名原理介绍（1）--schemev1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">pwnhub无用的电脑_丧心病狂_writeup</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Web-50-苏打学姐撞上碳酸钠了"><span class="toc-number">1.</span> <span class="toc-text">Web 50 (苏打学姐撞上碳酸钠了)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc-20-回转十三位"><span class="toc-number">2.</span> <span class="toc-text">Misc 20 (回转十三位)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc20-Easy"><span class="toc-number">3.</span> <span class="toc-text">Misc20 (Easy)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc60-Document"><span class="toc-number">4.</span> <span class="toc-text">Misc60 (Document)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc100-Noisy"><span class="toc-number">5.</span> <span class="toc-text">Misc100 (Noisy)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Misc150-Sword-Art-Online"><span class="toc-number">6.</span> <span class="toc-text">Misc150 (Sword Art Online)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn20"><span class="toc-number">7.</span> <span class="toc-text">Pwn20</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pwn80"><span class="toc-number">8.</span> <span class="toc-text">Pwn80</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mobile20-Log"><span class="toc-number">9.</span> <span class="toc-text">Mobile20 (Log)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mobile50-Base"><span class="toc-number">10.</span> <span class="toc-text">Mobile50 (Base)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mobile100-Smali"><span class="toc-number">11.</span> <span class="toc-text">Mobile100 (Smali)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Re60"><span class="toc-number">12.</span> <span class="toc-text">Re60</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Re100-Easy-GUI"><span class="toc-number">13.</span> <span class="toc-text">Re100 (Easy GUI)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Re150-Easy-Linux"><span class="toc-number">14.</span> <span class="toc-text">Re150 (Easy Linux)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Re200-壶中的大银河-Easy"><span class="toc-number">15.</span> <span class="toc-text">Re200 (壶中的大银河~Easy~)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Re250-蓬莱的玉枝"><span class="toc-number">16.</span> <span class="toc-text">Re250 (蓬莱的玉枝)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Re350-永遠の春夢"><span class="toc-number">17.</span> <span class="toc-text">Re350 (永遠の春夢)</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <!-- 来必力City版安装代码 -->
+        <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTEzNi83Njg1">
+            <script type="text/javascript">
+           (function(d, s) {
+               var j, e = d.getElementsByTagName(s)[0];
+               if (typeof LivereTower === 'function') { return; }
+               j = d.createElement(s);
+               j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+               j.async = true;
+               e.parentNode.insertBefore(j, e);
+           })(document, 'script');
+            </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+        </div>
+        <!-- City版安装代码已完成 -->
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/04/07/Android签名原理介绍（1）--schemev1/" title="上一篇: Android签名原理介绍（1）--schemev1">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/" title="下一篇: pwnhub无用的电脑_丧心病狂_writeup">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/诈尸一下/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu克隆mac地址后连不上网/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity出题记录/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/编译小米3td内核记录/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/源码分析Android-so加载过程/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/记录一个Windows下Makefile的神坑/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-思路/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android签名原理介绍（2）-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android签名原理介绍（1）--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/各种编码区别及内存映射/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu的apache2配置PHP不能运行问题/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/数据库坑之记录/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/汇编学习-nasm使用-调试/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf神奇的压缩文件/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/滴滴-学生卡/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP破解-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/全国大学生信息安全竞赛初赛-对称密码1/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/全国大学生信息安全竞赛初赛_珍贵资料/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/两年了/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr四道Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014——最难的题目/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/一篇helloworld及些许说明/">一篇helloworld及些许说明</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 giglf
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >dalao到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 8;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-107314179-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?549394a97554b370d120d5a854f98672";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

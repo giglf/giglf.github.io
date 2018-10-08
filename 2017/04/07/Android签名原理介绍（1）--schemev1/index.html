@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Android签名原理介绍（1）--schemev1 | giglf的盐缸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言因为某些不知名的原因，让我感觉很有必要学习一下apk签名的方式，于是。。。便有了这篇 （真的好久没写了哇，近期烦心事真的太多了） 我在网上搜了各种大大小小关于apk签名的文章，但始终没有能让我满意的，而且也感觉一直缺乏一篇能从字节上分析对比新旧两种签名方式的文章，so…… 传统的安卓签名方式是通过jar的签名方式实现的，在apk包下，会有一个META-INF的文件夹，META-INF的文件夹下">
+<meta name="keywords" content="Android,签名认证,scheme v1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android签名原理介绍（1）--schemev1">
+<meta property="og:url" content="http://blog.2bsitcker.cn/2017/04/07/Android签名原理介绍（1）--schemev1/index.html">
+<meta property="og:site_name" content="giglf的盐缸">
+<meta property="og:description" content="前言因为某些不知名的原因，让我感觉很有必要学习一下apk签名的方式，于是。。。便有了这篇 （真的好久没写了哇，近期烦心事真的太多了） 我在网上搜了各种大大小小关于apk签名的文章，但始终没有能让我满意的，而且也感觉一直缺乏一篇能从字节上分析对比新旧两种签名方式的文章，so…… 传统的安卓签名方式是通过jar的签名方式实现的，在apk包下，会有一个META-INF的文件夹，META-INF的文件夹下">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://blog.2bsitcker.cn/2017/04/07/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg">
+<meta property="og:updated_time" content="2017-11-22T11:51:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android签名原理介绍（1）--schemev1">
+<meta name="twitter:description" content="前言因为某些不知名的原因，让我感觉很有必要学习一下apk签名的方式，于是。。。便有了这篇 （真的好久没写了哇，近期烦心事真的太多了） 我在网上搜了各种大大小小关于apk签名的文章，但始终没有能让我满意的，而且也感觉一直缺乏一篇能从字节上分析对比新旧两种签名方式的文章，so…… 传统的安卓签名方式是通过jar的签名方式实现的，在apk包下，会有一个META-INF的文件夹，META-INF的文件夹下">
+<meta name="twitter:image" content="http://blog.2bsitcker.cn/2017/04/07/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="giglf的盐缸" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate">giglf</a></h1>
+        </hgroup>
+
+        
+        <p class="header-subtitle">让咸鱼更咸</p>
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives">文章</a></li>
+                        
+                            <li><a href="/tags">标签</a></li>
+                        
+                            <li><a href="/about">about</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Android/" style="font-size: 16.67px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so加载/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/全国大学生信息安全竞赛初赛/" style="font-size: 13.33px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/内核编译/" style="font-size: 10px;">内核编译</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/签名认证/" style="font-size: 13.33px;">签名认证</a> <a href="/tags/编码/" style="font-size: 10px;">编码</a> <a href="/tags/逆向/" style="font-size: 20px;">逆向</a> <a href="/tags/随便写写啦/" style="font-size: 20px;">随便写写啦</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/luuman/hexo-theme-spfk">spfk主题</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">我都不知道我是谁了，大概只是一条只想吃吃喝喝的咸鱼吧</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">giglf</a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me">giglf</a></h1>
+            </hgroup>
+            
+            <p class="header-subtitle">让咸鱼更咸</p>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives">文章</a></li>
+                
+                    <li><a href="/tags">标签</a></li>
+                
+                    <li><a href="/about">about</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Android签名原理介绍（1）--schemev1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/04/07/Android签名原理介绍（1）--schemev1/" class="article-date">
+      <time datetime="2017-04-07T15:48:25.000Z" itemprop="datePublished">2017-04-07</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android签名原理介绍（1）--schemev1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+    <div class="article-category tagcloud">
+    <a class="article-category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scheme-v1/">scheme v1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/签名认证/">签名认证</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因为某些不知名的原因，让我感觉很有必要学习一下apk签名的方式，于是。。。便有了这篇</p>
+<p>（真的好久没写了哇，近期烦心事真的太多了）</p>
+<p>我在网上搜了各种大大小小关于apk签名的文章，但始终没有能让我满意的，而且也感觉一直缺乏一篇能从字节上分析对比新旧两种签名方式的文章，so……</p>
+<p>传统的安卓签名方式是通过jar的签名方式实现的，在apk包下，会有一个<code>META-INF</code>的文件夹，META-INF的文件夹下，会有<code>MANIFEST.MF</code> <code>CERT.SF</code> <code>CERT.RSA</code>三个文件，均是用于apk签名认证的。</p>
+<p>而在Android7.0后，新增了一个APK Signature Scheme v2的签名方式，更为强效。而原来的签名方式则是 JAR-signed APK verification (v1 scheme)</p>
+<p>详细可看官方的文档 </p>
+<blockquote>
+<p><a href="https://source.android.com/security/apksigning/v2#v1-verification" target="_blank" rel="noopener">https://source.android.com/security/apksigning/v2#v1-verification</a></p>
+</blockquote>
+<a id="more"></a>
+<h2 id="JAR-signed-APK-verification-v1-scheme"><a href="#JAR-signed-APK-verification-v1-scheme" class="headerlink" title="JAR-signed APK verification (v1 scheme)"></a>JAR-signed APK verification (v1 scheme)</h2><p>分析一下原版的签名方式</p>
+<p>├─META-INF<br>│      CERT.RSA<br>│      CERT.SF<br>│      MANIFEST.MF</p>
+<p><code>MANIFEST.MF</code>：储存了apk底下除了META-INF文件夹外其余文件的SHA1后对应的base64的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Built-By: Generated-by-ADT</span><br><span class="line">Created-By: Android Gradle 2.3.0</span><br><span class="line"></span><br><span class="line">Name: res/anim/design_snackbar_in.xml</span><br><span class="line">SHA1-Digest: QPiYcwJRp7LvVEneHabhK9QbisA=</span><br><span class="line"></span><br><span class="line">Name: res/layout/design_text_input_password_icon.xml</span><br><span class="line">SHA1-Digest: jJEvq6P1Soe1bsUay8j+cdxWKGk=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-hdpi-v4/abc_list_longpressed_holo.9.png</span><br><span class="line">SHA1-Digest: KQunCQh0E4bP0utgN0cHdQr9OwA=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-xxhdpi-v4/abc_ic_star_half_black_16dp.png</span><br><span class="line">SHA1-Digest: EikVyBT5I7pmbJO2k8qF0V5hUc0=</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><code>CERT.SF</code>：在MAINFEST.MF文件的基础上，增加了对MANIFEST.MF的SHA1的值，并在base64编码后放到开头。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Signature-Version: 1.0</span><br><span class="line">SHA1-Digest-Manifest: rYILhq+GQ4rnRO9NeNUFTLzDiFs=</span><br><span class="line">Created-By: 1.0 (Android)</span><br><span class="line"></span><br><span class="line">Name: res/anim/design_snackbar_in.xml</span><br><span class="line">SHA1-Digest: QPiYcwJRp7LvVEneHabhK9QbisA=</span><br><span class="line"></span><br><span class="line">Name: res/layout/design_text_input_password_icon.xml</span><br><span class="line">SHA1-Digest: jJEvq6P1Soe1bsUay8j+cdxWKGk=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-hdpi-v4/abc_list_longpressed_holo.9.png</span><br><span class="line">SHA1-Digest: KQunCQh0E4bP0utgN0cHdQr9OwA=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-xxhdpi-v4/abc_ic_star_half_black_16dp.png</span><br><span class="line">SHA1-Digest: EikVyBT5I7pmbJO2k8qF0V5hUc0=</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p><code>CERT.RSA</code>：这个则是RSA证书文件了，文本文件打开肯定是乱码，我们可以通过openssl查看其信息。</p>
+<p>应该算挺标准的X509格式的证书吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">$ openssl pkcs7 -inform DER -in CERT.RSA -noout -print_certs -text</span><br><span class="line">Certificate:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 3 (0x2)</span><br><span class="line">        Serial Number: 2064162882 (0x7b08a042)</span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">        Issuer: OU=gifish, CN=lin.giglf</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Feb 28 14:20:15 2017 GMT</span><br><span class="line">            Not After : Feb 22 14:20:15 2042 GMT</span><br><span class="line">        Subject: OU=gifish, CN=lin.giglf</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: rsaEncryption</span><br><span class="line">                Public-Key: (2048 bit)</span><br><span class="line">                Modulus:</span><br><span class="line">                    00:af:8a:df:e1:7f:70:b4:97:85:71:1b:ca:b8:9e:</span><br><span class="line">                    48:80:7a:4e:10:5a:a7:d7:aa:85:3a:7c:0a:99:42:</span><br><span class="line">                    ec:db:01:d7:28:ad:69:72:04:e6:9e:f3:0a:56:30:</span><br><span class="line">                    f1:d8:1e:8b:bd:d9:94:2e:ac:b0:64:83:71:89:24:</span><br><span class="line">                    e4:8e:63:f1:24:7f:73:d7:e4:48:d6:82:11:f6:9c:</span><br><span class="line">                    1f:de:4a:22:52:f1:b3:7b:0b:7a:01:09:fc:8e:36:</span><br><span class="line">                    85:2c:79:b3:25:60:93:aa:61:d2:d4:7c:e1:ab:70:</span><br><span class="line">                    40:5b:bb:cd:30:9a:cd:40:89:df:8d:73:25:87:ce:</span><br><span class="line">                    49:1e:63:42:47:d7:f4:66:40:56:db:67:6b:89:b2:</span><br><span class="line">                    4f:8e:9f:4a:f3:04:f4:40:58:02:83:c0:81:0b:5e:</span><br><span class="line">                    79:e6:d3:7f:3b:32:22:47:ed:f2:42:1f:7c:94:41:</span><br><span class="line">                    b1:d2:4b:f7:df:d0:61:68:1f:74:60:07:56:05:e4:</span><br><span class="line">                    44:27:5d:15:24:66:02:3e:51:06:7b:13:9c:f1:31:</span><br><span class="line">                    f3:15:39:6f:de:22:27:44:f9:3a:42:59:c8:20:f4:</span><br><span class="line">                    41:5a:4e:36:b0:8e:25:eb:a4:a8:72:01:e6:81:56:</span><br><span class="line">                    86:67:01:e5:bd:43:28:99:14:57:90:ff:b3:e9:f5:</span><br><span class="line">                    c6:85:d7:36:cb:05:c0:31:c6:b0:f5:b9:ec:54:ae:</span><br><span class="line">                    83:85</span><br><span class="line">                Exponent: 65537 (0x10001)</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Subject Key Identifier:</span><br><span class="line">                30:06:A9:7C:68:78:A4:7A:50:52:4F:B6:75:DE:5D:88:86:AD:DD:4F</span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">         26:2b:cf:a3:fa:4d:81:c5:a7:37:6f:4a:95:2c:ba:f4:73:cc:</span><br><span class="line">         57:69:8c:0e:4e:07:ad:6a:df:9e:ad:c1:62:68:82:c9:89:35:</span><br><span class="line">         9f:17:32:4c:98:a3:f5:45:fb:54:75:8e:ea:74:5f:ad:b4:56:</span><br><span class="line">         c6:4c:c1:e9:f0:c5:0d:12:37:b1:83:35:16:af:de:43:e7:1b:</span><br><span class="line">         58:26:eb:86:c5:3c:da:88:6a:28:fa:65:cf:49:c6:ff:84:d7:</span><br><span class="line">         dd:1e:ad:3f:01:a0:4e:ae:52:a4:98:8f:4f:94:84:04:5f:93:</span><br><span class="line">         43:01:39:80:69:02:46:ac:bc:b4:12:f9:b2:fd:4b:ed:50:71:</span><br><span class="line">         cc:6d:1f:5f:5e:5d:e0:67:a2:a3:65:af:bf:e0:bd:26:8e:51:</span><br><span class="line">         56:d1:76:6a:e7:56:90:4e:aa:57:90:60:d0:47:38:3f:2f:9c:</span><br><span class="line">         38:01:e0:2d:4a:6c:9e:e5:5a:e5:33:fe:a6:46:f2:a9:03:ed:</span><br><span class="line">         28:2e:7a:de:e3:a8:33:3f:1c:3d:ca:eb:dd:7d:28:82:6f:2a:</span><br><span class="line">         b1:09:37:7f:b8:2c:59:75:e0:0c:2b:5f:87:9a:24:f3:2b:88:</span><br><span class="line">         5e:bb:71:60:51:d2:a4:68:c2:8f:ba:8e:46:3d:14:d9:21:13:</span><br><span class="line">         68:23:c0:f2:05:3a:21:5e:10:20:05:59:f9:06:33:9c:c4:7d:</span><br><span class="line">         95:91:ce:43</span><br></pre></td></tr></table></figure>
+<hr>
+<p>接着就结合源码看一看</p>
+<p>因为网上有关这部分的已经很多了，这里贴一个链接，我就不自己贴代码了</p>
+<blockquote>
+<p><a href="http://www.2cto.com/kf/201601/456020.html" target="_blank" rel="noopener">http://www.2cto.com/kf/201601/456020.html</a></p>
+</blockquote>
+<p>大致说一下其中的主要流程</p>
+<ol>
+<li>apk包安装，解压得到<code>META-INF</code>下的文件</li>
+<li>计算apk内所有文件的hash+base64的值，与<code>MANIFEST.MF</code>的内容进行比较，查看是否一致</li>
+<li>使用<code>CERT.RSA</code>证书文件(可以是<code>.DSA .RSA .EC</code>)校验签名文件<code>CERT.SF</code>文件，两个文件名称必须相同</li>
+<li>验证通过后，再用<code>CERT.SF</code>文件与<code>MANIFEST.MF</code>文件对比，确认没被篡改。</li>
+</ol>
+<p>这部分就这样被我咸鱼地搞了一天，说几点要点。</p>
+<ul>
+<li><p>刚开始我是结合android 7.1.1的源码看的，结果源码太多，里面各种自定义的类，看着没什么耐心，而且因为是7.0以上的源码，当中还结合了v2签名的代码，看着很复杂（主要是今天太懒没耐心）。后来就看<code>SignApk</code>这个工具的代码去了，路径是<code>build/tools/signapk/src/com/android/signapk/SignApk.java</code> 由于是一个签名工具，关键代码比较集中，比较容易理解。</p>
+</li>
+<li><p>刚开始的时候比较困惑，说的是用<code>CERT.RSA</code>校验签名文件<code>CERT.SF</code>，但是我在对比过<code>MANIFEST.MF</code>和<code>CERT.SF</code>后发现，这两个文件除了开头部分，后面是完全一样的，那么所谓的签名文件是什么意思？</p>
+<p>看过SignApk的代码后，我明白了。（因为代码网上都能找到讲解，我就直接说思路了）</p>
+<p>通过工具签名，其流程是这样的</p>
+<ol>
+<li>得到签名的信息，公钥、私钥等（可能包含多个签名）</li>
+<li>通过jar(zip/apk)的入口点（即包内的各个文件）计算出hash+base64的值，hash用的sha1还是sha256取决于安卓sdk的最低版本，结果存到<code>MANIFEST.MF</code>里</li>
+<li>取出一对公钥私钥</li>
+<li>对<code>MANIFEST.MF</code>计算hash+base64，把<code>MANIFEST.MF</code>剩余部分复制过去，得到<code>CERT.SF</code>，这就是为何后面是完全一样的了。</li>
+<li>调用<code>writeSignatureBlock()</code>方法，用私钥对<code>CERT.SF</code>当中生成的hash+base64进行加密，生成的密文放到证书最后生成<code>CERT.RSA</code>。</li>
+<li>如果还有别的签名重复3-5步。</li>
+</ol>
+<p>我对两个不同的apk进行了签名，对比CERT.RSA文件可以看到就最后存在差异</p>
+<p><img src="/2017/04/07/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg" alt="diff"></p>
+<p>通过openssl输出的证书信息都是一样的。</p>
+<p>由此便可推出Android在验证apk签名信息时做的步骤。</p>
+<p>接下来下一篇介绍新一代的签名方式</p>
+</li>
+</ul>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>赞助gif换电脑、吃双皮奶(逃</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2017/04/07/Android签名原理介绍（1）--schemev1/">Android签名原理介绍（1）--schemev1</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问 giglf 的个人博客">giglf</a></p>
+        <p><span>发布时间:</span>2017年04月07日 - 23时48分</p>
+        <p><span>最后更新:</span>2017年11月22日 - 19时51分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2017/04/07/Android签名原理介绍（1）--schemev1/" title="Android签名原理介绍（1）--schemev1">http://blog.2bsitcker.cn/2017/04/07/Android签名原理介绍（1）--schemev1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://blog.2bsitcker.cn/2017/04/07/Android签名原理介绍（1）--schemev1/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+    <a href="/2017/04/11/Android签名原理介绍（2）-schemev2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          Android签名原理介绍（2）--schemev2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/21/NGfish_mini-lctf_writeup/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">NGfish_mini-lctf_writeup</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JAR-signed-APK-verification-v1-scheme"><span class="toc-number">1.1.</span> <span class="toc-text">JAR-signed APK verification (v1 scheme)</span></a></li></ol></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <!-- 来必力City版安装代码 -->
+        <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTEzNi83Njg1">
+            <script type="text/javascript">
+           (function(d, s) {
+               var j, e = d.getElementsByTagName(s)[0];
+               if (typeof LivereTower === 'function') { return; }
+               j = d.createElement(s);
+               j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+               j.async = true;
+               e.parentNode.insertBefore(j, e);
+           })(document, 'script');
+            </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+        </div>
+        <!-- City版安装代码已完成 -->
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2017/04/11/Android签名原理介绍（2）-schemev2/" title="上一篇: Android签名原理介绍（2）--schemev2">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2017/02/21/NGfish_mini-lctf_writeup/" title="下一篇: NGfish_mini-lctf_writeup">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/诈尸一下/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu克隆mac地址后连不上网/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity出题记录/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/编译小米3td内核记录/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/源码分析Android-so加载过程/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/记录一个Windows下Makefile的神坑/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-思路/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android签名原理介绍（2）-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android签名原理介绍（1）--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/各种编码区别及内存映射/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu的apache2配置PHP不能运行问题/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/数据库坑之记录/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/汇编学习-nasm使用-调试/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf神奇的压缩文件/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/滴滴-学生卡/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP破解-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/全国大学生信息安全竞赛初赛-对称密码1/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/全国大学生信息安全竞赛初赛_珍贵资料/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/两年了/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr四道Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014——最难的题目/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/一篇helloworld及些许说明/">一篇helloworld及些许说明</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2018 giglf
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >dalao到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 8;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-107314179-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?549394a97554b370d120d5a854f98672";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>
