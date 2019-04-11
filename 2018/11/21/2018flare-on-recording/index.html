@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://blog.2bsitcker.cn/2018/11/21/2018flare-on-recording/c4_getflag.png">
 <meta property="og:image" content="http://blog.2bsitcker.cn/2018/11/21/2018flare-on-recording/wow64.png">
 <meta property="og:image" content="http://blog.2bsitcker.cn/2018/11/21/2018flare-on-recording/c8_qemu.png">
-<meta property="og:updated_time" content="2019-01-27T08:23:06.363Z">
+<meta property="og:updated_time" content="2019-04-11T09:46:03.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="2018flare-on recording">
 <meta name="twitter:description" content="http://flare-on.com 记录一下今年的flare-on，断断续续做了好久，最后12题中总共解出6题，后面的题就不够时间看了 再一次感受到自己是在太菜了，发现自己在逆向的时候很不善于用一些有用的工具，大部分时候是通过自己手动硬逆，事实上，逆向的目的是要搞懂程序在干些什么，不必去过于探究一些细节，而对于我数学、算法方面的硬伤，只需要抽时间去恶补理论基础就好了。但对于逆向技巧，flare">
@@ -395,16 +395,25 @@
 <p>很容易能注意到<code>sub_1001800</code>和<code>sub_1001600</code>这两个条件函数，只有满足才会执行接下来的流程</p>
 <p>简单查了MS的api可知道，这是对系统的版本做了检查</p>
 <p><code>sub_1001800</code>：只有Windows 7和Windows Server 2008 R2才能满足条件</p>
-<p><code>sub_1001600</code>：程序要运行在WOW64的环境下</p>
+<p><code>sub_1001600</code>：通过PEB获取模块信息，对模块名进行hash，与hash值比较，程序要运行在WOW64的环境下</p>
 <p>这里设计到WOW64（Windows on Windows ），这个机制是为了确保向前兼容，使得32位的程序能够直接运行在64位的系统上</p>
 <p><img src="/2018/11/21/2018flare-on-recording/wow64.png" alt="wow64"></p>
 <p>借用一下官方wp的图，原始32位windows跟借助wow所加载的dll是不一样的</p>
 <p>程序还包含了一个x64call的函数，用了一种很hacker的技巧从32位跳转到执行64位程序</p>
 <p><a href="http://rce.co/knockin-on-heavens-gate-dynamic-processor-mode-switching/" target="_blank" rel="noopener">http://rce.co/knockin-on-heavens-gate-dynamic-processor-mode-switching/</a></p>
-<p>在分析中可以看到他把data哩的数据都跟0xDEEDEEB异或，简单异或出来后就是一个64位的dll</p>
+<p>在分析中可以看到他把data里的数据都跟0xDEEDEEB异或，简单异或出来后就是一个64位的dll</p>
+<p>通过一个导出的函数<code>X64Call</code>进行调用</p>
+<p>X64Call中调用参数包含了一个偏移<code>0x580</code>，这个函数将会调用64bit dll中偏移为0x580的那个导出函数</p>
 <hr>
-<p><u>未完待续。。。To be continue</u></p>
-<!-- todo -->
+<p>进入到64bit的dll，那个导出函数很值得注意，里面包含了一些<code>NtQueryInformationProcess</code>字符串，感觉像是在解释这些api的地址</p>
+<p>这个先不管，注意到底下sub_180003100，第二个参数数据的开头是<code>MZ</code>，这又打包了一个dll，这个函数做了些qmemcpy的操作，看着挺复杂的，但是细看一下应该是根据PE文件头去读出整个PE文件，然后进行memcpy的操作</p>
+<p>把这个crackme.dll文件dump出来，这又变成一个32位的dll了，继续分析。</p>
+<p>32位dll中会接收localhost发送过来的信息，端口由用户输入，总共有29个循环</p>
+<p>从64bit dll中会找到通过windows 的ioctl进行的socket connect等代码，从一个大的switch case中就能找到相关的异或代码，异或出来就是flag</p>
+<hr>
+<p>因为整个64bit dll分析起来非常复杂，整个binary通过一种很魔幻的方式去达成他的目的，真的是厉害</p>
+<p>但是这题真实想做出其实不难，虽然接受的是再次内嵌的一个32位的dll，但是在64位中看到那么一块针对已有data进行异或的地方的时候，会下意思先尝试，这么一尝试就能拿到flag了，甚至都不需要再继续细逆。</p>
+<p>但是这个函数埋藏得比较深，另外还带有许多配置操作的函数，导致这题的难度增加了不少。</p>
 <h2 id="Challenge-8"><a href="#Challenge-8" class="headerlink" title="Challenge 8"></a>Challenge 8</h2><p>继续看下一题，file得出是一个DOS/MBR 的boot sector</p>
 <p>我们可以直接用qemu启动，启动出来是一个非常DOS的界面，蓝屏白字，要求逆向输入password</p>
 <p>一股古老的气息扑面而来 That’s funny!</p>
@@ -525,7 +534,7 @@
         <p><span>本文标题:</span><a href="/2018/11/21/2018flare-on-recording/">2018flare-on recording</a></p>
         <p><span>文章作者:</span><a href="/" title="访问 giglf 的个人博客">giglf</a></p>
         <p><span>发布时间:</span>2018年11月21日 - 10时52分</p>
-        <p><span>最后更新:</span>2019年01月27日 - 16时23分</p>
+        <p><span>最后更新:</span>2019年04月11日 - 17时46分</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2018/11/21/2018flare-on-recording/" title="2018flare-on recording">http://blog.2bsitcker.cn/2018/11/21/2018flare-on-recording/</a>
             <span class="copy-path" data-clipboard-text="原文: http://blog.2bsitcker.cn/2018/11/21/2018flare-on-recording/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
