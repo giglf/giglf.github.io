@@ -9,21 +9,21 @@
 <meta name="keywords" content="汇编,nasm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编学习&amp;&amp;nasm使用&amp;&amp;调试">
-<meta property="og:url" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/index.html">
+<meta property="og:url" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/index.html">
 <meta property="og:site_name" content="giglf的盐缸">
 <meta property="og:description" content="前言为了更好的做逆向，刚学了点汇编的知识，尽管在我们微机课上也会有教，但总有时会分心。而且，这些不自己实际操作下也是搞不懂的。 尽管在这之前我已近玩过一些逆向了，但更多的是单步调试，通过ida、OD等强大的功能飘过，一些细节并不清楚。所以必须要系统地学习汇编的知识。 这里我选择的书是王爽的《汇编语言(第三版)》，虽然这书讲的是8086的16位的汇编（啊喂，太过时了吧！），不过基本原理都是差不多的，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/outputFile_zpsudht7pkw.jpg">
-<meta property="og:image" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/fileType_zpsmo5ioh4y.jpg">
-<meta property="og:image" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/op_zps7liklweq.jpg">
-<meta property="og:image" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/Ubuntu15.10-2016-11-06-23-34-49_zpslku1vnhc.png">
-<meta property="og:image" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/ida_zpsa0iyohkd.jpg">
-<meta property="og:image" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/OD_zpsct2lubdk.jpg">
+<meta property="og:image" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/outputFile_zpsudht7pkw.jpg">
+<meta property="og:image" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/fileType_zpsmo5ioh4y.jpg">
+<meta property="og:image" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/op_zps7liklweq.jpg">
+<meta property="og:image" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/Ubuntu15.10-2016-11-06-23-34-49_zpslku1vnhc.png">
+<meta property="og:image" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/ida_zpsa0iyohkd.jpg">
+<meta property="og:image" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/OD_zpsct2lubdk.jpg">
 <meta property="og:updated_time" content="2017-11-22T11:48:50.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="汇编学习&amp;&amp;nasm使用&amp;&amp;调试">
 <meta name="twitter:description" content="前言为了更好的做逆向，刚学了点汇编的知识，尽管在我们微机课上也会有教，但总有时会分心。而且，这些不自己实际操作下也是搞不懂的。 尽管在这之前我已近玩过一些逆向了，但更多的是单步调试，通过ida、OD等强大的功能飘过，一些细节并不清楚。所以必须要系统地学习汇编的知识。 这里我选择的书是王爽的《汇编语言(第三版)》，虽然这书讲的是8086的16位的汇编（啊喂，太过时了吧！），不过基本原理都是差不多的，">
-<meta name="twitter:image" content="http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/outputFile_zpsudht7pkw.jpg">
+<meta name="twitter:image" content="http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/outputFile_zpsudht7pkw.jpg">
   
     <link rel="alternative" href="/atom.xml" title="giglf的盐缸" type="application/atom+xml">
   
@@ -373,8 +373,8 @@
         <p><span>发布时间:</span>2016年11月06日 - 22时35分</p>
         <p><span>最后更新:</span>2017年11月22日 - 19时48分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2016/11/06/汇编学习-nasm使用-调试/" title="汇编学习&amp;&amp;nasm使用&amp;&amp;调试">http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://blog.2bsitcker.cn/2016/11/06/汇编学习-nasm使用-调试/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2016/11/06/汇编学习-nasm使用-调试/" title="汇编学习&amp;&amp;nasm使用&amp;&amp;调试">http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://giglf.github.io/2016/11/06/汇编学习-nasm使用-调试/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
