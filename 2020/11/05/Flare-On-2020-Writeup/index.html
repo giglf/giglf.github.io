@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Flare-On 2020 Writeup | giglf的盐缸</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这writeup是断断续续写下来的，最近事情比较多，所以也拖得比较久 (然后就没想到又拖了快4个月——2021.3.14) 在今年的flareon上，再次ak，这次排名是107，希望能拿到那根钥匙吧T_T  (收到了 yeah！)，去年的牌居然给我寄丢了，气死我了 再次是简单回顾总结整个比赛 (其实就是流水账writeup) 因为官方的wp已经很详细了，所以这篇会很流水账，主要记录一些跟官方不一样">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Flare-On 2020 Writeup">
+<meta property="og:url" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/index.html">
+<meta property="og:site_name" content="giglf的盐缸">
+<meta property="og:description" content="这writeup是断断续续写下来的，最近事情比较多，所以也拖得比较久 (然后就没想到又拖了快4个月——2021.3.14) 在今年的flareon上，再次ak，这次排名是107，希望能拿到那根钥匙吧T_T  (收到了 yeah！)，去年的牌居然给我寄丢了，气死我了 再次是简单回顾总结整个比赛 (其实就是流水账writeup) 因为官方的wp已经很详细了，所以这篇会很流水账，主要记录一些跟官方不一样">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/2-invalid.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/2-run.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/3-patch.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/3-win.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/4-flag.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/5-flag.jpg">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/6-delete.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/7-payload.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/8-solve.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/9-patch.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/10-trick.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/10-firststage.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/10-stackoverflow.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/10-hint.png">
+<meta property="og:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/11-autorun.png">
+<meta property="article:published_time" content="2020-11-05T13:04:02.000Z">
+<meta property="article:modified_time" content="2021-04-09T01:24:10.537Z">
+<meta property="article:author" content="giglf">
+<meta property="article:tag" content="flare-on">
+<meta property="article:tag" content="reverse">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/2-invalid.png">
+  
+    <link rel="alternative" href="/atom.xml" title="giglf的盐缸" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/img/favicon.jpg">
+  
+  
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  
+  
+      <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  
+  <!-- 加载特效 -->
+    <script src="/js/pace.js"></script>
+    <link href="/css/pace/pace-theme-flash.css" rel="stylesheet" />
+  <script>
+      var yiliaConfig = {
+          rootUrl: '/',
+          fancybox: true,
+          animate: true,
+          isHome: false,
+          isPost: true,
+          isArchive: false,
+          isTag: false,
+          isCategory: false,
+          open_in_new: false
+      }
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+    <header id="header" class="inner">
+        <a href="/" class="profilepic">
+            
+            <img lazy-src="/img/head.jpg" class="js-avatar">
+            
+        </a>
+
+        <hgroup>
+          <h1 class="header-author"><a href="/" title="Hi Mate"></a></h1>
+        </hgroup>
+
+        
+        
+        
+            <div id="switch-btn" class="switch-btn">
+                <div class="icon">
+                    <div class="icon-ctn">
+                        <div class="icon-wrap icon-house" data-idx="0">
+                            <div class="birdhouse"></div>
+                            <div class="birdhouse_holes"></div>
+                        </div>
+                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
+                            <div class="ribbon"></div>
+                        </div>
+                        
+                        <div class="icon-wrap icon-link hide" data-idx="2">
+                            <div class="loopback_l"></div>
+                            <div class="loopback_r"></div>
+                        </div>
+                        
+                        
+                        <div class="icon-wrap icon-me hide" data-idx="3">
+                            <div class="user"></div>
+                            <div class="shoulder"></div>
+                        </div>
+                        
+                    </div>
+                    
+                </div>
+                <div class="tips-box hide">
+                    <div class="tips-arrow"></div>
+                    <ul class="tips-inner">
+                        <li>菜单</li>
+                        <li>标签</li>
+                        
+                        <li>友情链接</li>
+                        
+                        
+                        <li>关于我</li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+
+        <div id="switch-area" class="switch-area">
+            <div class="switch-wrap">
+                <section class="switch-part switch-part1">
+                    <nav class="header-menu">
+                        <ul>
+                        
+                            <li><a href="/">首页</a></li>
+                        
+                            <li><a href="/archives">文章</a></li>
+                        
+                            <li><a href="/tags">标签</a></li>
+                        
+                            <li><a href="/about">about</a></li>
+                        
+                        </ul>
+                    </nav>
+                    <nav class="header-nav">
+                        <ul class="social">
+                            
+                                <a class="fl mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                            
+                                <a class="fl github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                            
+                                <a class="fl rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                            
+                        </ul>
+                    </nav>
+                </section>
+                
+                
+                <section class="switch-part switch-part2">
+                    <div class="widget tagcloud" id="js-tagcloud">
+                        <a href="/tags/Android/" style="font-size: 16px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/flare-on/" style="font-size: 14px;">flare-on</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/reverse/" style="font-size: 12px;">reverse</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so%E5%8A%A0%E8%BD%BD/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B/" style="font-size: 12px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/" style="font-size: 10px;">内核编译</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81/" style="font-size: 12px;">签名认证</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 10px;">编码</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 20px;">逆向</a> <a href="/tags/%E9%9A%8F%E4%BE%BF%E5%86%99%E5%86%99%E5%95%A6/" style="font-size: 18px;">随便写写啦</a>
+                    </div>
+                </section>
+                
+                
+                
+                <section class="switch-part switch-part3">
+                    <div id="js-friends">
+                    
+                      <a target="_blank" class="main-nav-link switch-friends-link" href="https://github.com/luuman/hexo-theme-spfk">spfk主题</a>
+                    
+                    </div>
+                </section>
+                
+
+                
+                
+                <section class="switch-part switch-part4">
+                
+                    <div id="js-aboutme">我都不知道我是谁了，大概只是一条只想吃吃喝喝的咸鱼吧</div>
+                </section>
+                
+            </div>
+        </div>
+    </header>                
+</div>
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+      <div class="overlay">
+          <div class="slider-trigger"></div>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
+      </div>
+    <div class="intrude-less">
+        <header id="header" class="inner">
+            <a href="/" class="profilepic">
+                
+                    <img lazy-src="/img/head.jpg" class="js-avatar">
+                
+            </a>
+            <hgroup>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
+            </hgroup>
+            
+            <nav class="header-menu">
+                <ul>
+                
+                    <li><a href="/">首页</a></li>
+                
+                    <li><a href="/archives">文章</a></li>
+                
+                    <li><a href="/tags">标签</a></li>
+                
+                    <li><a href="/about">about</a></li>
+                
+                <div class="clearfix"></div>
+                </ul>
+            </nav>
+            <nav class="header-nav">
+                <div class="social">
+                    
+                        <a class="mail" target="_blank" href="mailto:lin.giglf@gmail.com" title="mail">mail</a>
+                    
+                        <a class="github" target="_blank" href="https://github.com/giglf" title="github">github</a>
+                    
+                        <a class="rss" target="_blank" href="/atom.xml" title="rss">rss</a>
+                    
+                </div>
+            </nav>
+        </header>                
+    </div>
+</nav>
+      <div class="body-wrap"><article id="post-Flare-On-2020-Writeup" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2020/11/05/Flare-On-2020-Writeup/" class="article-date">
+      <time datetime="2020-11-05T13:04:02.000Z" itemprop="datePublished">2020-11-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Flare-On 2020 Writeup
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+
+        
+    <div class="article-tag tagcloud">
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/flare-on/" rel="tag">flare-on</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/reverse/" rel="tag">reverse</a></li></ul>
+    </div>
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>这writeup是断断续续写下来的，最近事情比较多，所以也拖得比较久 (然后就没想到又拖了快4个月——2021.3.14)</p>
+<p>在今年的flareon上，再次ak，这次排名是107，<del>希望能拿到那根钥匙吧T_T</del>  (收到了 yeah！)，去年的牌居然给我寄丢了，气死我了</p>
+<p>再次是简单回顾总结整个比赛 (其实就是流水账writeup)</p>
+<p>因为官方的wp已经很详细了，所以这篇会很流水账，主要记录一些跟官方不一样的东西，或者有学到的新的奇淫技巧</p>
+<p>感觉今年的难度比去年的要高一些</p>
+<p>官方WP：<a target="_blank" rel="noopener" href="https://www.fireeye.com/blog/threat-research/2020/10/flare-on-7-challenge-solutions.html">https://www.fireeye.com/blog/threat-research/2020/10/flare-on-7-challenge-solutions.html</a></p>
+<span id="more"></span>
+<h2 id="1-fidler"><a href="#1-fidler" class="headerlink" title="1_-_fidler"></a>1_-_fidler</h2><p>第一题是个用python写的喂猫猫游戏</p>
+<p>因为都是用python写的，源码一目了然，并且这题就算不会逆向，也可以直接玩通关，不用很久</p>
+<p>想让知道详情的可以直接查看官方wp</p>
+<p><a target="_blank" rel="noopener" href="https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/flareon7-challenge1-solution.pdf">https://www.fireeye.com/content/dam/fireeye-www/blog/pdfs/flareon7-challenge1-solution.pdf</a></p>
+<p>我当时直接拼了个脚本</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decode_flag</span>(<span class="params">frob</span>):</span></span><br><span class="line">    last_value = frob</span><br><span class="line">    encoded_flag = [<span class="number">1135</span>, <span class="number">1038</span>, <span class="number">1126</span>, <span class="number">1028</span>, <span class="number">1117</span>, <span class="number">1071</span>, <span class="number">1094</span>, <span class="number">1077</span>, <span class="number">1121</span>, <span class="number">1087</span>, <span class="number">1110</span>, <span class="number">1092</span>, <span class="number">1072</span>, <span class="number">1095</span>, <span class="number">1090</span>, <span class="number">1027</span>,</span><br><span class="line">                    <span class="number">1127</span>, <span class="number">1040</span>, <span class="number">1137</span>, <span class="number">1030</span>, <span class="number">1127</span>, <span class="number">1099</span>, <span class="number">1062</span>, <span class="number">1101</span>, <span class="number">1123</span>, <span class="number">1027</span>, <span class="number">1136</span>, <span class="number">1054</span>]</span><br><span class="line">    decoded_flag = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(encoded_flag)):</span><br><span class="line">        c = encoded_flag[i]</span><br><span class="line">        val = (c - ((i%<span class="number">2</span>)*<span class="number">1</span> + (i%<span class="number">3</span>)*<span class="number">2</span>)) ^ last_value</span><br><span class="line">        decoded_flag.append(val)</span><br><span class="line">        last_value = c</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join([<span class="built_in">chr</span>(x) <span class="keyword">for</span> x <span class="keyword">in</span> decoded_flag])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">current_coins = <span class="number">1000</span>*<span class="number">1000000000</span></span><br><span class="line">target_amount = (<span class="number">2</span>**<span class="number">36</span>) + (<span class="number">2</span>**<span class="number">35</span>)</span><br><span class="line"><span class="keyword">if</span> current_coins &gt; (target_amount - <span class="number">2</span>**<span class="number">20</span>):</span><br><span class="line">    <span class="keyword">while</span> current_coins &gt;= (target_amount + <span class="number">2</span>**<span class="number">20</span>):</span><br><span class="line">        current_coins -= <span class="number">2</span>**<span class="number">20</span></span><br><span class="line"><span class="built_in">print</span>(decode_flag(<span class="built_in">int</span>(current_coins / <span class="number">10</span>**<span class="number">8</span>)))</span><br><span class="line"><span class="comment"># idle_with_kitty@flare-on.com</span></span><br></pre></td></tr></table></figure>
+<p>有趣的是，因为我太菜了，这个脚本拼了一段时间，当我刚刚拼凑好脚本，游戏那边也刚好通关跑出flag来了= =</p>
+<h2 id="2–garbage-exe"><a href="#2–garbage-exe" class="headerlink" title="2–garbage.exe"></a>2–garbage.exe</h2><p>这题卡了很多人，也卡了我有点时间</p>
+<p>首先，PE文件是损坏的，但是我们不知道是哪里损坏</p>
+<p>直接扔进ida，会发现经过upx加壳的，直接通过upx会提示<code>invalid overlay size</code></p>
+<p>这个报错的话，因为之前大概看过一下upx的源码，好像差不多意思就是其中一个加壳的chunk大小跟header中的size不一样了</p>
+<p>找各种工具看了很久才发现，文件最后的xml没了一块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&#39;1.0&#39; encoding&#x3D;&#39;UTF-8&#39; standalone&#x3D;&#39;yes&#39;?&gt; </span><br><span class="line">&lt;assembly xmlns&#x3D;&#39;urn:schemas-microsoft-com:asm.v1&#39; manifestVersion&#x3D;&#39;1.0&#39;&gt; </span><br><span class="line">  &lt;trustInfo xmlns&#x3D;&quot;urn:schemas-microsoft-com:asm.v3&quot;&gt; </span><br><span class="line">    &lt;securit </span><br></pre></td></tr></table></figure>
+<p>好吧，猜这个损坏是文件最后被截掉了一块，因为通过各种工具查看各种头都是好的，除了下面这些invalid</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/2-invalid.png" alt="2-invalid"></p>
+<p>于是根据PE文件头中的文件大小在后面padding了一堆0，然后就可以用upx解压了</p>
+<p>虽然解压出来有些地址有问题，但是并不影响看懂程序的逻辑，很快就弄出来了</p>
+<p><a href="mailto:C0rruptGarbag3@flare-on.com">C0rruptGarbag3@flare-on.com</a></p>
+<p>这里就不贴代码了</p>
+<hr>
+<p>但是，注意到一个东西，在message中包含了一句：</p>
+<blockquote>
+<p>You should be able to get it working again, reverse engineer it, and acquire the flag.</p>
+</blockquote>
+<p>似乎是可以把它恢复成可运行的binary，官方文档也介绍了其中的方法</p>
+<p>在upx脱壳后，通过CFF explorer其实可以看到，在Import table中import的函数都是能看到的，但是缺失了import的dll名称</p>
+<p>因此根据import的函数就可以推断出dll分别是kernel32.dll和shell32.dll</p>
+<p>修复后，再把configuration File删掉（因为是少了一段的，这个configrue会导致程序错误）</p>
+<p>就能够正常跑起来了 （CFF explorer真好用）</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/2-run.png" alt="2-run"></p>
+<h2 id="3-Wednesday"><a href="#3-Wednesday" class="headerlink" title="3-Wednesday"></a>3-Wednesday</h2><p>是一个类似flappy bird的憨憨小游戏，上下通过障碍物<br>txt里面介绍了怎么玩</p>
+<p>好吧，那直接猜一下当达到XX分数的时候给flag</p>
+<p>直接祭出cheat engine！</p>
+<p>找到了分数，然后改大……诶，没什么反应</p>
+<p>试了一轮，还是老老实实去逆吧。</p>
+<p>发现这个是通过nim写的<br><a target="_blank" rel="noopener" href="https://github.com/Vladar4/nimgame2/blob/master/nimgame2/nimgame.nim">https://github.com/Vladar4/nimgame2/blob/master/nimgame2/nimgame.nim</a></p>
+<p>看了下感觉语法有点像脚本语言，但其实际还是编译出来的exe，因而没办法直接恢复出源码，只能照着上面示例代码慢慢看</p>
+<p>时间有点太久了，不太记得具体逆的过程中遇到了什么问题，这里大致描述一下我的思路。</p>
+<p>首先逆到逻辑发现总共分数达到296的时候就能够getflag，但是试过直接cheat engine修改成296没反应</p>
+<p>或者最后出来winner的界面，但是没有flag</p>
+<p>再细逆，发现flag是从障碍物的排序解码过来的，但是我没理清游戏操作原理，所以最后还是选择了patch</p>
+<p>patch位置如图，对应了两个操作的patch，1、操作的cmp；2、reseteverything</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/3-patch.png" alt="3-patch"></p>
+<p>patch完后，我就等他自动跑了，这个时候撞到柱子不会死，而且也不会因为撞柱而重置</p>
+<p>最后getflag</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/3-win.png" alt="3-win"></p>
+<p>官方wp提到了3种方法，</p>
+<ol>
+<li><p>找到flag buffer，然后静态解；</p>
+</li>
+<li><p>patch program</p>
+</li>
+<li>写bot</li>
+</ol>
+<p>当然也有头铁的老哥直接玩通关了……</p>
+<p>找了下，bot的代码</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/TWVyY3VyaW8K/shitty-wednesday-solution">https://github.com/TWVyY3VyaW8K/shitty-wednesday-solution</a></p>
+<p>这是通过图像识别做的，这样就完全不用逆了，其中有个关键的库叫pyautogui，看着好像还挺好用</p>
+<h2 id="4-report-xls"><a href="#4-report-xls" class="headerlink" title="4-report.xls"></a>4-report.xls</h2><p>这题给了个excel文件</p>
+<p>一开始以为是普通的excel宏，结果发现还是too naive</p>
+<p>按照正常的VBA分析，把宏代码去混淆，看完逻辑解密出来一个stomp.mp3</p>
+<p>然后就什么都没发现了</p>
+<p>而事实上，这个stomp.mp3可以算是一个hint</p>
+<p>有个叫做 VBA stomping 的东西，参考</p>
+<p><a target="_blank" rel="noopener" href="https://zanderchang.github.io/2019/04/30/VBA-Stomping%E7%AE%80%E4%BB%8B/">https://zanderchang.github.io/2019/04/30/VBA-Stomping%E7%AE%80%E4%BB%8B/</a></p>
+<p><a target="_blank" rel="noopener" href="https://vbastomp.com/">https://vbastomp.com/</a></p>
+<p>简单来说，在excel宏上，打开office实际执行的不是宏代码，而是文档文件中的p-code</p>
+<p>p-code是宏代码的编译版本</p>
+<p>如果文档中的p-code与当前系统上的VBA版本兼容，那实际执行的是储存的p-code，宏编辑器中显示的是反编译的p-code</p>
+<p>而如果在不同版本的excel上打开，p-code不可重用，VBA源码将重新编译成p-code</p>
+<blockquote>
+<p><strong>使用 VBA Stomping 技术的恶意文档只能使用用于创建文档时相同的 VBA 版本执行。</strong></p>
+</blockquote>
+<p>因此，这个excel中实际的flag代码要从p-code中恢复，而光通过宏编辑器是看不到的</p>
+<p>我使用了<a target="_blank" rel="noopener" href="https://github.com/bontchev/pcodedmp">https://github.com/bontchev/pcodedmp</a> 反编译p-code</p>
+<p>然后就很容易得到flag了</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/4-flag.png" alt="4-flag"></p>
+<h2 id="5-TKApp"><a href="#5-TKApp" class="headerlink" title="5-TKApp"></a>5-TKApp</h2><p>题目文件是个 <code>TKApp.tpk</code></p>
+<p>tpk…我首先反应怎么像apk这样，而且file了一下发现实际也是zip</p>
+<p>查了下这个似乎是三星智能手表的应用</p>
+<p>搭模拟器太麻烦了。。直接静态搞吧</p>
+<p>解压出来能看到很多文件</p>
+<p>其中最关键的是当中的一个<code>TKApp.dll</code></p>
+<p>这个dll是.net的，直接用dnspy分析</p>
+<p>实际上整个过程没什么太大的难点，纯粹就是分析代码，然后从app的配置文件、xml等地方去找一些资源值，然后拼凑出来key</p>
+<p>按AES处理一下就出来flag了，详细可以看官方wp</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/5-flag.jpg" alt="5-flag"></p>
+<h2 id="6-codeit"><a href="#6-codeit" class="headerlink" title="6-codeit"></a>6-codeit</h2><p>这题开始有点麻烦了</p>
+<p>整个应用是输入文字，然后会显示出来文字对应的二维码</p>
+<p>反编译后发现，他是通过AutoIt写的应用</p>
+<blockquote>
+<p>AutoIt is a freeware BASIC-like scripting language designed for general scripting and automating the  Windows GUI.</p>
+</blockquote>
+<p>这还是个脚本语言，搜了一轮后，用工具把脚本提出来了</p>
+<p>具体用的是什么工具，，时间有点久远忘了，我文件夹里面还留着这两个工具</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/SanseoLab/ejExtractor">https://github.com/SanseoLab/ejExtractor</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/nazywam/AutoIt-Ripper">https://github.com/nazywam/AutoIt-Ripper</a></p>
+<p>官方wp中也提到了两种</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/fireeye/flare-vm/issues/172">https://github.com/fireeye/flare-vm/issues/172</a></p>
+<p><a target="_blank" rel="noopener" href="https://gitlab.com/x0r19x91/autoit-extractor">https://gitlab.com/x0r19x91/autoit-extractor</a></p>
+<p>这个不太重要，能顺利吧Autoit脚本提取出来就行了</p>
+<p>因为这个Autoit脚本经过了很严重的混淆，我写了个脚本patch一下，输出的语法肯定不对的，但是能静态逆着舒服很多</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#... some global constant</span></span><br><span class="line"><span class="comment"># s=&#x27;......&#x27;</span></span><br><span class="line"></span><br><span class="line">arr = s.split(<span class="string">&quot;4FD5$&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decode</span>(<span class="params">s</span>):</span></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">bytes</span>.fromhex(s).decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># for i in arr:</span></span><br><span class="line"><span class="comment">#     print(decode(i))</span></span><br><span class="line"></span><br><span class="line">data = <span class="built_in">open</span>(<span class="string">&#x27;out.txt&#x27;</span>, <span class="string">&#x27;r&#x27;</span>).read()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line">pattern = re.<span class="built_in">compile</span>(<span class="string">r&#x27;AREHDIDXRGK \( \$OS \[ .*? \] \)&#x27;</span>) <span class="comment"># AREHDIDXRGK \( \$OS \[ .*? \] \)</span></span><br><span class="line"> </span><br><span class="line">func_call = pattern.findall(data)</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> s <span class="keyword">in</span> func_call:</span><br><span class="line">    var = s.split(<span class="string">&#x27; &#x27;</span>)[<span class="number">4</span>][<span class="number">1</span>:]</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        repl = decode(arr[<span class="built_in">globals</span>()[var]-<span class="number">1</span>])</span><br><span class="line">        data = data.replace(s, <span class="string">f&quot;\&quot;<span class="subst">&#123;repl&#125;</span>\&quot;&quot;</span>)</span><br><span class="line">    <span class="keyword">except</span>:</span><br><span class="line">        <span class="built_in">print</span>(var)</span><br><span class="line">        <span class="built_in">print</span>(<span class="built_in">globals</span>()[var])</span><br><span class="line">        <span class="comment"># sys.exit(1)</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> g <span class="keyword">in</span> var_dict:</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">type</span>(var_dict[g]) == <span class="built_in">int</span>:</span><br><span class="line">        data = data.replace(<span class="string">f&quot;$<span class="subst">&#123;g&#125;</span>&quot;</span>, <span class="built_in">str</span>(var_dict[g]))</span><br><span class="line"></span><br><span class="line"><span class="built_in">open</span>(<span class="string">&#x27;out.patch2.txt&#x27;</span>, <span class="string">&#x27;w&#x27;</span>).write(data)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>逆着发现，每次生成二维码的时候，都会在当前目录有文件创建，然后马上又被删除</p>
+<p>因为对windows不熟悉，我用了种很笨的办法。。用frida hook WIN API</p>
+<p>让他不删除掉那个文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> DeleteFileA = Module.findExportByName(<span class="string">&quot;kernel32.dll&quot;</span>, <span class="string">&#x27;DeleteFileA&#x27;</span>);</span><br><span class="line"></span><br><span class="line">Interceptor.replace(DeleteFileA, <span class="keyword">new</span> NativeCallback(<span class="function"><span class="keyword">function</span> (<span class="params">pathPtr</span>) </span>&#123;</span><br><span class="line">&#125;, <span class="string">&#x27;int&#x27;</span>, [<span class="string">&#x27;pointer&#x27;</span>]));</span><br></pre></td></tr></table></figure>
+<p>而实际上，通过官方的wp得知，其实直接设置当前文件夹权限就行了</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/6-delete.png" alt="6-delete.png"></p>
+<p>然后发现被删掉的图片其实就是开头welcome的那张图，bmp格式，但是后面代码也会引用到了这张图</p>
+<p>代码会经过一系列操作，通过<code>GetComputerNameA</code>的结果计算密钥，进行解密生成带flag的二维码</p>
+<p>这一步卡了很久，怎么能确定ComputerName？</p>
+<p>万万没想到这一步是靠猜的</p>
+<p>当中有一步是引用了上面提到的图片，然后对图片前面一部分字节进行处理</p>
+<p>看了下，这似乎是LSB</p>
+<p>因为那堆数据是 0xFF和0xFE混搭</p>
+<p>于是，图片隐写提取出来<code>aut01tfan1999</code></p>
+<p>试了下把计算机名改成这个，然后再生成二维码，发现出来的就是flag了</p>
+<p><a href="mailto:L00ks_L1k3_Y0u_D1dnt_Run_Aut0_Tim3_0n_Th1s_0ne!@flare-on.com">L00ks_L1k3_Y0u_D1dnt_Run_Aut0_Tim3_0n_Th1s_0ne!@flare-on.com</a></p>
+<h2 id="7-re-crowd"><a href="#7-re-crowd" class="headerlink" title="7-re_crowd"></a>7-re_crowd</h2><p>题目给的是一个流量包</p>
+<p>首先，通过http的请求可以还原出他访问的网站，这个网站是题目自己编写的网站，描述了一些背景</p>
+<p>因为网站的漏洞，服务器上的 C:\accounts.txt 被偷了</p>
+<p>那么就接着分析流量吧</p>
+<p>从流量包种能看到大量的像这样的http请求</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/7-payload.png" alt="7-payload"></p>
+<p>看着很奇怪，特别是PROPFIND这种请求方式，以及<code>&quot;(Not &lt;locktoken:write1&gt;)&quot;</code>这种字段</p>
+<p>那么上网上搜，就能发现有个IIS的漏洞利用方式跟这段数据包非常像</p>
+<p>漏洞详情参考<a target="_blank" rel="noopener" href="https://paper.seebug.org/259/">https://paper.seebug.org/259/</a></p>
+<p>CVE-2017-7269</p>
+<p>这个漏洞能达成RCE</p>
+<p>由于存在很多个类似的流量包，我按顺序把这些流量包下了下来，放在一起比较，就能发现</p>
+<p>这些流量包最后的ascii字符都是一样的，而前面一段，则是按顺序，每一次都比上一次少2字节</p>
+<p>分析完那个漏洞，感觉这个过程应该是在爆破路径，前面的乱码就对应的padding，后面开始是shellcode</p>
+<p>但是这段shellcode，直接丢进IDA看，感觉非常乱，看不出来</p>
+<p>尝试把前面<code>VVYAIAIAIAIAIAIAIAIAIAIAIAIAIAIA</code>搜一下，发现这是alpha shellcode</p>
+<p>简单来说，就是用可见字符组成的shellcode</p>
+<p>而前面则是自解码的shellcode片段</p>
+<p>参考<a target="_blank" rel="noopener" href="https://gitlab.com/kalilinux/packages/metasploit-framework/blob/07ca796c8f087fa0c77730b95edac2461ea6a7ab/spec/lib/rex/encoder/alpha2/unicode_mixed_spec.rb">https://gitlab.com/kalilinux/packages/metasploit-framework/blob/07ca796c8f087fa0c77730b95edac2461ea6a7ab/spec/lib/rex/encoder/alpha2/unicode_mixed_spec.rb</a></p>
+<p>在网上能找到这些shellcode的编码器，但是找不到解码器，所以照这编码器，我写了个逆</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">shellcode_decoder</span>(<span class="params">s</span>):</span></span><br><span class="line">    ret = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">0</span>, <span class="built_in">len</span>(s), <span class="number">2</span>):</span><br><span class="line">        X, Y = s[i], s[i+<span class="number">1</span>]</span><br><span class="line">        C, E = ((X &amp; <span class="number">0xf0</span>) &gt;&gt; <span class="number">4</span>), ((Y &amp; <span class="number">0xf0</span>) &gt;&gt; <span class="number">4</span>)</span><br><span class="line">        D, F = (X &amp; <span class="number">0xf</span>), (Y &amp; <span class="number">0xf</span>)</span><br><span class="line">        A = (D + E) &amp; <span class="number">0xf</span></span><br><span class="line">        B = F</span><br><span class="line">        ret += <span class="built_in">bytes</span>([((A&lt;&lt;<span class="number">4</span>) + B)])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> ret</span><br></pre></td></tr></table></figure>
+<p>但其实实际上，官方的做法是通过shellcodeRunner去进行调试，然后再dump出来（我太菜了）</p>
+<p>当时没有直接调试成功，应该是设置的问题，以后试试用shellcodeRunner这个工具</p>
+<p>shellcode解密出来，可以发现这是个下载器，从流量中找到下一段shellcode，</p>
+<p>由于当中还包含了通过对api hash，然后比对调用特定的win api</p>
+<p>根据hash找到了这么一个网站，直接找就完事了</p>
+<p><a target="_blank" rel="noopener" href="https://hiddencodes.wordpress.com/2014/08/22/windows-api-hash-list-1/">https://hiddencodes.wordpress.com/2014/08/22/windows-api-hash-list-1/</a></p>
+<p>然后很快，就找到flag了</p>
+<p><a href="mailto:h4ve_you_tri3d_turning_1t_0ff_and_0n_ag4in@flare-on.com">h4ve_you_tri3d_turning_1t_0ff_and_0n_ag4in@flare-on.com</a></p>
+<hr>
+<p>关于最后的hash，这其实是恶意代码中常用的伎俩</p>
+<p>官方wp中提到有很多工具可以拿来搜</p>
+<ul>
+<li>We can use the IDA Pro shellcode_hashes_search_plugin.py Python script available at  <a target="_blank" rel="noopener" href="https://github.com/fireeye/flare-ida">https://github.com/fireeye/flare-ida</a> </li>
+<li>We can use an emulation tool such as scdbg (<a target="_blank" rel="noopener" href="https://github.com/dzzie/SCDBG">https://github.com/dzzie/SCDBG</a>) </li>
+<li>We can resolve the APIs dynamically in a debugger</li>
+</ul>
+<h2 id="8-Aardvark"><a href="#8-Aardvark" class="headerlink" title="8-Aardvark"></a>8-Aardvark</h2><p>这题非常无语</p>
+<p>直接打开发现报错了，逆进去发现，这似乎是要跟WSL交互</p>
+<p>从pe的资源节释放出来一个elf，这个elf将运行在WSL里面，然后作为井字棋的AI</p>
+<p>玩家需要赢了才能getflag</p>
+<p>首先，这个AI写的很好，在井字棋这种情况下能保证输不了，玩家最多跟它打平</p>
+<p>看了看getflag的逻辑，是从系统中取了一堆信息内容运算后得出的</p>
+<p>居然是跟系统相关的？那么还是动态跑起来</p>
+<hr>
+<p>这里，我就直接尝试在WSL中安装了gdb，然后attach到AI进程</p>
+<p>跑到check的分支，直接修改了寄存器的值。。</p>
+<p>然后发现就输出flag了，这里多得看了眼twitter，有人说，如果你得到一个有点乱的flag，不要怀疑，尝试提交一下</p>
+<p>没想到就真的就是这个flag</p>
+<p><a href="mailto:`c1ArF/P2CjiDXQIZ@flare-on.com">`c1ArF/P2CjiDXQIZ@flare-on.com</a>`</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/8-solve.png" alt="8-solve"></p>
+<hr>
+<p>这题出的确实一般，下面根据官方wp的内容补充一些相关的技术知识</p>
+<ol>
+<li><p>WSL与Windows的交互</p>
+<p>这里交互方式是通过Unix socket，<code>socket(AF_UNIX, SOCK_STREAM, 0);</code>，绑定的名称为<code>496b9b4b.ed5</code></p>
+<p>在Win7的时候，似乎是不支持AF_UNIX的，而在Window 10 17063版本后，Windows支持AF_UNIX了</p>
+<p><a target="_blank" rel="noopener" href="https://devblogs.microsoft.com/commandline/af_unix-comes-to-windows/">https://devblogs.microsoft.com/commandline/af_unix-comes-to-windows/</a></p>
+<p>这让window支持通过Unix Socket跨进程通信</p>
+</li>
+<li><p>WSL链接 <code>CoCreateInstance</code></p>
+<p>通过指定 COM Class ID  and Interface ID，与WSL链接，根据windows版本的不同，其接口函数也不太一样</p>
+<p>题目中适配了Windows 10 1803, 1809, 1903, 1909, 2004, or 20H2</p>
+</li>
+<li><p>flag生成中使用到的环境信息</p>
+<p>因为flag是通过环境信息xor得来的，那怎么保证的flag唯一性？</p>
+<p>首先，题目中有对WSL版本检查，elf跑的环境只能是WSL1</p>
+<p>而当中用到的4种环境信息：</p>
+<ol>
+<li><code>/proc/modules</code> WSL1中没有这个目录，跳过</li>
+<li><code>/proc/mounts</code> 中根目录类型，WSL中是<code>wslfs</code>或<code>lxfs</code>，最后都是fs，用fs异或</li>
+<li><code>/proc/version_signature</code>信息，WSL前面固定是Microsoft</li>
+<li>VDSO shared library 的program header的virtual address，四个固定的0xffffffffff70</li>
+<li><code>/proc</code>下文件i-number，因为WSL下的i-number高16位肯定都是0</li>
+</ol>
+<p>所以，题目就是通过这种办法跑出flag（Q：这是否可以用来当作识别WSL环境的特征呢？）</p>
+</li>
+</ol>
+<h2 id="9-crackinstaller"><a href="#9-crackinstaller" class="headerlink" title="9-crackinstaller"></a>9-crackinstaller</h2><p>对于像我这样不熟悉windows的来说，这题很复杂</p>
+<p>题目总共给的就一个文件 <code>crackstaller.exe</code></p>
+<p>这个文件的行为像一个dropper</p>
+<p>他里面内嵌(embedded)了3个二进制文件</p>
+<p>首先crackstaller其实是整个crackme的安装器</p>
+<p>在mian之前，会释放出<code>C:\Windows\System32\cfs.dll</code></p>
+<p>以及加载<code>DriverBootstrap</code>，其具体表现还是一个PE文件，实际是一个<code>.sys</code></p>
+<p>在官方wp中他把这两个binary叫做 <code>capcom.sys</code>和<code>driver.sys</code></p>
+<p>官方wp说到，binary里面用到了chacha20解密，然后再进行lznt1解压缩</p>
+<p>在实际逆向过程，调试直接跳过了这步</p>
+<p>其在释放出capcom.sys后，会通过<code>DeviceIoControl</code>调用<code>0xAA013044</code>的处理</p>
+<p>实际上capcom.sys的作用是<code>disable SMEP（Supervisor Mode Execution Prevention）</code></p>
+<p>并且同时，会在capcom上加载driver.sys</p>
+<p>整个过程，实际上是关闭了SMEP保护，然后加载driver.sys到用户层，通过文件头找到DriverBootstrap调用</p>
+<p>其实相当于运行了一个shellcode</p>
+<p>而运行shellcode之前，crackstaller通过一系列操作吧driver.sys加载到内存上，为了保证其能正常运行，并且把导入函数通过参数的方式传入DriverBootstrap</p>
+<p>而中间还有个非常鸡贼的操作</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/9-patch.png" alt="9-patch"></p>
+<p>把整个driver.sys搜索一遍，把0xDC16F3C3B57323 patch成 “BBACABA”</p>
+<p>在逆driver.sys的时候能发现，这个其实是解密出password的密钥，所以也难怪我一开始直接逆怎么都解不出真实值</p>
+<p>driver.sys通过<code>CmRegisterCallbackEx((PEX_CALLBACK_FUNCTION)Function, &amp;Altitude, a1, a1, &amp;Cookie, 0i64);</code>注册了个回调函数</p>
+<p>这个函数，搜了一大堆文档，最后发现是</p>
+<blockquote>
+<p>which is called every time a thread performs an operation on the registry.</p>
+</blockquote>
+<p>里面用<code>ZwCreateKey(&amp;KeyHandle, KEY_ALL_ACCESS, &amp;ObjectAttributes, 0, &amp;Class, 0, Argument2-&gt;Disposition);</code></p>
+<p>Class里面包含了解密出来的password <code>H@n $h0t FiRst!</code></p>
+<p>这一步ZwCreateKey其实我完全没理解是在干什么</p>
+<p>官方wp说，他把password储存 in a  registry class string （class type string？）</p>
+<p>当使用<code>RegCreateKeyEx</code>创建key时，lpClass可以被忽略，被设置成NULL</p>
+<blockquote>
+<p>lpClass</p>
+<p>​    A pointer to a buffer that receives the user-defined class of the key. This parameter can be <strong>NULL</strong>.</p>
+</blockquote>
+<p>官方wp写到因为这个参数从来不会被使用，所以数据可以储存在里面，并且通过regedit、reg.exe等工具都不会返回class strings</p>
+<p>正确的提取方式是下面的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">PrintPassword</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    HKEY hkey = <span class="literal">NULL</span>;</span><br><span class="line">    CHAR password[MAX_PATH] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    DWORD buf_size = MAX_PATH;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ERROR_SUCCESS != (result = RegOpenKeyA(</span><br><span class="line">        HKEY_CLASSES_ROOT,</span><br><span class="line">        <span class="string">&quot;CLSID\\&#123;CEEACC6E-CCB2-4C4F-BCF6-D2176037A9A7&#125;\\Config,</span></span><br><span class="line"><span class="string">        &amp;hkey))) return;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    if (ERROR_SUCCESS != (result = RegQueryInfoKeyA(</span></span><br><span class="line"><span class="string">        hkey,</span></span><br><span class="line"><span class="string">        password,</span></span><br><span class="line"><span class="string">        &amp;buf_size,</span></span><br><span class="line"><span class="string">        NULL,</span></span><br><span class="line"><span class="string">        NULL, NULL, NULL, NULL,</span></span><br><span class="line"><span class="string">        NULL, NULL, NULL, NULL))) return;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    if (0 == buf_size) return;</span></span><br><span class="line"><span class="string">    printf(“password: %s\n”, password);</span></span><br><span class="line"><span class="string">    return;</span></span><br><span class="line"><span class="string">&#125;</span></span><br></pre></td></tr></table></figure>
+<p>而剩下的部分，就是注册得到的COM server <code>credHelper.dll</code></p>
+<p>通过COM与该server交互，就能读到flag</p>
+<p>当然，我当时并不懂COM，完全靠猜，把credHelper.dll翻了个底朝天找出来的= =</p>
+<p>并且时通过静态解出来，这题如果能调到DriverBootstrap，能省很多事</p>
+<p>而整个crackstaller的本质作用是安装了一个COM server，本身并不具备正常crackme拥有的输入</p>
+<p>因此如果要正常交互还是需要用户写一个COM client去跟他交互，再从注册表读出flag</p>
+<hr>
+<p>这题如果没搞懂的话强烈建议去看官方wp，包括里面描述到的COM细节</p>
+<p>另外，在解密一些字符串的时候，我用到了flare团队中的一些ida插件，用来自动解密字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> print_function</span><br><span class="line"><span class="keyword">import</span> flare_emu</span><br><span class="line"></span><br><span class="line"><span class="comment"># def decrypt(argv):</span></span><br><span class="line"><span class="comment">#     myEH = flare_emu.EmuHelper()</span></span><br><span class="line"><span class="comment">#     myEH.emulateRange(myEH.analysisHelper.getNameAddr(&quot;dec3_7FF6FDF81C34&quot;), registers = &#123;&quot;arg1&quot;:argv[0], &quot;arg2&quot;:argv[1], &quot;arg3&quot;:argv[2]&#125;)</span></span><br><span class="line"><span class="comment">#     return myEH.getEmuString(0x7FF6FDFB94E0).decode(&#x27;utf-8&#x27;)</span></span><br><span class="line">    </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">decrypt</span>(<span class="params">data, l</span>):</span></span><br><span class="line">    key = [<span class="number">0x3C</span>, <span class="number">0x67</span>, <span class="number">0x7E</span>, <span class="number">0x7B</span>, <span class="number">0x3C</span>, <span class="number">0x69</span>, <span class="number">0x74</span>, <span class="number">0x00</span>]</span><br><span class="line">    ret = <span class="string">b&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">        ret += <span class="built_in">bytes</span>([data[i] ^ key[i % <span class="number">7</span>]])</span><br><span class="line">    <span class="keyword">return</span> ret.decode(<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">    </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">iterateCallback</span>(<span class="params">eh, address, argv, userData</span>):</span></span><br><span class="line">    s = decrypt(eh.getEmuBytes(argv[<span class="number">0</span>], argv[<span class="number">1</span>]), argv[<span class="number">1</span>])</span><br><span class="line">    <span class="comment"># s = decrypt(argv)</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;%s: %s&quot;</span> % (eh.hexString(address), s))</span><br><span class="line">    eh.analysisHelper.setComment(address, s, <span class="literal">False</span>)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:   </span><br><span class="line">    eh = flare_emu.EmuHelper()</span><br><span class="line">    <span class="comment"># eh.iterate(eh.analysisHelper.getNameAddr(&quot;dec2struct_140004D60&quot;), iterateCallback)</span></span><br><span class="line">    eh.iterate(eh.analysisHelper.getNameAddr(<span class="string">&quot;dec4_7FF6F9C11CA8&quot;</span>), iterateCallback)</span><br></pre></td></tr></table></figure>
+<h2 id="10-break"><a href="#10-break" class="headerlink" title="10-break"></a>10-break</h2><p>终于迎来了一道ELF的题目，原本以为这会比较常规一些，没想到，作者这操作也太魔鬼了</p>
+<p>首先，粗略的看一下main函数，会发现只是一个非常简单的strcmp</p>
+<p>借用官方wp的图，输入这个字符串会提示错误</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/10-trick.png" alt="10-trick"></p>
+<p>那当然不可能这么简单啦</p>
+<p>那么看一下.init，会发现两个函数</p>
+<p>一个叫<code>parent_sub</code> 另一个叫<code>first_fork</code></p>
+<p>而在里面还会出现另一个second_chlid，通过fork创建了两个子进程，总共算起来是3个进程</p>
+<p>在运行起来后通过ps就能看出来</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root       154  0.0  0.0   3644   540 pts/2    t+   10:27   0:00 ./break</span><br><span class="line">root       155  0.0  0.0   3780    64 pts/2    S+   10:27   0:00 ./break</span><br><span class="line">root       156  0.0  0.0   3780    80 pts/2    S+   10:27   0:00 ./break</span><br></pre></td></tr></table></figure>
+<hr>
+<p>首先，我们区分三个进程为parent、first_child、second_child</p>
+<p>在这三个进程中</p>
+<p>first_child —–(ptrace attach)——-&gt; parent</p>
+<p>second_child –(ptrace attach)——&gt; first_child</p>
+<p>接下来说一下每个ptrace都在做什么</p>
+<p><strong>first_child</strong>: 通过<code>ptrace_me(PTRACE_SYSEMU, parent_pid, 0, 0)</code>捕获parent进程的syscall</p>
+<p>并根据不同的syscall进行不同的运算</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">v25 = <span class="number">0x1337CAFE</span> * (v15.orig_eax ^ <span class="number">0xDEADBEEF</span>);</span><br><span class="line">...</span><br><span class="line">                <span class="keyword">switch</span> ( v25 )</span><br><span class="line">                &#123;</span><br><span class="line">                  <span class="keyword">case</span> <span class="number">0x4A51739A</span>:              <span class="comment">// eax = 0x5c truncate</span></span><br><span class="line">                    readdata_fromaddr_804BBF8(parent_pid, v15.ebx, (<span class="keyword">int</span> *)&amp;outbuf, <span class="number">40000</span>);</span><br><span class="line">                    <span class="keyword">for</span> ( i = <span class="number">0</span>; i &lt;= <span class="number">39999</span> &amp;&amp; *((_BYTE *)&amp;outbuf + i); ++i )</span><br><span class="line">                    &#123;</span><br><span class="line">                      v14[i] = *((_BYTE *)&amp;outbuf + i);</span><br><span class="line">                      <span class="keyword">if</span> ( v32 == <span class="number">-1</span> &amp;&amp; v14[i] != byte_81A5100[i] )</span><br><span class="line">                        v32 = i;                <span class="comment">// memcmp</span></span><br><span class="line">                    &#125;</span><br><span class="line">                    v32 = v30(<span class="number">0xA4F57126</span>, userinput_81A56C0, v32);</span><br><span class="line">                    v15.eax = v32;</span><br><span class="line">                    ptrace_me(PTRACE_SETREGS, parent_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;v15);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="number">0x7E85DB2A</span>:              <span class="comment">// eax = 0x4 write</span></span><br><span class="line">                    size = v15.edx;</span><br><span class="line">                    buf = <span class="built_in">malloc</span>(v15.edx);      <span class="comment">// emu puts()</span></span><br><span class="line">                    readdata_fromaddr_804BBF8(parent_pid, v15.ecx, (<span class="keyword">int</span> *)buf, size);</span><br><span class="line">                    write(STDOUT_FILENO, buf, size);</span><br><span class="line">                    v15.eax = size;</span><br><span class="line">                    ptrace_me(PTRACE_SETREGS, parent_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;v15);</span><br><span class="line">                    <span class="built_in">free</span>(buf);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                  <span class="keyword">case</span> <span class="number">0x3DFC1166</span>:              <span class="comment">// 0x22 nice</span></span><br><span class="line">                    buf = xor_withbuf_idx_8056281(v15.ebx);<span class="comment">// why? It call dec_idx in true.</span></span><br><span class="line">                    v5 = <span class="built_in">strlen</span>((<span class="keyword">const</span> <span class="keyword">char</span> *)buf);</span><br><span class="line">                    writedata_toaddr_804BB2D(parent_pid, (<span class="keyword">int</span>)tmpstring_81A52A0, (<span class="keyword">int</span> *)buf, v5 + <span class="number">1</span>);</span><br><span class="line">                    <span class="built_in">free</span>(buf);                  <span class="comment">// return some string to tmpstring</span></span><br><span class="line">                    v15.eax = <span class="number">0</span>;</span><br><span class="line">                    ptrace_me(<span class="number">13</span>, parent_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;v15);</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>second_child</strong>: 通过<code>PTRACE_PEEKDATA</code>、<code>PTRACE_GETREGS</code>等捕获<code>SIGSEGV</code>，并根据栈上的数据进行运算</p>
+<p>并根据arg1的值选择不同的计算，返回值放到eax上，这有点类似一个VM fetch instruction然后解析执行的过程</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( data == SIGSEGV )                  <span class="comment">// 0xB7F</span></span><br><span class="line">        &#123;</span><br><span class="line">          ptrace_me(PTRACE_GETREGS, child1_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;reg_15);</span><br><span class="line">          v9 = ptrace_me(PTRACE_PEEKDATA, child1_pid, reg_15.esp, <span class="number">0</span>);</span><br><span class="line">          arg1 = ptrace_me(PTRACE_PEEKDATA, child1_pid, reg_15.esp + <span class="number">4</span>, <span class="number">0</span>);</span><br><span class="line">          arg2 = ptrace_me(PTRACE_PEEKDATA, child1_pid, reg_15.esp + <span class="number">8</span>, <span class="number">0</span>);<span class="comment">// point at [Memory 0] function call in child1</span></span><br><span class="line">          arg3 = ptrace_me(PTRACE_PEEKDATA, child1_pid, reg_15.esp + <span class="number">12</span>, <span class="number">0</span>);</span><br><span class="line">  ...</span><br><span class="line">    </span><br><span class="line">  ...  </span><br><span class="line">            <span class="keyword">switch</span> ( arg1 )</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="keyword">case</span> <span class="number">0xA4F57126</span>:</span><br><span class="line">                reg_15.eax = arg3;</span><br><span class="line">                <span class="keyword">if</span> ( arg3 != <span class="number">-1</span> )</span><br><span class="line">                &#123;</span><br><span class="line">                  readdata_fromaddr_804BBF8(child1_pid, arg2, (<span class="keyword">int</span> *)userinput_81A56C0, <span class="number">62</span>);</span><br><span class="line">                  <span class="keyword">if</span> ( <span class="built_in">strncmp</span>(&amp;userinput_81A56C0[<span class="number">48</span>], <span class="string">&quot;@no-flare.com&quot;</span>, <span class="number">0xD</span>u) )</span><br><span class="line">                    reg_15.eax = <span class="number">-1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">              <span class="keyword">case</span> <span class="number">0xB82D3C24</span>:</span><br><span class="line">                reg_15.eax = arg2 + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">              <span class="keyword">case</span> <span class="number">0x91BDA628</span>:</span><br><span class="line">                reg_15.eax = (<span class="number">16</span> * (arg2 - <span class="number">1</span>)) | ((_BYTE)arg3 - <span class="number">1</span>) &amp; <span class="number">0xF</span>;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">  ...</span><br></pre></td></tr></table></figure>
+<p>因为second_child捕获的是first_child中的SIGSEGV，所以正常情况下second_child都是处于Sleep状态</p>
+<p>而first_child捕获的是parent中的系统调用，在没有系统调用的情况下也是处于Sleep状态</p>
+<p>这个从开始通过ps查看的进程信息就能看出</p>
+<p><code>S    interruptible sleep (waiting for an event to complete)</code></p>
+<p>在first_child开始时，会通过<code>ptrace_me(PTRACE_POKEDATA, parent_pid, (int)sub_8048CDB, 0xB0F)</code></p>
+<p>把sub_8048CDB开头字节patch掉，而这个函数正是main函数进去调用的strcmp的函数</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_BOOL4 __cdecl <span class="title">sub_8048CDB</span><span class="params">(<span class="keyword">char</span> *s1)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">strcmp</span>(s1, <span class="string">&quot;sunsh1n3_4nd_r41nb0ws@flare-on.com&quot;</span>) == <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当开头被patch掉后，main函数执行到这里的时候，会产生<code>Illegal Instruction</code>错误，而这个错误正好被first_child捕获</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( (stat_loc[<span class="number">0</span>] &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span> == SIGILL )<span class="comment">// Illegal Instruction</span></span><br><span class="line">&#123;</span><br><span class="line">  v7 = <span class="built_in">strlen</span>(userinput_81A56C0);</span><br><span class="line">  writedata_toaddr_804BB2D(parent_pid, (<span class="keyword">int</span>)userinput_81A56C0, (<span class="keyword">int</span> *)userinput_81A56C0, v7);</span><br><span class="line">  ptrace_me(PTRACE_GETREGS, parent_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;v15);</span><br><span class="line">  v21 = v15.esp;</span><br><span class="line">  <span class="keyword">if</span> ( ptrace_me(PTRACE_POKEDATA, parent_pid, v15.esp + <span class="number">4</span>, (<span class="keyword">int</span>)userinput_81A56C0) == <span class="number">-1</span> )</span><br><span class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">  v15.eip = (<span class="keyword">int</span>)rm_rf;</span><br><span class="line">  ptrace_me(PTRACE_SETREGS, parent_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;v15);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>而通过这个处理，把parent的执行流控制到函数<code>rm_rf</code>上</p>
+<p>这个函数非常鸡贼</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">_BOOL4 __cdecl <span class="title">rm_rf</span><span class="params">(<span class="keyword">char</span> *userinput)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  _BOOL4 result; <span class="comment">// eax</span></span><br><span class="line">  <span class="keyword">char</span> v2[<span class="number">176</span>]; <span class="comment">// [esp+4h] [ebp-D4h] BYREF</span></span><br><span class="line">  <span class="keyword">char</span> *argv[<span class="number">5</span>]; <span class="comment">// [esp+B4h] [ebp-24h] BYREF</span></span><br><span class="line">  <span class="keyword">int</span> v4; <span class="comment">// [esp+C8h] [ebp-10h]</span></span><br><span class="line">  <span class="keyword">size_t</span> v5; <span class="comment">// [esp+CCh] [ebp-Ch]</span></span><br><span class="line"></span><br><span class="line">  v5 = <span class="built_in">strlen</span>(userinput);</span><br><span class="line">  argv[<span class="number">0</span>] = <span class="string">&quot;rm&quot;</span>;</span><br><span class="line">  argv[<span class="number">1</span>] = <span class="string">&quot;-rf&quot;</span>;</span><br><span class="line">  argv[<span class="number">2</span>] = <span class="string">&quot;--no-preserve-root&quot;</span>;</span><br><span class="line">  argv[<span class="number">3</span>] = <span class="string">&quot;/&quot;</span>;</span><br><span class="line">  argv[<span class="number">4</span>] = <span class="number">0</span>;</span><br><span class="line">  execve(userinput, argv, <span class="number">0</span>);</span><br><span class="line">  --v5;</span><br><span class="line">  v4 = -nice(<span class="number">165</span>);</span><br><span class="line">  aes_key_expension_804B495((<span class="keyword">int</span>)v2, v4);</span><br><span class="line">  aes_decrypt_804BABC((<span class="keyword">int</span>)v2, (<span class="keyword">int</span>)&amp;unk_81A50EC);</span><br><span class="line">  aes_decrypt_804BABC((<span class="keyword">int</span>)v2, (<span class="keyword">int</span>)&amp;unk_81A50F0);</span><br><span class="line">  aes_decrypt_804BABC((<span class="keyword">int</span>)v2, (<span class="keyword">int</span>)&amp;unk_81A50F4);</span><br><span class="line">  aes_decrypt_804BABC((<span class="keyword">int</span>)v2, (<span class="keyword">int</span>)&amp;unk_81A50F8);</span><br><span class="line">  <span class="keyword">if</span> ( !<span class="built_in">memcmp</span>(userinput, &amp;unk_81A50EC, <span class="number">0x10</span>u) )<span class="comment">// w3lc0mE_t0_Th3_l</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;unk_81A50EC, <span class="number">0</span>, <span class="number">0x10</span>u);</span><br><span class="line">    result = sub_8048F05(userinput + <span class="number">16</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;unk_81A50EC, <span class="number">0</span>, <span class="number">0x10</span>u);</span><br><span class="line">    result = <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>乍一看，他还会先执行<code>rm -rf --no-preserve-root /</code>，算是个恶趣味了</p>
+<p>但是实际上，execve这个系统调用会被first_child捕获，进行的实际是别的操作</p>
+<p>如果哪个人把first_child这个进程kill掉了，那么，恭喜～获得 <code>rm -rf /</code>大礼包</p>
+<p>在看到下面的memcmp，其实就能想到我直接调试到这然后直接读内存不就好了</p>
+<p>但是，这整个程序是通过ptrace驱动的</p>
+<p>而linux上的调试器也是通过ptrace实现的，一个经典的反调试是，当一个进程已经被ptrace，就不能再被另一个进程ptrace</p>
+<p>所以有反调试会通过ptrace自己来反调试，但是这种反调试很好过，只要把ptrace自己的代码patch掉就好了</p>
+<p>但是这题不行，因为整个执行流都需要靠ptace去驱动，这没办法去掉。</p>
+<p>开始我是在想通过虚拟机之类的方法捕获执行流的，但是发现qemu对其中一些系统调用并没有模拟好，包括ptrace的一些功能</p>
+<p>导致整个题目没法正常跑通。后来也想过使用frida等工具进行插桩，但是实际上frida也是通过ptrace再插桩的</p>
+<p>也想过用pintool等一些工具去尝试，当时忘了什么原因，也报了一些错误。</p>
+<p>最后其实是通过libc hook来输出一些中间值的。</p>
+<p>简单来说就是通过<code>LD_PRELOAD=$(pwd)/libchook.so ./10_-_break/break</code></p>
+<p>对libc进行hook</p>
+<h3 id="stage1"><a href="#stage1" class="headerlink" title="stage1"></a>stage1</h3><p>通过这个方式直接输出了第一部分的flag</p>
+<p><code>w3lc0mE_t0_Th3_l</code></p>
+<p>官方wp提到了另外一种方法，就是通过linux的mem接口</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/10-firststage.png" alt="10-firststage"></p>
+<h3 id="stage2"><a href="#stage2" class="headerlink" title="stage2"></a>stage2</h3><p>然后stage2，stage2是对代码段一大块区域进行解密的操作。然后这一大块的前32字节就是stage2的flag</p>
+<p>这个函数里面会发现这样的调用</p>
+<p><code>0804C40C: ((void (__cdecl *)(void *, int *))MEMORY[0])(&amp;loc_804C3C4, &amp;v5);</code></p>
+<p>这个调用乍一看毫无道理，函数地址为0，但是这样的代码会引起segmentfault</p>
+<p>SIGSEGV会被ptrace捕获，下面是first_child中捕获SIGSEGV的代码</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> ( (stat_loc[<span class="number">0</span>] &amp; <span class="number">0xFF00</span>) &gt;&gt; <span class="number">8</span> == SIGSEGV )</span><br><span class="line">&#123;</span><br><span class="line">  ptrace_me(PTRACE_GETREGS, parent_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;v15);</span><br><span class="line">  v20 = ptrace_me(PTRACE_PEEKDATA, parent_pid, v15.esp, <span class="number">0</span>);</span><br><span class="line">  v19 = ptrace_me(PTRACE_PEEKDATA, parent_pid, v15.esp + <span class="number">4</span>, <span class="number">0</span>);</span><br><span class="line">  addr = ptrace_me(PTRACE_PEEKDATA, parent_pid, v15.esp + <span class="number">8</span>, <span class="number">0</span>);</span><br><span class="line">  data = ptrace_me(PTRACE_PEEKDATA, parent_pid, addr, <span class="number">0</span>) + <span class="number">1</span>;</span><br><span class="line">  v15.esp += <span class="number">4</span>;</span><br><span class="line">  <span class="keyword">if</span> ( data &gt; <span class="number">15</span> )</span><br><span class="line">  &#123;                                   <span class="comment">// loop 16</span></span><br><span class="line">    v15.eip = v20;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">  &#123;</span><br><span class="line">    v15.eip = v19;</span><br><span class="line">    ptrace_me(PTRACE_POKEDATA, parent_pid, addr, data);</span><br><span class="line">    v15.esp += <span class="number">16</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ptrace_me(PTRACE_SETREGS, parent_pid, <span class="number">0</span>, (<span class="keyword">int</span>)&amp;v15);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>实际上，这就是一个从当前地址到第一个参数<code>0x804C3C4</code>的循环，循环次数为16</p>
+<p>而这个函数的运算则是使用了许多奇怪的系统调用，而实际上这些系统调用都被替换成first_child中的操作</p>
+<p>而当时我好像也没太识别出这个这是什么算法，就直接抄写并写了个逆，中间还因为一些抄写错误卡了一段时间= =</p>
+<p>最后还是通过libc hook进行验证才写对的</p>
+<p>Flag2: <code>4nD_0f_De4th_4nd_d3strUct1oN_4nd</code></p>
+<p>也贴一下代码吧，官方wp提到，这个一个Custom ARX Feistel Cipher</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python3</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">enc_flag = [<span class="number">0x64</span>, <span class="number">0xA0</span>, <span class="number">0x60</span>, <span class="number">0x02</span>, <span class="number">0xEA</span>, <span class="number">0x8A</span>, <span class="number">0x87</span>, <span class="number">0x7D</span>, <span class="number">0x6C</span>, <span class="number">0xE9</span>, <span class="number">0x7C</span>, <span class="number">0xE4</span>, <span class="number">0x82</span>, <span class="number">0x3F</span>, <span class="number">0x2D</span>, <span class="number">0x0C</span>, <span class="number">0x8C</span>, <span class="number">0xB7</span>, <span class="number">0xB5</span>, <span class="number">0xEB</span>, <span class="number">0xCF</span>, <span class="number">0x35</span>, <span class="number">0x4F</span>, <span class="number">0x42</span>, <span class="number">0x4F</span>, <span class="number">0xAD</span>, <span class="number">0x2B</span>, <span class="number">0x49</span>, <span class="number">0x20</span>, <span class="number">0x28</span>, <span class="number">0x7C</span>, <span class="number">0xE0</span>]</span><br><span class="line"></span><br><span class="line">constant_s = <span class="string">b&#x27;This string has no purpose and is merely here to waste your time.&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># constant_s = b&#x27;Wasting your time6&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">PAIR64</span>(<span class="params">a, b</span>):</span></span><br><span class="line">    <span class="keyword">return</span> (a &lt;&lt; <span class="number">32</span>) + b</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">init</span>(<span class="params">a1, s, l</span>):</span></span><br><span class="line">    <span class="keyword">global</span> data</span><br><span class="line">    ret = a1</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(l):</span><br><span class="line">        v3 = (s[i] ^ ret) &amp; <span class="number">0xff</span></span><br><span class="line">        low = ((ret &gt;&gt; <span class="number">8</span>) ^ data[<span class="number">2</span>*v3]) &amp; <span class="number">0xffffffff</span></span><br><span class="line">        hi = ((((ret &gt;&gt; <span class="number">32</span>) &amp; <span class="number">0xffffffff</span>) &gt;&gt; <span class="number">8</span>) ^ data[<span class="number">2</span>*v3+<span class="number">1</span>]) &amp; <span class="number">0xffffffff</span></span><br><span class="line">        ret = PAIR64(hi, low)</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">count1</span>(<span class="params">n</span>):</span></span><br><span class="line">    ret = <span class="number">0</span></span><br><span class="line">    <span class="keyword">while</span> n != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">if</span> (n &amp; <span class="number">1</span>) != <span class="number">0</span>:</span><br><span class="line">            ret += <span class="number">1</span></span><br><span class="line">        n &gt;&gt;= <span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">buf_round</span>(<span class="params">a, buf</span>):</span></span><br><span class="line">    flags = a</span><br><span class="line">    </span><br><span class="line">    buf[<span class="number">7</span>] = flags &amp; <span class="number">0xffffffff</span></span><br><span class="line">    buf[<span class="number">19</span>] = (flags &gt;&gt; <span class="number">32</span>) &amp; <span class="number">0xffffffff</span></span><br><span class="line">    buf[<span class="number">41</span>] = (count1(flags) &gt;&gt; <span class="number">1</span>)</span><br><span class="line">    v6 = flags &amp; <span class="number">1</span></span><br><span class="line">    flags &gt;&gt;= <span class="number">1</span>        </span><br><span class="line">    <span class="keyword">if</span> v6 == <span class="number">1</span>:</span><br><span class="line">        v8 = <span class="number">0x9E3779B9C6EF3720</span></span><br><span class="line">        flags ^= v8</span><br><span class="line">    <span class="keyword">return</span> flags, buf</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">ror</span>(<span class="params">a1, a2</span>):</span></span><br><span class="line">    <span class="keyword">return</span> ((a1 &gt;&gt; (a2 &amp; <span class="number">0x1F</span>)) | (a1 &lt;&lt; (-(a2 &amp; <span class="number">0x1F</span>) &amp; <span class="number">0x1F</span>))) &amp; <span class="number">0xffffffff</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">catch_chmod</span>(<span class="params">buf, hi</span>):</span></span><br><span class="line">    v2 = (hi + buf[<span class="number">7</span>]) &amp; <span class="number">0xffffffff</span></span><br><span class="line">    v3 = ror(v2, buf[<span class="number">41</span>])</span><br><span class="line">    <span class="keyword">return</span> v3 ^ buf[<span class="number">19</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enc_once</span>(<span class="params">out, num, buf</span>):</span></span><br><span class="line">    v7 = num</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        out, buf = buf_round(out, buf)</span><br><span class="line">        hi = (v7 &gt;&gt; <span class="number">32</span>) &amp; <span class="number">0xffffffff</span></span><br><span class="line">        <span class="comment"># print(&quot;hi: &quot;, hex(hi))</span></span><br><span class="line">        v3 = catch_chmod(buf, hi)</span><br><span class="line">        low = (v7 ^ v3) &amp; <span class="number">0xffffffff</span></span><br><span class="line">        v7 = PAIR64(low, hi)</span><br><span class="line">    num = PAIR64(v7 &amp; <span class="number">0xffffffff</span>, (v7 &gt;&gt; <span class="number">32</span>) &amp; <span class="number">0xffffffff</span>)</span><br><span class="line">    <span class="keyword">return</span> num</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">enc</span>(<span class="params">num_buf</span>):</span></span><br><span class="line">    <span class="keyword">global</span> constant_s</span><br><span class="line">    out = init(<span class="number">0</span>, constant_s, <span class="built_in">len</span>(constant_s)) <span class="comment"># 0x7d08ff3b28b975ec</span></span><br><span class="line">    <span class="comment"># memcpy(&amp;num_buf, flagfrom16, 0x20u);</span></span><br><span class="line">    buf = [<span class="number">0</span>] * <span class="number">496</span> </span><br><span class="line">    ret_arr = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(num_buf)):</span><br><span class="line">        num = enc_once(out, num_buf[i], buf)</span><br><span class="line">        ret_arr.append(num)</span><br><span class="line">    <span class="keyword">return</span> ret_arr</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dec_once</span>(<span class="params">out, num, buf</span>):</span></span><br><span class="line">    buf_array = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        out, tmpbuf = buf_round(out, buf)</span><br><span class="line">        buf_array.append(<span class="built_in">list</span>(tmpbuf))</span><br><span class="line">        buf = tmpbuf</span><br><span class="line">    buf_array = buf_array[::-<span class="number">1</span>]</span><br><span class="line">    </span><br><span class="line">    v7 = PAIR64(num &amp; <span class="number">0xffffffff</span>, (num &gt;&gt; <span class="number">32</span>) &amp; <span class="number">0xffffffff</span>)</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">16</span>):</span><br><span class="line">        buf = buf_array[i]</span><br><span class="line">        low = v7 &amp; <span class="number">0xffffffff</span></span><br><span class="line">        v3 = catch_chmod(buf, low)</span><br><span class="line">        hi = (v7 &gt;&gt; <span class="number">32</span>) &amp; <span class="number">0xffffffff</span></span><br><span class="line">        hi ^= v3</span><br><span class="line">        v7 = PAIR64(low, hi)</span><br><span class="line">    <span class="keyword">return</span> v7</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">dec</span>(<span class="params">num_buf</span>):</span></span><br><span class="line">    <span class="keyword">global</span> constant_s</span><br><span class="line">    out = init(<span class="number">0</span>, constant_s, <span class="built_in">len</span>(constant_s)) <span class="comment"># 0x674a1dea4b695809</span></span><br><span class="line">    buf = [<span class="number">0</span>] * <span class="number">496</span></span><br><span class="line">    ret = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(num_buf)):</span><br><span class="line">        ret_num = dec_once(out, num_buf[i], buf)</span><br><span class="line">        ret.append(ret_num)</span><br><span class="line">    <span class="keyword">return</span> ret</span><br><span class="line">    </span><br><span class="line"><span class="keyword">import</span> struct</span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span>():</span></span><br><span class="line">    num_buf = struct.unpack(<span class="string">&quot;&lt;QQQQ&quot;</span>, <span class="built_in">bytearray</span>(enc_flag))</span><br><span class="line">    out_buf = dec(num_buf)</span><br><span class="line">    flag = struct.pack(<span class="string">&quot;&lt;QQQQ&quot;</span>, *out_buf)</span><br><span class="line">    <span class="built_in">print</span>(flag)</span><br><span class="line"></span><br><span class="line">main()</span><br></pre></td></tr></table></figure>
+<h3 id="stage3"><a href="#stage3" class="headerlink" title="stage3"></a>stage3</h3><p>同样的代码，把后续代码段的代码也解密出来了</p>
+<p>其实当时这个后续代码段我没看出来是怎么跳转过去的，然后没搞懂就直接顺着代码继续逆了</p>
+<p>现在看官方wp</p>
+<p>说的是下面代码的栈溢出，原本v30是0，会导致SIGSEGV被second_child捕获，从而调用到second_child中的cmp</p>
+<p>但实际上，这个栈溢出会一直到很后边才会停止，这个取决于outbuf[i]是否为0，而数据中第一个出现0的地方前面存在一个疑似地址的值</p>
+<p>而这个值刚好溢出到把v30给覆盖了，而覆盖成0x08053b70，恰好为解密后的代码的入口点Orz</p>
+<p>这题目的操作真的太骚了</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/10-stackoverflow.png" alt="10-stackoverflow"></p>
+<p>而当时这个函数，有些函数逆着发现，存在类似进位的操作，猜测这是一个大整数库，照着这个思路很快就把他算术逻辑逆出来了</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/10-hint.png" alt="10-hint"></p>
+<p>甚至当中胡乱解密解出来了一张图片的提示，让我发现其中一个函数其实是除法23333</p>
+<p>最后逆出来的算术如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">const1 = <span class="number">0xd1cc3447d5a9e1e6adae92faaea8770db1fab16b1568ea13c3715f2aeba9d84f</span></span><br><span class="line">const2 = <span class="number">0xc10357c7a53fa2f1ef4a5bf03a2d156039e7a57143000c8d8f45985aea41dd31</span></span><br><span class="line">const3 = <span class="number">0x480022d87d1823880d9e4ef56090b54001d343720dd77cbc5bc5692be948236c</span></span><br><span class="line">const4 = <span class="number">0x480022d87d1823880d9e4ef56090b54001d343720dd77cbc5bc5692be948236c</span></span><br><span class="line">const5 = <span class="number">0xd036c5d4e7eda23afceffbad4e087a48762840ebb18e3d51e4146f48c04697eb</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># v9 = rand % const1</span></span><br><span class="line"><span class="comment"># v11 = pow(const2, v9, const1)</span></span><br><span class="line"><span class="comment"># v13 = pow(const4, v9, const1)</span></span><br><span class="line"><span class="comment"># const5 == flag * v11 % const1</span></span><br><span class="line"><span class="comment"># const3 == v13</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 然后使用sage去解了</span></span><br><span class="line">v9 = discrete_log(const3,mod(const4,const1)) <span class="comment"># 因为const3和const4是一样的，这个是存在bug的</span></span><br><span class="line"><span class="built_in">print</span>(v9) </span><br><span class="line"><span class="comment"># 1 </span></span><br><span class="line"></span><br><span class="line">v11 = const2 % const1</span><br><span class="line">flag = <span class="built_in">hex</span>(const5 * v11.inverse_mod(const1) % const1)</span><br><span class="line"><span class="built_in">bytearray</span>.fromhex(flag[<span class="number">2</span>:])[::-<span class="number">1</span>]</span><br><span class="line"><span class="comment"># bytearray(b&#x27;_n0_puppi3s@flare-on.com&#x27;)</span></span><br></pre></td></tr></table></figure>
+<p>获得最终的flag</p>
+<p><a href="mailto:`w3lc0mE_t0_Th3_l4nD_0f_De4th_4nd_d3strUct1oN_4nd_n0_puppi3s@flare-on.com">`w3lc0mE_t0_Th3_l4nD_0f_De4th_4nd_d3strUct1oN_4nd_n0_puppi3s@flare-on.com</a> `</p>
+<h2 id="11-rabbithole"><a href="#11-rabbithole" class="headerlink" title="11-rabbithole"></a>11-rabbithole</h2><p>这题也是够狠</p>
+<p>flareon官方直接把一个现成的病毒进行去毒处理，然后做成一道题给我们</p>
+<p>首先把我自己的做题过程记录下来吧，整个过程花了很长时间，重复造了一些轮子。</p>
+<hr>
+<p>首先题目拿到手的是一个.dat的文件</p>
+<p>file一下</p>
+<p><code>NTUSER.DAT: MS Windows registry file, NT/2000 or above</code></p>
+<p>数据库文件，对windows不是很熟悉，于是网上瞎找这文件的打开方式，后来发现其实是可以直接从regedit中打开的</p>
+<p>这其实是<code>user registry hive</code>，这个文件通常储存在<code>%USERPROFILE%</code>中，在win10下就是<code>C:/Users/&lt;username&gt;</code>里面</p>
+<p>参考<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/sysinfo/registry-hives">Registry Hives - Win32 apps | Microsoft Docs</a></p>
+<p>这个似乎就是每个用户自己的注册表数据</p>
+<p>然后我便开始瞎翻注册表，但是什么都没发现，里面的内容实在太多了</p>
+<p>然后就转想，开始网上搜索关于registry hive取证的内容</p>
+<p>很巧，最后被我找到了fireeye自己的一篇文章</p>
+<p><a target="_blank" rel="noopener" href="https://www.fireeye.com/blog/threat-research/2020/01/saigon-mysterious-ursnif-fork.html">SAIGON, the Mysterious Ursnif Fork | FireEye Inc</a></p>
+<p>这个时候看twitter上的讨论，一堆大佬在劝：善用搜索引擎，能为你省很多时间。</p>
+<p>看着很像呀，我还以为他们说的就是这个文章，于是我开始翻注册表，尝试找到类似开机启动的东西</p>
+<p>但是也还是什么都没发现，最后引起我的注意是<code>Software/Timerpro</code></p>
+<p>这名字看着像个定时器软件呀（事实证明，too naive，并且这真是巧合了）</p>
+<p>注册表这项里面，第一项就是一个powershell脚本</p>
+<p>开逆！</p>
+<p>这个脚本在做一些类似dll注入的操作，而dll则是从base64解码出来</p>
+<p>开始逆dll，发现。。真的复杂，有许多操作都不知道在干什么，而且，他也不是一个标准的dll格式</p>
+<p>整个文件格式很奇怪，但是按照正常的文件头偏移计算，又能索引到关键的地址</p>
+<p>用了上面文章中附录的一个脚本，转换成了PE文件 <strong>Shellcode Converter Script</strong></p>
+<p>代码很长一段，就不贴上来了，查看源码到<a target="_blank" rel="noopener" href="https://www.fireeye.com/blog/threat-research/2020/01/saigon-mysterious-ursnif-fork.html">SAIGON, the Mysterious Ursnif Fork | FireEye Inc</a></p>
+<p>整个dll也带一些混淆，像通过文件头的索引找到某个section，对section进行解密操作</p>
+<p>这个解密操作能够解密出来使用到的一些字符串内容。而xor解密的密钥则是跟文件的timestamp相关</p>
+<p>前面一系列解析文件头也包含了从文件头中找到这个timestamp</p>
+<p>然后，上面提到的那片文章给了我很大的帮助，他在文件末尾有嵌入了一些文件</p>
+<p>这个dll中，总共有两个embedded file</p>
+<p>并且，当中有用到的解压算法 aplib，文章中也有提到，这让我省了很多算法识别的时间</p>
+<p>两个embbedded file中，第一个是一个RSA public key，第二个是一堆字符串</p>
+<p>并且，通过<code>XorShiftRng</code>随机数算法，用sid作为种子的一部分，利用embbeded file中的字符串作为字符串表</p>
+<p>生成特定的字符串，用这个作为注册表中的key值，所以其实之前看到的Timerpro是随机数生成的字段，然后被我误解成一个软件了。。。</p>
+<p>当时还搜了好久这个软件，结果啥都没搜到</p>
+<p>而这个sid，则是从注册表中查找<code>S-1-5-21-3823548243-3100178540-2044283163-1006</code></p>
+<p>而RSA public key，则是用作其中一部分数据的解密，作为密钥使用serpent算法进行解密</p>
+<p>关于这个加密算法，我当时没有找到有现成的库，是找到了一个serpent的python代码</p>
+<p>而一开始没看仔细，直接使用ECB模式解密，发现失败，后来突然想到，会不会是CBC模式，然后手动改成了CBC模式</p>
+<p>初始化IV用0，解出</p>
+<p>而在Timerpro底下，包含了<code>Columncurrent</code> 、<code>Languagetheme</code>两个项，里面存着都是加密压缩过的PX文件，一个目录存32位，一个目录存64位，通过上面提到的方式解密出来</p>
+<p>什么是PX文件？其实是有点像一开始dump出来的dll，都不是一个正规的PE文件，但是通过病毒的加载器，能成功跑起来</p>
+<p>这个时候，我需要找到解析这些文件片段的方法</p>
+<p>网上搜了一圈</p>
+<p><a target="_blank" rel="noopener" href="https://research.checkpoint.com/2020/gozi-the-malware-with-a-thousand-faces/">https://research.checkpoint.com/2020/gozi-the-malware-with-a-thousand-faces/</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/0ver-fl0w/ISFB_Tools">https://github.com/0ver-fl0w/ISFB_Tools</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hasherezade/funky_malware_formats">https://github.com/hasherezade/funky_malware_formats</a></p>
+<p>好家伙，才发现我网上搜了一堆的算法，拼凑起来的脚本，人家早就整理好了= =，毕竟这是个现成的病毒样本</p>
+<p>浪费了贼多时间= =</p>
+<p>做到这我才知道他们说的善用搜索引擎的意思……</p>
+<p>在解出来后，主要关注几个</p>
+<p>这些文件跟开始的dll很类似，都用着相同的字符串加密方式，以及相同的embedded file嵌入方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">RowmapGuiprotocol：     (run time library)(rtl.dll)</span><br><span class="line">这个就复杂很多了，看了下没看到什么特别的，有文件操作、Event操作</span><br><span class="line">还有ShellExecuteW</span><br><span class="line">传进去的是不知名数据，暂时看不出什么，待继续看</span><br><span class="line">big switchcase here</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WebmodeThemearchive：(45a0fcd0.dll) (netwrk.dll)</span><br><span class="line">包含WinHttp的操作</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WebsoftwareProcesstemplate：(8576b0d0.dll 最开始的dll)</span><br><span class="line">跟原本的exe很多相似的函数片段，包含了PRnd、还有aplib等等</span><br><span class="line">似乎就是一模一样的&#x3D; &#x3D;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">WordlibSystemser：（d6306e08.dll） (explorer.dll)</span><br><span class="line">很多字符操作类似的东西，还有注册表设置等</span><br></pre></td></tr></table></figure>
+<p>其实这个病毒主要是怎么驱动起来的我也说不清楚，整个过程分析得我很混乱，并且由于我刚开始分析的是64位文件夹下的，没有关注32位文件夹下的，以为他们完全一样</p>
+<p>但是32位文件夹下还包含了一个配置文件，这个配置文件写明了最后储存到注册表的flag的加密密钥</p>
+<p>一直到最后卡住，找twitter的大佬询问才解决。</p>
+<p>然后，通过serpent解出储存在注册表中的flag</p>
+<p><a href="mailto:`r4d1x_m4l0rum_357_cup1d1745@flare-on.com">`r4d1x_m4l0rum_357_cup1d1745@flare-on.com</a>`</p>
+<hr>
+<p>由于这个病毒是从真实病毒修改而来的，而很多大佬本身就是做病毒研究的工作，因此，这题对他们来说做起来应该非常快</p>
+<p>而很多人都有提到，善用搜索引擎，因为确实是非常多人已经把里面算法、脚本打包好了</p>
+<p>这里再说一下开始时应该怎么分析。</p>
+<p>开始我是靠猜找到Timerpro这个关键的注册表项</p>
+<p>而实际上，有更加靠谱的办法。。</p>
+<p>微软有个工具叫autorun</p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sysinternals/downloads/autoruns">Autoruns for Windows - Windows Sysinternals | Microsoft Docs</a></p>
+<p>这个工具可以分析windows中所有自动启动项，包括注册表、定时任务等等</p>
+<p>借用官方wp的图，通过这个工具，能发现</p>
+<p><img src="/2020/11/05/Flare-On-2020-Writeup/11-autorun.png" alt="11-autorun"></p>
+<p>一个自动运行的脚本，而那串base64解码出来，正是Timerpro注册表项</p>
+<p><code>iex (gp &#39;HKCU:\SOFTWARE\Timerpro&#39;).D</code></p>
+<h2 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h2><p>最后这题，大佬们对这个病毒做了去毒操作，，真的太强了Orz</p>
+<p>并且patch了所有密钥相关的数据，避免病毒与原server交互</p>
+<p>整个过程其实我写得很流水账，因为感觉这题没有什么特别的技巧可言，更多是在逆向过程学到一个又一个的骚操作</p>
+<p>病毒分析真是有意思</p>
+<p>这片流水账wp也从2020年10月拖到2021年4月，emmmm半年了，因为之前忙毕设忙得焦头烂额</p>
+<p>不知道21年还有没有空继续打flareon了:) </p>
+<p>Respect!</p>
+
+      
+      
+        <div class="page-reward">
+          <p><a href="javascript:void(0)" onclick="dashangToggle()" class="dashang">赏</a></p>
+          <div class="hide_box"></div>
+          <div class="shang_box">
+            <a class="shang_close" href="javascript:void(0)" onclick="dashangToggle()">×</a>
+            <div class="shang_tit">
+              <p>赞助gif换电脑、吃双皮奶(逃</p>
+            </div>
+            <div class="shang_payimg">
+              <img src="/img/alipayimg.jpg" alt="扫码支持" title="扫一扫" />
+            </div>
+              <div class="pay_explain">扫码打赏，你说多少就多少</div>
+            <div class="shang_payselect">
+              
+                <div class="pay_item checked" data-id="alipay">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/alipay.png" alt="支付宝" /></span>
+                </div>
+              
+              
+                <div class="pay_item" data-id="wechat">
+                  <span class="radiobox"></span>
+                  <span class="pay_logo"><img src="/img/weixin.png" alt="微信" /></span>
+                </div>
+              
+            </div>
+            <div class="shang_info">
+              <p>打开<span id="shang_pay_txt">支付宝</span>扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+        </div>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/zepto/1.2.0/zepto.min.js"></script>
+        <script type="text/javascript">
+          $(".pay_item").click(function(){
+            $(this).addClass('checked').siblings('.pay_item').removeClass('checked');
+            var dataid=$(this).attr('data-id');
+            $(".shang_payimg img").attr("src","/img/"+dataid+"img.jpg");
+            $("#shang_pay_txt").text(dataid=="alipay"?"支付宝":"微信");
+          });
+          function dashangToggle(){
+            
+            $(".hide_box").fadeToggle();
+            $(".shang_box").fadeToggle();
+          }
+        </script>
+      
+    </div>
+    
+  </div>
+  
+    
+    <div class="copyright">
+        <p><span>本文标题:</span><a href="/2020/11/05/Flare-On-2020-Writeup/">Flare-On 2020 Writeup</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
+        <p><span>发布时间:</span>2020年11月05日 - 21时04分</p>
+        <p><span>最后更新:</span>2021年04月09日 - 09时24分</p>
+        <p>
+            <span>原始链接:</span><a class="post-url" href="/2020/11/05/Flare-On-2020-Writeup/" title="Flare-On 2020 Writeup">http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://giglf.github.io/2020/11/05/Flare-On-2020-Writeup/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <script src="/js/clipboard.min.js"></script>
+            <script> var clipboard = new Clipboard('.copy-path'); </script>
+        </p>
+        <p>
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+        </p>
+    </div>
+
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2019/10/08/Flare-On-2019-Writeup/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Flare-On 2019 Writeup</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-fidler"><span class="toc-number">1.</span> <span class="toc-text">1_-_fidler</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E2%80%93garbage-exe"><span class="toc-number">2.</span> <span class="toc-text">2–garbage.exe</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-Wednesday"><span class="toc-number">3.</span> <span class="toc-text">3-Wednesday</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-report-xls"><span class="toc-number">4.</span> <span class="toc-text">4-report.xls</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-TKApp"><span class="toc-number">5.</span> <span class="toc-text">5-TKApp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-codeit"><span class="toc-number">6.</span> <span class="toc-text">6-codeit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-re-crowd"><span class="toc-number">7.</span> <span class="toc-text">7-re_crowd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Aardvark"><span class="toc-number">8.</span> <span class="toc-text">8-Aardvark</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-crackinstaller"><span class="toc-number">9.</span> <span class="toc-text">9-crackinstaller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-break"><span class="toc-number">10.</span> <span class="toc-text">10-break</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#stage1"><span class="toc-number">10.1.</span> <span class="toc-text">stage1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stage2"><span class="toc-number">10.2.</span> <span class="toc-text">stage2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#stage3"><span class="toc-number">10.3.</span> <span class="toc-text">stage3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-rabbithole"><span class="toc-number">11.</span> <span class="toc-text">11-rabbithole</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">12.</span> <span class="toc-text">写在最后</span></a></li></ol>
+</div>
+<input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+<script>
+    var valueHide = "隐藏目录";
+    var valueShow = "显示目录";
+
+    if ($(".left-col").is(":hidden")) {
+        $("#tocButton").attr("value", valueShow);
+    }
+    $("#tocButton").click(function() {
+        if ($("#toc").is(":hidden")) {
+            $("#tocButton").attr("value", valueHide);
+            $("#toc").slideDown(320);
+        }
+        else {
+            $("#tocButton").attr("value", valueShow);
+            $("#toc").slideUp(350);
+        }
+    })
+    if ($(".toc").length < 1) {
+        $("#toc, #tocButton").hide();
+    }
+</script>
+
+
+
+
+
+<div class="bdsharebuttonbox">
+	<a href="#" class="fx fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fx fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fx fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+	<a href="#" class="fx fa-facebook-official bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+	<a href="#" class="fx fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+	<a href="#" class="fx fa-linkedin bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+	<a href="#" class="fx fa-files-o bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+</div>
+<script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+
+
+
+
+    
+        <!-- 来必力City版安装代码 -->
+        <div id="lv-container" data-id="city" data-uid="MTAyMC8zMTEzNi83Njg1">
+            <script type="text/javascript">
+           (function(d, s) {
+               var j, e = d.getElementsByTagName(s)[0];
+               if (typeof LivereTower === 'function') { return; }
+               j = d.createElement(s);
+               j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+               j.async = true;
+               e.parentNode.insertBefore(j, e);
+           })(document, 'script');
+            </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+        </div>
+        <!-- City版安装代码已完成 -->
+    
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+        
+            <a href="/2019/10/08/Flare-On-2019-Writeup/" title="下一篇: Flare-On 2019 Writeup">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/11/05/Flare-On-2020-Writeup/">Flare-On 2020 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/08/Flare-On-2019-Writeup/">Flare-On 2019 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/2018flare-on-recording/">2018flare-on recording</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/%E8%AF%88%E5%B0%B8%E4%B8%80%E4%B8%8B/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu%E5%85%8B%E9%9A%86mac%E5%9C%B0%E5%9D%80%E5%90%8E%E8%BF%9E%E4%B8%8D%E4%B8%8A%E7%BD%91/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B33td%E5%86%85%E6%A0%B8%E8%AE%B0%E5%BD%95/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90Android-so%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AAWindows%E4%B8%8BMakefile%E7%9A%84%E7%A5%9E%E5%9D%91/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-%E6%80%9D%E8%B7%AF/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%882%EF%BC%89-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub%E6%97%A0%E7%94%A8%E7%9A%84%E7%94%B5%E8%84%91-%E4%B8%A7%E5%BF%83%E7%97%85%E7%8B%82-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/%E5%90%84%E7%A7%8D%E7%BC%96%E7%A0%81%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu%E7%9A%84apache2%E9%85%8D%E7%BD%AEPHP%E4%B8%8D%E8%83%BD%E8%BF%90%E8%A1%8C%E9%97%AE%E9%A2%98/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9D%91%E4%B9%8B%E8%AE%B0%E5%BD%95/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0-nasm%E4%BD%BF%E7%94%A8-%E8%B0%83%E8%AF%95/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf%E7%A5%9E%E5%A5%87%E7%9A%84%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/%E6%BB%B4%E6%BB%B4-%E5%AD%A6%E7%94%9F%E5%8D%A1/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP%E7%A0%B4%E8%A7%A3-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B-%E5%AF%B9%E7%A7%B0%E5%AF%86%E7%A0%811/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B_%E7%8F%8D%E8%B4%B5%E8%B5%84%E6%96%99/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/%E4%B8%A4%E5%B9%B4%E4%BA%86/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr%E5%9B%9B%E9%81%93Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014%E2%80%94%E2%80%94%E6%9C%80%E9%9A%BE%E7%9A%84%E9%A2%98%E7%9B%AE/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/%E4%B8%80%E7%AF%87helloworld%E5%8F%8A%E4%BA%9B%E8%AE%B8%E8%AF%B4%E6%98%8E/">一篇helloworld及些许说明</a></li></ul>
+    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    <script>
+        $(".post-list").addClass("toc-article");
+        $(".post-list-item a").attr("target","_blank");
+        $("#post-nav-button > a:nth-child(2)").click(function() {
+            $(".fa-bars, .fa-times").toggle();
+            $(".post-list").toggle(300);
+            if ($(".toc").length > 0) {
+                $("#toc, #tocButton").toggle(200, function() {
+                    if ($(".switch-area").is(":visible")) {
+                        $("#tocButton").attr("value", valueHide);
+                        }
+                    })
+            }
+            else {
+            }
+        })
+    </script>
+
+
+
+    <script>
+        
+    </script>
+</div>
+      <footer id="footer">
+    <div class="outer">
+        <div id="footer-info">
+            <div class="footer-left">
+                &copy; 2021 giglf
+            </div>
+            <div class="footer-right">
+                <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
+            </div>
+        </div>
+        
+            <div class="visit">
+                
+                    <span id="busuanzi_container_site_pv" style='display:none'>
+                        <span id="site-visit" >dalao到访数: 
+                            <span id="busuanzi_value_site_uv"></span>
+                        </span>
+                    </span>
+                
+                
+                    <span>, </span>
+                
+                
+                    <span id="busuanzi_container_page_pv" style='display:none'>
+                        <span id="page-visit">本页阅读量: 
+                            <span id="busuanzi_value_page_pv"></span>
+                        </span>
+                    </span>
+                
+            </div>
+        
+    </div>
+</footer>
+
+    </div>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
+<script src="/js/main.js"></script>
+
+
+    <script>
+        $(document).ready(function() {
+            var backgroundnum = 8;
+            var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
+            $("#mobile-nav").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+            $(".left-col").css({"background-image": backgroundimg,"background-size": "cover","background-position": "center"});
+        })
+    </script>
+
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-107314179-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+
+	<script>
+	var _hmt = _hmt || [];
+	(function() {
+	  var hm = document.createElement("script");
+	  hm.src = "//hm.baidu.com/hm.js?549394a97554b370d120d5a854f98672";
+	  var s = document.getElementsByTagName("script")[0]; 
+	  s.parentNode.insertBefore(hm, s);
+	})();
+	</script>
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<div class="scroll" id="scroll">
+    <a href="#"><i class="fa fa-arrow-up"></i></a>
+    <a href="#comments"><i class="fa fa-comments-o"></i></a>
+    <a href="#footer"><i class="fa fa-arrow-down"></i></a>
+</div>
+<script>
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        };
+    })
+</script>
+
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+
+  <script language="javascript">
+    $(function() {
+        $("a[title]").each(function() {
+            var a = $(this);
+            var title = a.attr('title');
+            if (title == undefined || title == "") return;
+            a.data('title', title).removeAttr('title').hover(
+
+            function() {
+                var offset = a.offset();
+                $("<div id=\"anchortitlecontainer\"></div>").appendTo($("body")).html(title).css({
+                    top: offset.top - a.outerHeight() - 15,
+                    left: offset.left + a.outerWidth()/2 + 1
+                }).fadeIn(function() {
+                    var pop = $(this);
+                    setTimeout(function() {
+                        pop.remove();
+                    }, pop.text().length * 800);
+                });
+            }, function() {
+                $("#anchortitlecontainer").remove();
+            });
+        });
+    });
+</script>
+
+
+  </div><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>

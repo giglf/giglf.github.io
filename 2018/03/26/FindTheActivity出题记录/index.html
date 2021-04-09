@@ -5,18 +5,19 @@
   
   <title>FindTheActivity出题记录 | giglf的盐缸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="某次ctf内部赛上出了一题android的re，算是第一次认真出题了23333 因为太菜了，这破题从开始想到写花我4天= =，最后还改了一个思路 题目源码https://github.com/giglf/CTF_RE_FindTheActivity">
-<meta name="keywords" content="Android,writeup">
+  <meta name="description" content="某次ctf内部赛上出了一题android的re，算是第一次认真出题了23333 因为太菜了，这破题从开始想到写花我4天&#x3D; &#x3D;，最后还改了一个思路 题目源码https:&#x2F;&#x2F;github.com&#x2F;giglf&#x2F;CTF_RE_FindTheActivity">
 <meta property="og:type" content="article">
 <meta property="og:title" content="FindTheActivity出题记录">
-<meta property="og:url" content="http://giglf.github.io/2018/03/26/FindTheActivity出题记录/index.html">
+<meta property="og:url" content="http://giglf.github.io/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="giglf的盐缸">
-<meta property="og:description" content="某次ctf内部赛上出了一题android的re，算是第一次认真出题了23333 因为太菜了，这破题从开始想到写花我4天= =，最后还改了一个思路 题目源码https://github.com/giglf/CTF_RE_FindTheActivity">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-03-26T03:09:10.000Z">
+<meta property="og:description" content="某次ctf内部赛上出了一题android的re，算是第一次认真出题了23333 因为太菜了，这破题从开始想到写花我4天&#x3D; &#x3D;，最后还改了一个思路 题目源码https:&#x2F;&#x2F;github.com&#x2F;giglf&#x2F;CTF_RE_FindTheActivity">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-03-26T02:54:43.000Z">
+<meta property="article:modified_time" content="2018-03-26T03:09:10.000Z">
+<meta property="article:author" content="giglf">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="writeup">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="FindTheActivity出题记录">
-<meta name="twitter:description" content="某次ctf内部赛上出了一题android的re，算是第一次认真出题了23333 因为太菜了，这破题从开始想到写花我4天= =，最后还改了一个思路 题目源码https://github.com/giglf/CTF_RE_FindTheActivity">
   
     <link rel="alternative" href="/atom.xml" title="giglf的盐缸" type="application/atom+xml">
   
@@ -24,9 +25,13 @@
     <link rel="icon" href="/img/favicon.jpg">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -48,8 +53,8 @@
           isCategory: false,
           open_in_new: false
       }
-  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
@@ -63,11 +68,9 @@
         </a>
 
         <hgroup>
-          <h1 class="header-author"><a href="/" title="Hi Mate">giglf</a></h1>
+          <h1 class="header-author"><a href="/" title="Hi Mate"></a></h1>
         </hgroup>
 
-        
-        <p class="header-subtitle">让咸鱼更咸</p>
         
         
         
@@ -144,7 +147,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/flare-on/" style="font-size: 12.5px;">flare-on</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so加载/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/全国大学生信息安全竞赛初赛/" style="font-size: 12.5px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/内核编译/" style="font-size: 10px;">内核编译</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/签名认证/" style="font-size: 12.5px;">签名认证</a> <a href="/tags/编码/" style="font-size: 10px;">编码</a> <a href="/tags/逆向/" style="font-size: 20px;">逆向</a> <a href="/tags/随便写写啦/" style="font-size: 17.5px;">随便写写啦</a>
+                        <a href="/tags/Android/" style="font-size: 16px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/flare-on/" style="font-size: 14px;">flare-on</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/reverse/" style="font-size: 12px;">reverse</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so%E5%8A%A0%E8%BD%BD/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B/" style="font-size: 12px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/" style="font-size: 10px;">内核编译</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81/" style="font-size: 12px;">签名认证</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 10px;">编码</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 20px;">逆向</a> <a href="/tags/%E9%9A%8F%E4%BE%BF%E5%86%99%E5%86%99%E5%95%A6/" style="font-size: 18px;">随便写写啦</a>
                     </div>
                 </section>
                 
@@ -175,7 +178,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">giglf</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -185,10 +188,8 @@
                 
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="Me">giglf</a></h1>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
             </hgroup>
-            
-            <p class="header-subtitle">让咸鱼更咸</p>
             
             <nav class="header-menu">
                 <ul>
@@ -221,7 +222,7 @@
       <div class="body-wrap"><article id="post-FindTheActivity出题记录" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/03/26/FindTheActivity出题记录/" class="article-date">
+      <a href="/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/" class="article-date">
       <time datetime="2018-03-26T02:54:43.000Z" itemprop="datePublished">2018-03-26</time>
 </a>
     </div>
@@ -250,7 +251,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/writeup/">writeup</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/writeup/" rel="tag">writeup</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -262,20 +263,20 @@
           
         <p>某次ctf内部赛上出了一题android的re，算是第一次认真出题了23333</p>
 <p>因为太菜了，这破题从开始想到写花我4天= =，最后还改了一个思路</p>
-<p>题目源码<a href="https://github.com/giglf/CTF_RE_FindTheActivity" target="_blank" rel="noopener">https://github.com/giglf/CTF_RE_FindTheActivity</a></p>
-<a id="more"></a>
+<p>题目源码<a target="_blank" rel="noopener" href="https://github.com/giglf/CTF_RE_FindTheActivity">https://github.com/giglf/CTF_RE_FindTheActivity</a></p>
+<span id="more"></span>
 <h1 id="FindTheActivity"><a href="#FindTheActivity" class="headerlink" title="FindTheActivity"></a>FindTheActivity</h1><p>我刚开始想到的出题思路是启动一个trick的Activity，误导验证过程，再通过AMS hook修改实际启动的Activity，真正启动的是一个要通过解密出来的dex里的Activity，这个解密出来的dex要通过DexClassLoader进行加载</p>
 <p>但是我害怕这个太简单，就想着再加了层NativeActivity</p>
 <p>从google的样例代码直接扒了下来简单修改了一下（不然完全不会写</p>
 <p>初始想法是把内层的整个dex给加密到so文件的data段，然后jeb反编译的时候会什么都看不到，再动态加载内存里的dex，但是……因为太菜了不会写（捂脸），这个参考了之前pwnhub上的一道题，后来仔细看了下，发现我内层的dex写得有点大……正常编译下来700多k，本身想法是直接加密后拷到代码中作为一个全局常量放在.data段，想参考apk加固的做法，但是一直没找到……总结下来还是太菜了，感觉给整个文件patch到data段不应该是这么个做法</p>
 <p>所以我就改成了从NativeActivity传一个key给MainActivity，作为获取解密的秘钥的关键，强制让解题者去看NativeActivity（滑稽），但是还遗留了一个偷鸡解法</p>
 <p>其中AMS hook替换启动的Activity参考了这篇博客里的做法</p>
-<p><a href="http://weishu.me/2016/03/21/understand-plugin-framework-activity-management/" target="_blank" rel="noopener">http://weishu.me/2016/03/21/understand-plugin-framework-activity-management/</a></p>
+<p><a target="_blank" rel="noopener" href="http://weishu.me/2016/03/21/understand-plugin-framework-activity-management/">http://weishu.me/2016/03/21/understand-plugin-framework-activity-management/</a></p>
 <h1 id="writeup"><a href="#writeup" class="headerlink" title="writeup"></a>writeup</h1><h2 id="正常解法"><a href="#正常解法" class="headerlink" title="正常解法"></a>正常解法</h2><p>首先安装上手机，发现是一个屏幕颜色不断变换的界面，点击操作无别的反应。</p>
 <p>然后jeb直接反编译，可以发现底下有6个类，其中名称很明显的是<code>CheckActivity</code>和<code>MainActivity</code></p>
 <p>对于一个android的apk，首先思路是要查看一下AndroidManifest.xml文件，这记录了该apk的一些权限、Activity等组件注册信息。</p>
 <p><code>&lt;intent-filter&gt;</code>包含这两句的是第一个启动的Activity</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">"android.intent.action.MAIN"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">"android.intent.category.LAUNCHER"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">action</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.action.MAIN&quot;</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">category</span> <span class="attr">android:name</span>=<span class="string">&quot;android.intent.category.LAUNCHER&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>最后可以看到第一个启动的其实是NativeActivity，搜一下能知道这是一个纯粹靠cpp写的Activity，可以从apk解压出/lib/libnative-main.so，这是包含NativeActivity的地方，并且主函数为<code>android_main</code> （但是我做了轻轻的混淆，把这符号名给删了）</p>
 <p>但是搜一下字符串能找到</p>
 <p><code>.text:00006288    0000003A    C    Ahahahah, go to shake your phone 100 times in 10 seconds!</code></p>
@@ -284,7 +285,7 @@
 <p>10秒里摇一摇摇到100次，会跳转到MainActivity（这开始应该是试出来的），会通过log输出一些信息，可以从ddms中看到</p>
 <hr>
 <p>再看到MainActivity，全程就是一个crackme，获取输入，然后放到intent里，再启动CheckActivtity，然后开始验证</p>
-<p>这个验证过程很简单，很容易就能恢复出<code>green{Do_you_really_think_this_is_flag?}</code></p>
+<p>这个验证过程很简单，很容易就能恢复出<code>green&#123;Do_you_really_think_this_is_flag?&#125;</code></p>
 <p>这是是flag吗？？并不是，这只是一个trick（要这么简单的话我写那么多类干嘛哦）</p>
 <p>但是intent的的确确是启动了CheckActivity这个Activity，但实际上这个flag在手机里输入试下也是出现wrong的。</p>
 <p>之后可以注意到，在MainActivity中还有个attachBaseContext，这个方法是在Activity生成时最开始调用的，注意到里面调用了另外的一个a的类</p>
@@ -300,7 +301,7 @@
 <p>最后就能出来真正的flag了</p>
 <h2 id="偷鸡解法"><a href="#偷鸡解法" class="headerlink" title="偷鸡解法"></a>偷鸡解法</h2><p>后来还放出了一个hint，注意data目录，因为DexClassLoader加载的dex在程序中有一步复制出来的步骤</p>
 <p>查看手机里<code>/data/data/&lt;package&gt;/</code>这个存放app的信息的目录，就能发现</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@pisces:/data/data/ctf.green.findtheactivity # ls</span><br><span class="line">app_dex</span><br><span class="line">app_outdex</span><br><span class="line">cache</span><br><span class="line">files</span><br><span class="line">lib</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@pisces:&#x2F;data&#x2F;data&#x2F;ctf.green.findtheactivity # ls</span><br><span class="line">app_dex</span><br><span class="line">app_outdex</span><br><span class="line">cache</span><br><span class="line">files</span><br><span class="line">lib</span><br></pre></td></tr></table></figure>
 <p>有个app_dex和app_outdex的目录</p>
 <p>从app_outdex中能找到一个dex文件，这其实就已经是解密过后的dex了！</p>
 <p>正常逻辑是解密后放到<code>app_dex</code>，然后<code>app_outdex</code>生成的是一个缓存用的odex文件，程序中在dex成功加载后就会删除两个文件夹里的内容，所以app_dex是空的，但是运行需要这个odex文件，odex文件是没删掉的！</p>
@@ -365,18 +366,18 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2018/03/26/FindTheActivity出题记录/">FindTheActivity出题记录</a></p>
-        <p><span>文章作者:</span><a href="/" title="访问 giglf 的个人博客">giglf</a></p>
+        <p><span>本文标题:</span><a href="/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/">FindTheActivity出题记录</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
         <p><span>发布时间:</span>2018年03月26日 - 10时54分</p>
         <p><span>最后更新:</span>2018年03月26日 - 11时09分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2018/03/26/FindTheActivity出题记录/" title="FindTheActivity出题记录">http://giglf.github.io/2018/03/26/FindTheActivity出题记录/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://giglf.github.io/2018/03/26/FindTheActivity出题记录/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/" title="FindTheActivity出题记录">http://giglf.github.io/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://giglf.github.io/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -384,7 +385,7 @@
 
 <nav id="article-nav">
   
-    <a href="/2018/04/06/Ubuntu克隆mac地址后连不上网/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/06/Ubuntu%E5%85%8B%E9%9A%86mac%E5%9C%B0%E5%9D%80%E5%90%8E%E8%BF%9E%E4%B8%8D%E4%B8%8A%E7%BD%91/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
@@ -394,7 +395,7 @@
     </a>
   
   
-    <a href="/2018/01/31/编译小米3td内核记录/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2018/01/31/%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B33td%E5%86%85%E6%A0%B8%E8%AE%B0%E5%BD%95/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">编译小米3td内核记录</div>
       <strong class="article-nav-caption">></strong>
     </a>
@@ -406,11 +407,13 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FindTheActivity"><span class="toc-number">1.</span> <span class="toc-text">FindTheActivity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#writeup"><span class="toc-number">2.</span> <span class="toc-text">writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正常解法"><span class="toc-number">2.1.</span> <span class="toc-text">正常解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#偷鸡解法"><span class="toc-number">2.2.</span> <span class="toc-text">偷鸡解法</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FindTheActivity"><span class="toc-number">1.</span> <span class="toc-text">FindTheActivity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#writeup"><span class="toc-number">2.</span> <span class="toc-text">writeup</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E5%B8%B8%E8%A7%A3%E6%B3%95"><span class="toc-number">2.1.</span> <span class="toc-text">正常解法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%81%B7%E9%B8%A1%E8%A7%A3%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">偷鸡解法</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -473,18 +476,18 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2018/04/06/Ubuntu克隆mac地址后连不上网/" title="上一篇: Ubuntu克隆mac地址后连不上网">
+            <a href="/2018/04/06/Ubuntu%E5%85%8B%E9%9A%86mac%E5%9C%B0%E5%9D%80%E5%90%8E%E8%BF%9E%E4%B8%8D%E4%B8%8A%E7%BD%91/" title="上一篇: Ubuntu克隆mac地址后连不上网">
                 <i class="fa fa-angle-left"></i>
             </a>
         
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
         
-            <a href="/2018/01/31/编译小米3td内核记录/" title="下一篇: 编译小米3td内核记录">
+            <a href="/2018/01/31/%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B33td%E5%86%85%E6%A0%B8%E8%AE%B0%E5%BD%95/" title="下一篇: 编译小米3td内核记录">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/08/Flare-On-2019-Writeup/">Flare-On 2019 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/2018flare-on-recording/">2018flare-on recording</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/诈尸一下/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu克隆mac地址后连不上网/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity出题记录/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/编译小米3td内核记录/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/源码分析Android-so加载过程/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/记录一个Windows下Makefile的神坑/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-思路/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android签名原理介绍（2）-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android签名原理介绍（1）--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/各种编码区别及内存映射/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu的apache2配置PHP不能运行问题/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/数据库坑之记录/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/汇编学习-nasm使用-调试/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf神奇的压缩文件/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/滴滴-学生卡/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP破解-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/全国大学生信息安全竞赛初赛-对称密码1/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/全国大学生信息安全竞赛初赛_珍贵资料/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/两年了/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr四道Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014——最难的题目/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/一篇helloworld及些许说明/">一篇helloworld及些许说明</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/11/05/Flare-On-2020-Writeup/">Flare-On 2020 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/08/Flare-On-2019-Writeup/">Flare-On 2019 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/2018flare-on-recording/">2018flare-on recording</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/%E8%AF%88%E5%B0%B8%E4%B8%80%E4%B8%8B/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu%E5%85%8B%E9%9A%86mac%E5%9C%B0%E5%9D%80%E5%90%8E%E8%BF%9E%E4%B8%8D%E4%B8%8A%E7%BD%91/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B33td%E5%86%85%E6%A0%B8%E8%AE%B0%E5%BD%95/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90Android-so%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AAWindows%E4%B8%8BMakefile%E7%9A%84%E7%A5%9E%E5%9D%91/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-%E6%80%9D%E8%B7%AF/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%882%EF%BC%89-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub%E6%97%A0%E7%94%A8%E7%9A%84%E7%94%B5%E8%84%91-%E4%B8%A7%E5%BF%83%E7%97%85%E7%8B%82-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/%E5%90%84%E7%A7%8D%E7%BC%96%E7%A0%81%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu%E7%9A%84apache2%E9%85%8D%E7%BD%AEPHP%E4%B8%8D%E8%83%BD%E8%BF%90%E8%A1%8C%E9%97%AE%E9%A2%98/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9D%91%E4%B9%8B%E8%AE%B0%E5%BD%95/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0-nasm%E4%BD%BF%E7%94%A8-%E8%B0%83%E8%AF%95/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf%E7%A5%9E%E5%A5%87%E7%9A%84%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/%E6%BB%B4%E6%BB%B4-%E5%AD%A6%E7%94%9F%E5%8D%A1/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP%E7%A0%B4%E8%A7%A3-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B-%E5%AF%B9%E7%A7%B0%E5%AF%86%E7%A0%811/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B_%E7%8F%8D%E8%B4%B5%E8%B5%84%E6%96%99/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/%E4%B8%A4%E5%B9%B4%E4%BA%86/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr%E5%9B%9B%E9%81%93Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014%E2%80%94%E2%80%94%E6%9C%80%E9%9A%BE%E7%9A%84%E9%A2%98%E7%9B%AE/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/%E4%B8%80%E7%AF%87helloworld%E5%8F%8A%E4%BA%9B%E8%AE%B8%E8%AF%B4%E6%98%8E/">一篇helloworld及些许说明</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
@@ -514,7 +517,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                &copy; 2019 giglf
+                &copy; 2021 giglf
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
@@ -545,8 +548,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {

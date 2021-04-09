@@ -6,19 +6,21 @@
   <title>Android签名原理介绍（1）--schemev1 | giglf的盐缸</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前言因为某些不知名的原因，让我感觉很有必要学习一下apk签名的方式，于是。。。便有了这篇 （真的好久没写了哇，近期烦心事真的太多了） 我在网上搜了各种大大小小关于apk签名的文章，但始终没有能让我满意的，而且也感觉一直缺乏一篇能从字节上分析对比新旧两种签名方式的文章，so…… 传统的安卓签名方式是通过jar的签名方式实现的，在apk包下，会有一个META-INF的文件夹，META-INF的文件夹下">
-<meta name="keywords" content="Android,签名认证,scheme v1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android签名原理介绍（1）--schemev1">
-<meta property="og:url" content="http://giglf.github.io/2017/04/07/Android签名原理介绍（1）--schemev1/index.html">
+<meta property="og:url" content="http://giglf.github.io/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/index.html">
 <meta property="og:site_name" content="giglf的盐缸">
 <meta property="og:description" content="前言因为某些不知名的原因，让我感觉很有必要学习一下apk签名的方式，于是。。。便有了这篇 （真的好久没写了哇，近期烦心事真的太多了） 我在网上搜了各种大大小小关于apk签名的文章，但始终没有能让我满意的，而且也感觉一直缺乏一篇能从字节上分析对比新旧两种签名方式的文章，so…… 传统的安卓签名方式是通过jar的签名方式实现的，在apk包下，会有一个META-INF的文件夹，META-INF的文件夹下">
-<meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://giglf.github.io/2017/04/07/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg">
-<meta property="og:updated_time" content="2017-11-22T11:51:24.000Z">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://giglf.github.io/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg">
+<meta property="article:published_time" content="2017-04-07T15:48:25.000Z">
+<meta property="article:modified_time" content="2017-11-22T11:51:24.000Z">
+<meta property="article:author" content="giglf">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="签名认证">
+<meta property="article:tag" content="scheme v1">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android签名原理介绍（1）--schemev1">
-<meta name="twitter:description" content="前言因为某些不知名的原因，让我感觉很有必要学习一下apk签名的方式，于是。。。便有了这篇 （真的好久没写了哇，近期烦心事真的太多了） 我在网上搜了各种大大小小关于apk签名的文章，但始终没有能让我满意的，而且也感觉一直缺乏一篇能从字节上分析对比新旧两种签名方式的文章，so…… 传统的安卓签名方式是通过jar的签名方式实现的，在apk包下，会有一个META-INF的文件夹，META-INF的文件夹下">
-<meta name="twitter:image" content="http://giglf.github.io/2017/04/07/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg">
+<meta name="twitter:image" content="http://giglf.github.io/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg">
   
     <link rel="alternative" href="/atom.xml" title="giglf的盐缸" type="application/atom+xml">
   
@@ -26,9 +28,13 @@
     <link rel="icon" href="/img/favicon.jpg">
   
   
-      <link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+      
+<link rel="stylesheet" href="//cdn.bootcss.com/animate.css/3.5.0/animate.min.css">
+
   
-  <link rel="stylesheet" href="/css/style.css">
+  
+<link rel="stylesheet" href="/css/style.css">
+
   <link rel="stylesheet" href="/font-awesome/css/font-awesome.min.css">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   
@@ -50,8 +56,8 @@
           isCategory: false,
           open_in_new: false
       }
-  </script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
+  </script>
+<meta name="generator" content="Hexo 5.4.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
 <body>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
     <div class="left-col">
@@ -65,11 +71,9 @@
         </a>
 
         <hgroup>
-          <h1 class="header-author"><a href="/" title="Hi Mate">giglf</a></h1>
+          <h1 class="header-author"><a href="/" title="Hi Mate"></a></h1>
         </hgroup>
 
-        
-        <p class="header-subtitle">让咸鱼更咸</p>
         
         
         
@@ -146,7 +150,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <a href="/tags/Android/" style="font-size: 15px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/flare-on/" style="font-size: 12.5px;">flare-on</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/reverse/" style="font-size: 10px;">reverse</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so加载/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/全国大学生信息安全竞赛初赛/" style="font-size: 12.5px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/内核编译/" style="font-size: 10px;">内核编译</a> <a href="/tags/密码学/" style="font-size: 10px;">密码学</a> <a href="/tags/汇编/" style="font-size: 10px;">汇编</a> <a href="/tags/签名认证/" style="font-size: 12.5px;">签名认证</a> <a href="/tags/编码/" style="font-size: 10px;">编码</a> <a href="/tags/逆向/" style="font-size: 20px;">逆向</a> <a href="/tags/随便写写啦/" style="font-size: 17.5px;">随便写写啦</a>
+                        <a href="/tags/Android/" style="font-size: 16px;">Android</a> <a href="/tags/Forensics/" style="font-size: 10px;">Forensics</a> <a href="/tags/Makefile/" style="font-size: 10px;">Makefile</a> <a href="/tags/Misc/" style="font-size: 10px;">Misc</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/apache2/" style="font-size: 10px;">apache2</a> <a href="/tags/flare-on/" style="font-size: 14px;">flare-on</a> <a href="/tags/java/" style="font-size: 10px;">java</a> <a href="/tags/mi3-td/" style="font-size: 10px;">mi3_td</a> <a href="/tags/mini-lctf/" style="font-size: 10px;">mini-lctf</a> <a href="/tags/minilctf/" style="font-size: 10px;">minilctf</a> <a href="/tags/nasm/" style="font-size: 10px;">nasm</a> <a href="/tags/network-manager/" style="font-size: 10px;">network-manager</a> <a href="/tags/php/" style="font-size: 10px;">php</a> <a href="/tags/pwn/" style="font-size: 10px;">pwn</a> <a href="/tags/pwnable-kr/" style="font-size: 10px;">pwnable.kr</a> <a href="/tags/pwnhub/" style="font-size: 10px;">pwnhub</a> <a href="/tags/reverse/" style="font-size: 12px;">reverse</a> <a href="/tags/scheme-v1/" style="font-size: 10px;">scheme v1</a> <a href="/tags/scheme-v2/" style="font-size: 10px;">scheme v2</a> <a href="/tags/so%E5%8A%A0%E8%BD%BD/" style="font-size: 10px;">so加载</a> <a href="/tags/unicode/" style="font-size: 10px;">unicode</a> <a href="/tags/utf-8/" style="font-size: 10px;">utf-8</a> <a href="/tags/writeup/" style="font-size: 10px;">writeup</a> <a href="/tags/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B/" style="font-size: 12px;">全国大学生信息安全竞赛初赛</a> <a href="/tags/%E5%86%85%E6%A0%B8%E7%BC%96%E8%AF%91/" style="font-size: 10px;">内核编译</a> <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" style="font-size: 10px;">密码学</a> <a href="/tags/%E6%B1%87%E7%BC%96/" style="font-size: 10px;">汇编</a> <a href="/tags/%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81/" style="font-size: 12px;">签名认证</a> <a href="/tags/%E7%BC%96%E7%A0%81/" style="font-size: 10px;">编码</a> <a href="/tags/%E9%80%86%E5%90%91/" style="font-size: 20px;">逆向</a> <a href="/tags/%E9%9A%8F%E4%BE%BF%E5%86%99%E5%86%99%E5%95%A6/" style="font-size: 18px;">随便写写啦</a>
                     </div>
                 </section>
                 
@@ -177,7 +181,7 @@
       <nav id="mobile-nav">
       <div class="overlay">
           <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me">giglf</a></h1>
+          <h1 class="header-author js-mobile-header hide"><a href="/" title="Me"></a></h1>
       </div>
     <div class="intrude-less">
         <header id="header" class="inner">
@@ -187,10 +191,8 @@
                 
             </a>
             <hgroup>
-              <h1 class="header-author"><a href="/" title="Me">giglf</a></h1>
+              <h1 class="header-author"><a href="/" title="Me"></a></h1>
             </hgroup>
-            
-            <p class="header-subtitle">让咸鱼更咸</p>
             
             <nav class="header-menu">
                 <ul>
@@ -223,7 +225,7 @@
       <div class="body-wrap"><article id="post-Android签名原理介绍（1）--schemev1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/04/07/Android签名原理介绍（1）--schemev1/" class="article-date">
+      <a href="/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/" class="article-date">
       <time datetime="2017-04-07T15:48:25.000Z" itemprop="datePublished">2017-04-07</time>
 </a>
     </div>
@@ -252,7 +254,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scheme-v1/">scheme v1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/签名认证/">签名认证</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/" rel="tag">Android</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scheme-v1/" rel="tag">scheme v1</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AD%BE%E5%90%8D%E8%AE%A4%E8%AF%81/" rel="tag">签名认证</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -269,23 +271,23 @@
 <p>而在Android7.0后，新增了一个APK Signature Scheme v2的签名方式，更为强效。而原来的签名方式则是 JAR-signed APK verification (v1 scheme)</p>
 <p>详细可看官方的文档 </p>
 <blockquote>
-<p><a href="https://source.android.com/security/apksigning/v2#v1-verification" target="_blank" rel="noopener">https://source.android.com/security/apksigning/v2#v1-verification</a></p>
+<p><a target="_blank" rel="noopener" href="https://source.android.com/security/apksigning/v2#v1-verification">https://source.android.com/security/apksigning/v2#v1-verification</a></p>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 <h2 id="JAR-signed-APK-verification-v1-scheme"><a href="#JAR-signed-APK-verification-v1-scheme" class="headerlink" title="JAR-signed APK verification (v1 scheme)"></a>JAR-signed APK verification (v1 scheme)</h2><p>分析一下原版的签名方式</p>
 <p>├─META-INF<br>│      CERT.RSA<br>│      CERT.SF<br>│      MANIFEST.MF</p>
 <p><code>MANIFEST.MF</code>：储存了apk底下除了META-INF文件夹外其余文件的SHA1后对应的base64的值</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Built-By: Generated-by-ADT</span><br><span class="line">Created-By: Android Gradle 2.3.0</span><br><span class="line"></span><br><span class="line">Name: res/anim/design_snackbar_in.xml</span><br><span class="line">SHA1-Digest: QPiYcwJRp7LvVEneHabhK9QbisA=</span><br><span class="line"></span><br><span class="line">Name: res/layout/design_text_input_password_icon.xml</span><br><span class="line">SHA1-Digest: jJEvq6P1Soe1bsUay8j+cdxWKGk=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-hdpi-v4/abc_list_longpressed_holo.9.png</span><br><span class="line">SHA1-Digest: KQunCQh0E4bP0utgN0cHdQr9OwA=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-xxhdpi-v4/abc_ic_star_half_black_16dp.png</span><br><span class="line">SHA1-Digest: EikVyBT5I7pmbJO2k8qF0V5hUc0=</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Manifest-Version: 1.0</span><br><span class="line">Built-By: Generated-by-ADT</span><br><span class="line">Created-By: Android Gradle 2.3.0</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;anim&#x2F;design_snackbar_in.xml</span><br><span class="line">SHA1-Digest: QPiYcwJRp7LvVEneHabhK9QbisA&#x3D;</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;layout&#x2F;design_text_input_password_icon.xml</span><br><span class="line">SHA1-Digest: jJEvq6P1Soe1bsUay8j+cdxWKGk&#x3D;</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;drawable-hdpi-v4&#x2F;abc_list_longpressed_holo.9.png</span><br><span class="line">SHA1-Digest: KQunCQh0E4bP0utgN0cHdQr9OwA&#x3D;</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;drawable-xxhdpi-v4&#x2F;abc_ic_star_half_black_16dp.png</span><br><span class="line">SHA1-Digest: EikVyBT5I7pmbJO2k8qF0V5hUc0&#x3D;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p><code>CERT.SF</code>：在MAINFEST.MF文件的基础上，增加了对MANIFEST.MF的SHA1的值，并在base64编码后放到开头。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Signature-Version: 1.0</span><br><span class="line">SHA1-Digest-Manifest: rYILhq+GQ4rnRO9NeNUFTLzDiFs=</span><br><span class="line">Created-By: 1.0 (Android)</span><br><span class="line"></span><br><span class="line">Name: res/anim/design_snackbar_in.xml</span><br><span class="line">SHA1-Digest: QPiYcwJRp7LvVEneHabhK9QbisA=</span><br><span class="line"></span><br><span class="line">Name: res/layout/design_text_input_password_icon.xml</span><br><span class="line">SHA1-Digest: jJEvq6P1Soe1bsUay8j+cdxWKGk=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-hdpi-v4/abc_list_longpressed_holo.9.png</span><br><span class="line">SHA1-Digest: KQunCQh0E4bP0utgN0cHdQr9OwA=</span><br><span class="line"></span><br><span class="line">Name: res/drawable-xxhdpi-v4/abc_ic_star_half_black_16dp.png</span><br><span class="line">SHA1-Digest: EikVyBT5I7pmbJO2k8qF0V5hUc0=</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Signature-Version: 1.0</span><br><span class="line">SHA1-Digest-Manifest: rYILhq+GQ4rnRO9NeNUFTLzDiFs&#x3D;</span><br><span class="line">Created-By: 1.0 (Android)</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;anim&#x2F;design_snackbar_in.xml</span><br><span class="line">SHA1-Digest: QPiYcwJRp7LvVEneHabhK9QbisA&#x3D;</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;layout&#x2F;design_text_input_password_icon.xml</span><br><span class="line">SHA1-Digest: jJEvq6P1Soe1bsUay8j+cdxWKGk&#x3D;</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;drawable-hdpi-v4&#x2F;abc_list_longpressed_holo.9.png</span><br><span class="line">SHA1-Digest: KQunCQh0E4bP0utgN0cHdQr9OwA&#x3D;</span><br><span class="line"></span><br><span class="line">Name: res&#x2F;drawable-xxhdpi-v4&#x2F;abc_ic_star_half_black_16dp.png</span><br><span class="line">SHA1-Digest: EikVyBT5I7pmbJO2k8qF0V5hUc0&#x3D;</span><br><span class="line"></span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p><code>CERT.RSA</code>：这个则是RSA证书文件了，文本文件打开肯定是乱码，我们可以通过openssl查看其信息。</p>
 <p>应该算挺标准的X509格式的证书吧</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">$ openssl pkcs7 -inform DER -in CERT.RSA -noout -print_certs -text</span><br><span class="line">Certificate:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 3 (0x2)</span><br><span class="line">        Serial Number: 2064162882 (0x7b08a042)</span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">        Issuer: OU=gifish, CN=lin.giglf</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Feb 28 14:20:15 2017 GMT</span><br><span class="line">            Not After : Feb 22 14:20:15 2042 GMT</span><br><span class="line">        Subject: OU=gifish, CN=lin.giglf</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: rsaEncryption</span><br><span class="line">                Public-Key: (2048 bit)</span><br><span class="line">                Modulus:</span><br><span class="line">                    00:af:8a:df:e1:7f:70:b4:97:85:71:1b:ca:b8:9e:</span><br><span class="line">                    48:80:7a:4e:10:5a:a7:d7:aa:85:3a:7c:0a:99:42:</span><br><span class="line">                    ec:db:01:d7:28:ad:69:72:04:e6:9e:f3:0a:56:30:</span><br><span class="line">                    f1:d8:1e:8b:bd:d9:94:2e:ac:b0:64:83:71:89:24:</span><br><span class="line">                    e4:8e:63:f1:24:7f:73:d7:e4:48:d6:82:11:f6:9c:</span><br><span class="line">                    1f:de:4a:22:52:f1:b3:7b:0b:7a:01:09:fc:8e:36:</span><br><span class="line">                    85:2c:79:b3:25:60:93:aa:61:d2:d4:7c:e1:ab:70:</span><br><span class="line">                    40:5b:bb:cd:30:9a:cd:40:89:df:8d:73:25:87:ce:</span><br><span class="line">                    49:1e:63:42:47:d7:f4:66:40:56:db:67:6b:89:b2:</span><br><span class="line">                    4f:8e:9f:4a:f3:04:f4:40:58:02:83:c0:81:0b:5e:</span><br><span class="line">                    79:e6:d3:7f:3b:32:22:47:ed:f2:42:1f:7c:94:41:</span><br><span class="line">                    b1:d2:4b:f7:df:d0:61:68:1f:74:60:07:56:05:e4:</span><br><span class="line">                    44:27:5d:15:24:66:02:3e:51:06:7b:13:9c:f1:31:</span><br><span class="line">                    f3:15:39:6f:de:22:27:44:f9:3a:42:59:c8:20:f4:</span><br><span class="line">                    41:5a:4e:36:b0:8e:25:eb:a4:a8:72:01:e6:81:56:</span><br><span class="line">                    86:67:01:e5:bd:43:28:99:14:57:90:ff:b3:e9:f5:</span><br><span class="line">                    c6:85:d7:36:cb:05:c0:31:c6:b0:f5:b9:ec:54:ae:</span><br><span class="line">                    83:85</span><br><span class="line">                Exponent: 65537 (0x10001)</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Subject Key Identifier:</span><br><span class="line">                30:06:A9:7C:68:78:A4:7A:50:52:4F:B6:75:DE:5D:88:86:AD:DD:4F</span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">         26:2b:cf:a3:fa:4d:81:c5:a7:37:6f:4a:95:2c:ba:f4:73:cc:</span><br><span class="line">         57:69:8c:0e:4e:07:ad:6a:df:9e:ad:c1:62:68:82:c9:89:35:</span><br><span class="line">         9f:17:32:4c:98:a3:f5:45:fb:54:75:8e:ea:74:5f:ad:b4:56:</span><br><span class="line">         c6:4c:c1:e9:f0:c5:0d:12:37:b1:83:35:16:af:de:43:e7:1b:</span><br><span class="line">         58:26:eb:86:c5:3c:da:88:6a:28:fa:65:cf:49:c6:ff:84:d7:</span><br><span class="line">         dd:1e:ad:3f:01:a0:4e:ae:52:a4:98:8f:4f:94:84:04:5f:93:</span><br><span class="line">         43:01:39:80:69:02:46:ac:bc:b4:12:f9:b2:fd:4b:ed:50:71:</span><br><span class="line">         cc:6d:1f:5f:5e:5d:e0:67:a2:a3:65:af:bf:e0:bd:26:8e:51:</span><br><span class="line">         56:d1:76:6a:e7:56:90:4e:aa:57:90:60:d0:47:38:3f:2f:9c:</span><br><span class="line">         38:01:e0:2d:4a:6c:9e:e5:5a:e5:33:fe:a6:46:f2:a9:03:ed:</span><br><span class="line">         28:2e:7a:de:e3:a8:33:3f:1c:3d:ca:eb:dd:7d:28:82:6f:2a:</span><br><span class="line">         b1:09:37:7f:b8:2c:59:75:e0:0c:2b:5f:87:9a:24:f3:2b:88:</span><br><span class="line">         5e:bb:71:60:51:d2:a4:68:c2:8f:ba:8e:46:3d:14:d9:21:13:</span><br><span class="line">         68:23:c0:f2:05:3a:21:5e:10:20:05:59:f9:06:33:9c:c4:7d:</span><br><span class="line">         95:91:ce:43</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">$ openssl pkcs7 -inform DER -in CERT.RSA -noout -print_certs -text</span><br><span class="line">Certificate:</span><br><span class="line">    Data:</span><br><span class="line">        Version: 3 (0x2)</span><br><span class="line">        Serial Number: 2064162882 (0x7b08a042)</span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">        Issuer: OU&#x3D;gifish, CN&#x3D;lin.giglf</span><br><span class="line">        Validity</span><br><span class="line">            Not Before: Feb 28 14:20:15 2017 GMT</span><br><span class="line">            Not After : Feb 22 14:20:15 2042 GMT</span><br><span class="line">        Subject: OU&#x3D;gifish, CN&#x3D;lin.giglf</span><br><span class="line">        Subject Public Key Info:</span><br><span class="line">            Public Key Algorithm: rsaEncryption</span><br><span class="line">                Public-Key: (2048 bit)</span><br><span class="line">                Modulus:</span><br><span class="line">                    00:af:8a:df:e1:7f:70:b4:97:85:71:1b:ca:b8:9e:</span><br><span class="line">                    48:80:7a:4e:10:5a:a7:d7:aa:85:3a:7c:0a:99:42:</span><br><span class="line">                    ec:db:01:d7:28:ad:69:72:04:e6:9e:f3:0a:56:30:</span><br><span class="line">                    f1:d8:1e:8b:bd:d9:94:2e:ac:b0:64:83:71:89:24:</span><br><span class="line">                    e4:8e:63:f1:24:7f:73:d7:e4:48:d6:82:11:f6:9c:</span><br><span class="line">                    1f:de:4a:22:52:f1:b3:7b:0b:7a:01:09:fc:8e:36:</span><br><span class="line">                    85:2c:79:b3:25:60:93:aa:61:d2:d4:7c:e1:ab:70:</span><br><span class="line">                    40:5b:bb:cd:30:9a:cd:40:89:df:8d:73:25:87:ce:</span><br><span class="line">                    49:1e:63:42:47:d7:f4:66:40:56:db:67:6b:89:b2:</span><br><span class="line">                    4f:8e:9f:4a:f3:04:f4:40:58:02:83:c0:81:0b:5e:</span><br><span class="line">                    79:e6:d3:7f:3b:32:22:47:ed:f2:42:1f:7c:94:41:</span><br><span class="line">                    b1:d2:4b:f7:df:d0:61:68:1f:74:60:07:56:05:e4:</span><br><span class="line">                    44:27:5d:15:24:66:02:3e:51:06:7b:13:9c:f1:31:</span><br><span class="line">                    f3:15:39:6f:de:22:27:44:f9:3a:42:59:c8:20:f4:</span><br><span class="line">                    41:5a:4e:36:b0:8e:25:eb:a4:a8:72:01:e6:81:56:</span><br><span class="line">                    86:67:01:e5:bd:43:28:99:14:57:90:ff:b3:e9:f5:</span><br><span class="line">                    c6:85:d7:36:cb:05:c0:31:c6:b0:f5:b9:ec:54:ae:</span><br><span class="line">                    83:85</span><br><span class="line">                Exponent: 65537 (0x10001)</span><br><span class="line">        X509v3 extensions:</span><br><span class="line">            X509v3 Subject Key Identifier:</span><br><span class="line">                30:06:A9:7C:68:78:A4:7A:50:52:4F:B6:75:DE:5D:88:86:AD:DD:4F</span><br><span class="line">    Signature Algorithm: sha256WithRSAEncryption</span><br><span class="line">         26:2b:cf:a3:fa:4d:81:c5:a7:37:6f:4a:95:2c:ba:f4:73:cc:</span><br><span class="line">         57:69:8c:0e:4e:07:ad:6a:df:9e:ad:c1:62:68:82:c9:89:35:</span><br><span class="line">         9f:17:32:4c:98:a3:f5:45:fb:54:75:8e:ea:74:5f:ad:b4:56:</span><br><span class="line">         c6:4c:c1:e9:f0:c5:0d:12:37:b1:83:35:16:af:de:43:e7:1b:</span><br><span class="line">         58:26:eb:86:c5:3c:da:88:6a:28:fa:65:cf:49:c6:ff:84:d7:</span><br><span class="line">         dd:1e:ad:3f:01:a0:4e:ae:52:a4:98:8f:4f:94:84:04:5f:93:</span><br><span class="line">         43:01:39:80:69:02:46:ac:bc:b4:12:f9:b2:fd:4b:ed:50:71:</span><br><span class="line">         cc:6d:1f:5f:5e:5d:e0:67:a2:a3:65:af:bf:e0:bd:26:8e:51:</span><br><span class="line">         56:d1:76:6a:e7:56:90:4e:aa:57:90:60:d0:47:38:3f:2f:9c:</span><br><span class="line">         38:01:e0:2d:4a:6c:9e:e5:5a:e5:33:fe:a6:46:f2:a9:03:ed:</span><br><span class="line">         28:2e:7a:de:e3:a8:33:3f:1c:3d:ca:eb:dd:7d:28:82:6f:2a:</span><br><span class="line">         b1:09:37:7f:b8:2c:59:75:e0:0c:2b:5f:87:9a:24:f3:2b:88:</span><br><span class="line">         5e:bb:71:60:51:d2:a4:68:c2:8f:ba:8e:46:3d:14:d9:21:13:</span><br><span class="line">         68:23:c0:f2:05:3a:21:5e:10:20:05:59:f9:06:33:9c:c4:7d:</span><br><span class="line">         95:91:ce:43</span><br></pre></td></tr></table></figure>
 <hr>
 <p>接着就结合源码看一看</p>
 <p>因为网上有关这部分的已经很多了，这里贴一个链接，我就不自己贴代码了</p>
 <blockquote>
-<p><a href="http://www.2cto.com/kf/201601/456020.html" target="_blank" rel="noopener">http://www.2cto.com/kf/201601/456020.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.2cto.com/kf/201601/456020.html">http://www.2cto.com/kf/201601/456020.html</a></p>
 </blockquote>
 <p>大致说一下其中的主要流程</p>
 <ol>
@@ -310,7 +312,7 @@
 <li>如果还有别的签名重复3-5步。</li>
 </ol>
 <p>我对两个不同的apk进行了签名，对比CERT.RSA文件可以看到就最后存在差异</p>
-<p><img src="/2017/04/07/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg" alt="diff"></p>
+<p><img src="/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/Android签名原理介绍（1）--schemev1/diff_zpsmiw3qcya.jpg" alt="diff"></p>
 <p>通过openssl输出的证书信息都是一样的。</p>
 <p>由此便可推出Android在验证apk签名信息时做的步骤。</p>
 <p>接下来下一篇介绍新一代的签名方式</p>
@@ -371,18 +373,18 @@
   
     
     <div class="copyright">
-        <p><span>本文标题:</span><a href="/2017/04/07/Android签名原理介绍（1）--schemev1/">Android签名原理介绍（1）--schemev1</a></p>
-        <p><span>文章作者:</span><a href="/" title="访问 giglf 的个人博客">giglf</a></p>
+        <p><span>本文标题:</span><a href="/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/">Android签名原理介绍（1）--schemev1</a></p>
+        <p><span>文章作者:</span><a href="/" title="访问  的个人博客"></a></p>
         <p><span>发布时间:</span>2017年04月07日 - 23时48分</p>
         <p><span>最后更新:</span>2017年11月22日 - 19时51分</p>
         <p>
-            <span>原始链接:</span><a class="post-url" href="/2017/04/07/Android签名原理介绍（1）--schemev1/" title="Android签名原理介绍（1）--schemev1">http://giglf.github.io/2017/04/07/Android签名原理介绍（1）--schemev1/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://giglf.github.io/2017/04/07/Android签名原理介绍（1）--schemev1/　　作者: giglf" title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
+            <span>原始链接:</span><a class="post-url" href="/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/" title="Android签名原理介绍（1）--schemev1">http://giglf.github.io/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/</a>
+            <span class="copy-path" data-clipboard-text="原文: http://giglf.github.io/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
             <script src="/js/clipboard.min.js"></script>
             <script> var clipboard = new Clipboard('.copy-path'); </script>
         </p>
         <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
+            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/3.0/cn/" title="中国大陆 (CC BY-NC-SA 3.0 CN)" target = "_blank">"署名-非商用-相同方式共享 3.0"</a> 转载请保留原文链接及作者。
         </p>
     </div>
 
@@ -390,7 +392,7 @@
 
 <nav id="article-nav">
   
-    <a href="/2017/04/11/Android签名原理介绍（2）-schemev2/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2017/04/11/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%882%EF%BC%89-schemev2/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
@@ -412,11 +414,13 @@
 
     <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JAR-signed-APK-verification-v1-scheme"><span class="toc-number">1.1.</span> <span class="toc-text">JAR-signed APK verification (v1 scheme)</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#JAR-signed-APK-verification-v1-scheme"><span class="toc-number">1.1.</span> <span class="toc-text">JAR-signed APK verification (v1 scheme)</span></a></li></ol></li></ol>
 </div>
 <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
 
+
 <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
 <script>
     var valueHide = "隐藏目录";
     var valueShow = "显示目录";
@@ -479,7 +483,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2017/04/11/Android签名原理介绍（2）-schemev2/" title="上一篇: Android签名原理介绍（2）--schemev2">
+            <a href="/2017/04/11/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%882%EF%BC%89-schemev2/" title="上一篇: Android签名原理介绍（2）--schemev2">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -490,7 +494,7 @@
             </a>
         
     </div>
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/10/08/Flare-On-2019-Writeup/">Flare-On 2019 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/2018flare-on-recording/">2018flare-on recording</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/诈尸一下/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu克隆mac地址后连不上网/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity出题记录/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/编译小米3td内核记录/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/源码分析Android-so加载过程/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/记录一个Windows下Makefile的神坑/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-思路/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android签名原理介绍（2）-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android签名原理介绍（1）--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub无用的电脑-丧心病狂-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/各种编码区别及内存映射/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu的apache2配置PHP不能运行问题/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/数据库坑之记录/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/汇编学习-nasm使用-调试/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf神奇的压缩文件/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/滴滴-学生卡/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP破解-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/全国大学生信息安全竞赛初赛-对称密码1/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/全国大学生信息安全竞赛初赛_珍贵资料/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/两年了/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr四道Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014——最难的题目/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/一篇helloworld及些许说明/">一篇helloworld及些许说明</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/11/05/Flare-On-2020-Writeup/">Flare-On 2020 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/10/08/Flare-On-2019-Writeup/">Flare-On 2019 Writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/11/21/2018flare-on-recording/">2018flare-on recording</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/08/%E8%AF%88%E5%B0%B8%E4%B8%80%E4%B8%8B/">诈尸一下</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/04/06/Ubuntu%E5%85%8B%E9%9A%86mac%E5%9C%B0%E5%9D%80%E5%90%8E%E8%BF%9E%E4%B8%8D%E4%B8%8A%E7%BD%91/">Ubuntu克隆mac地址后连不上网</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/03/26/FindTheActivity%E5%87%BA%E9%A2%98%E8%AE%B0%E5%BD%95/">FindTheActivity出题记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/01/31/%E7%BC%96%E8%AF%91%E5%B0%8F%E7%B1%B33td%E5%86%85%E6%A0%B8%E8%AE%B0%E5%BD%95/">编译小米3td内核记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/28/Blog-update-again/">Blog update again...</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/22/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90Android-so%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B/">源码分析Android so加载过程</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/11/12/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%AAWindows%E4%B8%8BMakefile%E7%9A%84%E7%A5%9E%E5%9D%91/">记录一个Windows下Makefile的神坑</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/25/pwnable-kr-%E6%80%9D%E8%B7%AF/">pwnable.kr_思路</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/10/09/Blog-update/">Blog update!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/09/04/About-recently/">About recently</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/11/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%882%EF%BC%89-schemev2/">Android签名原理介绍（2）--schemev2</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/04/07/Android%E7%AD%BE%E5%90%8D%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%EF%BC%881%EF%BC%89--schemev1/">Android签名原理介绍（1）--schemev1</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/21/NGfish_mini-lctf_writeup/">NGfish_mini-lctf_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/20/pwnhub%E6%97%A0%E7%94%A8%E7%9A%84%E7%94%B5%E8%84%91-%E4%B8%A7%E5%BF%83%E7%97%85%E7%8B%82-writeup/">pwnhub无用的电脑_丧心病狂_writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/02/17/%E5%90%84%E7%A7%8D%E7%BC%96%E7%A0%81%E5%8C%BA%E5%88%AB%E5%8F%8A%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84/">各种编码区别及内存映射</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/28/2016minilctf-Forensics500-Angel-Beats/">2016minilctf-Forensics500-Angel Beats!</a></li><li class="post-list-item"><a class="post-list-link" href="/2017/01/21/Ubuntu%E7%9A%84apache2%E9%85%8D%E7%BD%AEPHP%E4%B8%8D%E8%83%BD%E8%BF%90%E8%A1%8C%E9%97%AE%E9%A2%98/">Ubuntu的apache2配置PHP不能运行问题</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/12/14/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%9D%91%E4%B9%8B%E8%AE%B0%E5%BD%95/">数据库坑之记录</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/11/06/%E6%B1%87%E7%BC%96%E5%AD%A6%E4%B9%A0-nasm%E4%BD%BF%E7%94%A8-%E8%B0%83%E8%AF%95/">汇编学习&&nasm使用&&调试</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/10/11/L-ctf%E7%A5%9E%E5%A5%87%E7%9A%84%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6/">2016 L-ctf神奇的压缩文件</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/09/23/%E6%BB%B4%E6%BB%B4-%E5%AD%A6%E7%94%9F%E5%8D%A1/">滴滴!!!学生卡</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/08/11/Android-APP%E7%A0%B4%E8%A7%A3-Forest3-6-2/">Android APP破解--Forest3.6.2</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/29/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B-%E5%AF%B9%E7%A7%B0%E5%AF%86%E7%A0%811/">全国大学生信息安全竞赛初赛_对称密码1</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/07/26/%E5%85%A8%E5%9B%BD%E5%A4%A7%E5%AD%A6%E7%94%9F%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AB%9E%E8%B5%9B%E5%88%9D%E8%B5%9B_%E7%8F%8D%E8%B4%B5%E8%B5%84%E6%96%99/">全国大学生信息安全竞赛初赛_珍贵资料</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/14/reversing-kr-ImagePic-Write-up/">reversing.kr_ImagePic Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/09/%E4%B8%A4%E5%B9%B4%E4%BA%86/">两年了</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/07/reversing-kr%E5%9B%9B%E9%81%93Easy/">reversing.kr四道Easy</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/06/05/btcf_quals_2014%E2%80%94%E2%80%94%E6%9C%80%E9%9A%BE%E7%9A%84%E9%A2%98%E7%9B%AE/">btcf_quals_2014——最难的题目</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/30/reversing.kr_replace-Write-up/">reversing.kr_replace Write up</a></li><li class="post-list-item"><a class="post-list-link" href="/2016/05/29/%E4%B8%80%E7%AF%87helloworld%E5%8F%8A%E4%BA%9B%E8%AE%B8%E8%AF%B4%E6%98%8E/">一篇helloworld及些许说明</a></li></ul>
     <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
     <script>
         $(".post-list").addClass("toc-article");
@@ -520,7 +524,7 @@
     <div class="outer">
         <div id="footer-info">
             <div class="footer-left">
-                &copy; 2019 giglf
+                &copy; 2021 giglf
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/luuman/hexo-theme-spfk" target="_blank">spfk</a> by luuman
@@ -551,8 +555,12 @@
 </footer>
 
     </div>
-    <script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+    
+<script src="https://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+
+
 <script src="/js/main.js"></script>
+
 
     <script>
         $(document).ready(function() {
